@@ -9,6 +9,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Source Files\Stages">
+      <UniqueIdentifier>{53000743-800a-4530-95b7-43986c1cc519}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\Compiler\main.cpp">
@@ -21,6 +24,9 @@
   <ItemGroup>
     <ClInclude Include="..\src\Compiler\stdafx.h">
       <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Compiler\Stages\IStage.h">
+      <Filter>Source Files\Stages</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

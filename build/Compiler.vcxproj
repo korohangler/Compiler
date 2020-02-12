@@ -18,6 +18,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\src\Compiler\Stages\IStage.h" />
     <ClInclude Include="..\src\Compiler\stdafx.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
@@ -56,13 +57,11 @@
     <LinkIncremental>true</LinkIncremental>
     <OutDir>$(SolutionDir)..\bin\$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)..\obj\Compiler\$(Platform)\$(Configuration)\</IntDir>
-    <IncludePath>$(solutionDir)src\Compiler;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(SolutionDir)..\bin\$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)..\obj\Compiler\$(Platform)\$(Configuration)\</IntDir>
-    <IncludePath>$(solutionDir)src\Compiler;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -73,6 +72,8 @@
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <PrecompiledHeader>Use</PrecompiledHeader>
+      <EnableEnhancedInstructionSet>AdvancedVectorExtensions</EnableEnhancedInstructionSet>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\src\Compiler\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -92,6 +93,8 @@
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <PrecompiledHeader>Use</PrecompiledHeader>
+      <EnableEnhancedInstructionSet>AdvancedVectorExtensions</EnableEnhancedInstructionSet>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\src\Compiler\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
