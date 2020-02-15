@@ -11,10 +11,13 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\src\Utils\framework.h">
+    <ClInclude Include="..\src\Utils\pch.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\Utils\pch.h">
+    <ClInclude Include="..\src\Utils\Utils.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Utils\StringConverter.h">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>

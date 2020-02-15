@@ -15,6 +15,9 @@
     <Filter Include="Tests">
       <UniqueIdentifier>{266a6b2d-40c9-425b-bed3-86588dbe1be0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\CompilerParts">
+      <UniqueIdentifier>{3d3bc3f5-165a-44f3-8470-42ac34b63263}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\Compiler\main.cpp">
@@ -26,6 +29,15 @@
     <ClCompile Include="..\src\Tests\Test.cpp">
       <Filter>Tests</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\Compiler\Stages\LexerStage.cpp">
+      <Filter>Source Files\Stages</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Compiler\Compiler.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Compiler\CompilerParts\ConfigReader.cpp">
+      <Filter>Source Files\CompilerParts</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\Compiler\stdafx.h">
@@ -33,6 +45,18 @@
     </ClInclude>
     <ClInclude Include="..\src\Compiler\Stages\IStage.h">
       <Filter>Source Files\Stages</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Compiler\Stages\LexerStage.h">
+      <Filter>Source Files\Stages</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Compiler\Compiler.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Compiler\CompilerParts\Config.h">
+      <Filter>Source Files\CompilerParts</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Compiler\CompilerParts\ConfigReader.h">
+      <Filter>Source Files\CompilerParts</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

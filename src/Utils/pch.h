@@ -8,7 +8,12 @@
 #define PCH_H
 
 // add headers that you want to pre-compile here
-#include "framework.h"
 #include <stdexcept>
+#include <string>
+#include <vector>
+#include <fstream>
+#include <sstream>
+
+#include "Utils.h"
 
 #endif //PCH_H

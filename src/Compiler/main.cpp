@@ -1,10 +1,18 @@
 #include "stdafx.h"
+#include "Compiler.h"
+#include "CompilerParts/ConfigReader.h"
 
-int main()
+int main(int argc, char*argv[])
 {
+	setlocale(LC_ALL, "en_US.UTF-8");
+
 	try
 	{
-		std::cout << "Hello world!\n";
+		ConfigReader confReader;
+
+		Compiler compiler(confReader.ReadConfigFromArgv(argc, argv));
+
+		compiler.PerformCompilation();
 	}
 	catch (std::runtime_error err)
 	{

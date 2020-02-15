@@ -1,10 +1,12 @@
 #pragma once
 
-namespace std { class string_view; }
-
 class IStage
 {
 public:
 
-	virtual void doStage(std::string_view pathToFile) = 0;
+	virtual ~IStage() {}
+	
+	virtual void DoStage(const std::wistream& inputStream, std::wostream& outputStream) = 0;
+
+	virtual std::wstring GetStageName() = 0;
 };

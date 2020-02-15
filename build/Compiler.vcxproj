@@ -15,9 +15,12 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\src\Compiler\Compiler.cpp" />
+    <ClCompile Include="..\src\Compiler\CompilerParts\ConfigReader.cpp" />
     <ClCompile Include="..\src\Compiler\main.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='UnitTests|x64'">true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="..\src\Compiler\Stages\LexerStage.cpp" />
     <ClCompile Include="..\src\Compiler\stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
@@ -30,7 +33,11 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\src\Compiler\Compiler.h" />
+    <ClInclude Include="..\src\Compiler\CompilerParts\Config.h" />
+    <ClInclude Include="..\src\Compiler\CompilerParts\ConfigReader.h" />
     <ClInclude Include="..\src\Compiler\Stages\IStage.h" />
+    <ClInclude Include="..\src\Compiler\Stages\LexerStage.h" />
     <ClInclude Include="..\src\Compiler\stdafx.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
@@ -79,19 +86,19 @@
     <LinkIncremental>true</LinkIncremental>
     <OutDir>$(SolutionDir)..\bin\$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)..\obj\Compiler\$(Platform)\$(Configuration)\</IntDir>
-    <IncludePath>$(SolutionDir)..\lib\boost_1_72_0\;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)..\lib\boost_1_72_0\;$(SolutionDir)..\lib\rapidjson\;$(SolutionDir)..\src\Utils\;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(SolutionDir)..\bin\$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)..\obj\Compiler\$(Platform)\$(Configuration)\</IntDir>
-    <IncludePath>$(SolutionDir)..\lib\boost_1_72_0\;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)..\lib\boost_1_72_0\;$(SolutionDir)..\lib\rapidjson\;$(SolutionDir)..\src\Utils\;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='UnitTests|x64'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(SolutionDir)..\bin\$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)..\obj\Compiler\$(Platform)\$(Configuration)\</IntDir>
-    <IncludePath>$(SolutionDir)..\lib\boost_1_72_0\;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)..\lib\boost_1_72_0\;$(SolutionDir)..\lib\rapidjson\;$(SolutionDir)..\src\Utils\;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
