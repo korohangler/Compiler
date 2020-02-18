@@ -16,5 +16,10 @@
 #include <filesystem>
 #include <stringbuffer.h>
 #include <writer.h>
+#include <istreamwrapper.h>
 
 #include <Utils.h>
+
+typedef rapidjson::GenericDocument<rapidjson::UTF16<>> WDocument;
+typedef rapidjson::GenericValue<rapidjson::UTF16<>> WValue;
+typedef rapidjson::GenericStringBuffer<rapidjson::UTF16<>> WStringBuffer;

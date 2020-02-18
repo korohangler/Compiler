@@ -13,6 +13,8 @@ public:
 
 	struct TokenRule
 	{
+		TokenRule() {};
+		TokenRule(std::wstring regExp, std::wstring type) : Regexpr(regExp), Type(type) {}
 		std::wregex  Regexpr;
 		std::wstring Type;
 	};
@@ -30,7 +32,7 @@ protected:
 	void ReadText(std::wistream& inputStream);
 	void ParseText();
 	void SaveTokens(std::wostream& outputStream);
-	void InitRules(rapidjson::Document& doc);
+	void InitRules(WDocument& doc);
 
 	std::vector<TokenRule>	  m_tokenRules;
 	std::vector<Token>		  m_tokens;

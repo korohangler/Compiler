@@ -5,19 +5,16 @@ LexerStage::LexerStage(std::wstring runningDirectory)
 {
 	std::wstring pathToConfig = runningDirectory + L"../../../data/Lexer/regexps.json";
 
-	FILE* pFile;
-	errno_t status = fopen_s(&pFile, Utils::StringConverter::WstrToStr(pathToConfig).c_str(), "rb");
+	std::wifstream rulesFile(pathToConfig);
 	
-	ASSERT2(pFile, "Unable to open Lexer config file!");
+	ASSERT2(rulesFile.is_open(), "Unable to open Lexer config file!");
 
-	char buffer[65536];
-	rapidjson::FileReadStream is(pFile, buffer, sizeof(buffer));
-	rapidjson::Document document;
-	document.ParseStream<0, rapidjson::UTF8<>, rapidjson::FileReadStream>(is);
+	rapidjson::WIStreamWrapper isw(rulesFile);
+
+	WDocument document;
+	document.ParseStream(isw);
 
 	InitRules(document);
-
-	if (pFile != nullptr) fclose(pFile);
 }
 
 void LexerStage::DoStage(std::wistream& inputStream, std::wostream& outputStream)
@@ -74,10 +71,6 @@ void LexerStage::ParseText()
 
 void LexerStage::SaveTokens(std::wostream& outputStream)
 {
-	typedef rapidjson::GenericDocument<rapidjson::UTF16<>> WDocument;
-	typedef rapidjson::GenericValue<rapidjson::UTF16<>> WValue;
-	typedef rapidjson::GenericStringBuffer<rapidjson::UTF16<>> WStringBuffer;
-
 	WDocument doc;
 	doc.SetObject();
 
@@ -90,11 +83,11 @@ void LexerStage::SaveTokens(std::wostream& outputStream)
 		objValue.SetObject();
 
 		WValue tmp;
-		tmp.SetString(m_tokens[i].Type.c_str(), m_tokens[i].Type.length());
+		tmp.SetString(m_tokens[i].Type.c_str(), static_cast<rapidjson::SizeType>(m_tokens[i].Type.length()));
 		objValue.AddMember(L"Type", tmp, allocator);
 
 		tmp = WValue();
-		tmp.SetString(m_tokens[i].Value.c_str(), m_tokens[i].Value.length());
+		tmp.SetString(m_tokens[i].Value.c_str(), static_cast<rapidjson::SizeType>(m_tokens[i].Value.length()));
 		objValue.AddMember(L"Value", tmp, allocator);
 
 		myArray.PushBack(objValue, allocator);
@@ -110,16 +103,10 @@ void LexerStage::SaveTokens(std::wostream& outputStream)
 	outputStream.write(result.c_str(), result.length());
 }
 
-void LexerStage::InitRules(rapidjson::Document& doc)
+void LexerStage::InitRules(WDocument& doc)
 {
-	auto rules = doc["Rules"].GetArray();
+	auto rules = doc[L"Rules"].GetArray();
 
 	for (auto i = rules.Begin(); i < rules.End(); i++)
-	{
-		TokenRule newRule;
-
-		newRule.Regexpr = Utils::StringConverter::StrToWstr((*i)["Regexp"].GetString());
-		newRule.Type	= Utils::StringConverter::StrToWstr((*i)["Type"].GetString());
-		m_tokenRules.emplace_back(newRule);
-	}
+		m_tokenRules.emplace_back((*i)[L"Regexp"].GetString(), (*i)[L"Type"].GetString());
 }
