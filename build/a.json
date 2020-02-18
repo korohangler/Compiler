@@ -1,0 +1,85 @@
+{
+    "Tokens":
+    [
+        {
+            "Type":"Variable",
+            "Value":"let"
+        },
+        {
+            "Type":"Separator",
+            "Value":" "
+        },
+        {
+            "Type":"Identificator",
+            "Value":"a"
+        },
+        {
+            "Type":"Separator",
+            "Value":" "
+        },
+        {
+            "Type":"Equal",
+            "Value":"="
+        },
+        {
+            "Type":"Separator",
+            "Value":" "
+        },
+        {
+            "Type":"Identificator",
+            "Value":"1"
+        },
+        {
+            "Type":"Separator",
+            "Value":";"
+        },
+        {
+            "Type":"Separator",
+            "Value":"\n"
+        },
+        {
+            "Type":"Separator",
+            "Value":"\n"
+        },
+        {
+            "Type":"Separator",
+            "Value":"\n"
+        },
+        {
+            "Type":"Variable",
+            "Value":"let"
+        },
+        {
+            "Type":"Separator",
+            "Value":" "
+        },
+        {
+            "Type":"Identificator",
+            "Value":"b"
+        },
+        {
+            "Type":"Separator",
+            "Value":" "
+        },
+        {
+            "Type":"Equal",
+            "Value":"="
+        },
+        {
+            "Type":"Separator",
+            "Value":" "
+        },
+        {
+            "Type":"Identificator",
+            "Value":"2"
+        },
+        {
+            "Type":"Separator",
+            "Value":";"
+        },
+        {
+            "Type":"Separator",
+            "Value":""
+        }
+    ]
+}

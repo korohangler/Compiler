@@ -4,13 +4,13 @@
 
 Compiler::Compiler() : m_currentStageIdx(0), m_firstStageIdx(0)
 {
-	m_stages.push_back(std::make_shared<LexerStage>());
-	m_stageOutputs.emplace_back();
 }
 
 Compiler::Compiler(Config config) : Compiler()
 {
 	m_config = config;
+	m_stages.push_back(std::make_shared<LexerStage>(m_config.ExecutionFolder));
+	m_stageOutputs.emplace_back();
 }
 
 void Compiler::PerformCompilation()

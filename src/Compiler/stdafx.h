@@ -3,6 +3,7 @@
 #include <string>
 #include <fstream>
 #include <document.h>
+#include <filereadstream.h>
 #include <map>
 #include <unordered_map>
 #include <vector>
@@ -13,5 +14,7 @@
 #include <clocale>
 #include <regex>
 #include <filesystem>
+#include <stringbuffer.h>
+#include <writer.h>
 
 #include <Utils.h>
