@@ -14,9 +14,11 @@ public:
 	struct TokenRule
 	{
 		TokenRule() {};
-		TokenRule(std::wstring regExp, std::wstring type) : Regexpr(regExp), Type(type) {}
+		TokenRule(std::wstring regExp, std::wstring type, bool delDupl, bool needExp) : Regexpr(regExp), Type(type), DeleteDuplicates(delDupl), NeedExport(needExp) {}
 		std::wregex  Regexpr;
 		std::wstring Type;
+		bool		 DeleteDuplicates;
+		bool		 NeedExport;
 	};
 
 	struct Token

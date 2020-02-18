@@ -50,16 +50,20 @@ void LexerStage::ParseText()
 			if (std::regex_search(std::wstring::const_iterator(currCharacter), m_inputText.cend(), resultedmatch, m_tokenRules[i].Regexpr)
 				&& resultedmatch.position(0) == 0)
 			{
-				m_tokens.emplace_back(resultedmatch.str(0), m_tokenRules[i].Type);
 				foundCorrectType = true;
-
-				size_t len = resultedmatch.length(0);
-
-				currCharIdx += len;
 
 				std::wstring resultedString = resultedmatch.str(0);
 
+				size_t len = resultedString.length();
+
+				currCharIdx += len;
+
 				for (auto& iter : resultedString) if (iter == L'\n') currentLine++;
+
+				if (!m_tokenRules[i].NeedExport) break;
+				if (currCharIdx != 0 && m_tokenRules[i].DeleteDuplicates && m_tokens.back().Value == resultedString && m_tokens.back().Type == m_tokenRules[i].Type) break;
+
+				m_tokens.emplace_back(resultedString, m_tokenRules[i].Type);
 
 				break;
 			}
@@ -108,5 +112,14 @@ void LexerStage::InitRules(WDocument& doc)
 	auto rules = doc[L"Rules"].GetArray();
 
 	for (auto i = rules.Begin(); i < rules.End(); i++)
-		m_tokenRules.emplace_back((*i)[L"Regexp"].GetString(), (*i)[L"Type"].GetString());
+	{
+		TokenRule newRule;
+		newRule.Regexpr = (*i)[L"Regexp"].GetString();
+		newRule.Type	= (*i)[L"Type"].GetString();
+
+		newRule.NeedExport = (*i).HasMember(L"NeedExport") ? (*i)[L"NeedExport"].GetBool() : true;
+		newRule.DeleteDuplicates = (*i).HasMember(L"DeleteDuplicates") ? (*i)[L"DeleteDuplicates"].GetBool() : false;
+
+		m_tokenRules.emplace_back(newRule);
+	}
 }

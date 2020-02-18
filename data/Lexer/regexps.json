@@ -15,11 +15,13 @@
         },
         {
             "Regexp" : "(;|\r\n|\r|\n|\\s|$)",
-            "Type"   : "Separator"
+            "Type"   : "Separator",
+            "DeleteDuplicates" : true,
+            "NeedExport" : false
         },
         {
-            "Regexp" : "[-|+]?([0-9]*.[0-9]+|[0-9]+.|[0-9]+)[e|E]?[-|+]?[0-9]+[flFL]?",
-            "Type"   : "Digit"
+            "Regexp" : "[-+]?([0-9]*|.[0-9]+|[0-9]+.|[0-9]+)[eE]?[-+]?[0-9]+[flFL]?",
+            "Type"   : "DoubleLiteral"
         },
         {
             "Regexp" : "(let)|(var)",
@@ -30,7 +32,7 @@
             "Type"   : "Equal"
         },
         {
-            "Regexp" : "\\w",
+            "Regexp" : "(\\w[\\d\\w_]?)",
             "Type"   : "Identificator"
         }
     ]
