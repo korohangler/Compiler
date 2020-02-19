@@ -28,12 +28,144 @@
             "Type"   : "variableDeclaration"
         },
         {
+            "Regexp" : "while",
+            "Type"   : "WhileLoop"
+        },
+        {
+            "Regexp" : "for",
+            "Type"   : "ForLoop"
+        },
+        {
+            "Regexp" : "do",
+            "Type"   : "Do"
+        },
+        {
+            "Regexp" : "break",
+            "Type"   : "Break"
+        },
+        {
+            "Regexp" : "switch",
+            "Type"   : "Switch"
+        },
+        {
+            "Regexp" : "case",
+            "Type"   : "SwitchCase"
+        },
+        {
+            "Regexp" : "default",
+            "Type"   : "SwitchDefault"
+        },
+        {
+            "Regexp" : "if",
+            "Type"   : "If"
+        },
+        {
+            "Regexp" : "else",
+            "Type"   : "Else"
+        },
+        {
+            "Regexp" : "function",
+            "Type"   : "Function"
+        },
+        {
+            "Regexp" : "return",
+            "Type"   : "Return"
+        },
+        {
+            "Regexp" : "++",
+            "Type"   : "Increment"
+        },
+        {
+            "Regexp" : "--",
+            "Type"   : "Decrement"
+        },
+        {
+            "Regexp" : "+=",
+            "Type"   : "PlusEqual"
+        },
+        {
+            "Regexp" : "-=",
+            "Type"   : "MinusEqual"
+        },
+        {
+            "Regexp" : "/=",
+            "Type"   : "DivEqual"
+        },
+        {
+            "Regexp" : "*=",
+            "Type"   : "MulEqual"
+        },
+        {
+            "Regexp" : "%=",
+            "Type"   : "ModEqual"
+        },
+        {
+            "Regexp" : "<=",
+            "Type"   : "LessEqual"
+        },
+        {
+            "Regexp" : ">=",
+            "Type"   : "MoreEqual"
+        },
+        {
+            "Regexp" : "!=",
+            "Type"   : "NotEqual"
+        },
+        {
+            "Regexp" : "==",
+            "Type"   : "LogicEqual"
+        },
+        {
             "Regexp" : "=",
-            "Type"   : "Equal"
+            "Type"   : "Assignment"
+        },
+        {
+            "Regexp" : "+",
+            "Type"   : "Addition"
+        },
+        {
+            "Regexp" : "*",
+            "Type"   : "Multiplication"
+        },
+        {
+            "Regexp" : "-",
+            "Type"   : "Subtraction"
+        },
+        {
+            "Regexp" : "/",
+            "Type"   : "Division"
+        },
+        {
+            "Regexp" : "%",
+            "Type"   : "Modulus"
+        },
+        {
+            "Regexp" : "&&",
+            "Type"   : "And"
+        },
+        {
+            "Regexp" : "||",
+            "Type"   : "Or"
+        },
+        {
+            "Regexp" : "!",
+            "Type"   : "Not"
         },
         {
             "Regexp" : "(\\w[\\d\\w_]?)",
             "Type"   : "Identificator"
+        },
+        {
+            "Regexp" : "NaN",
+            "Type"   : "NaN"
+        },
+        {
+            "Regexp" : "Infinity",
+            "Type"   : "Infinity"
+        },
+        {
+            "Regexp" : "undefined",
+            "Type"   : "Undefined"
         }
     ]
 }
