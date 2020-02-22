@@ -4,16 +4,18 @@
 class LexerStage : public IStage
 {
 public:
+	LexerStage() {}
 	LexerStage(std::wstring runningDirectory);
 	~LexerStage() override {}
 
 	void DoStage(std::wistream& inputStream, std::wostream& outputStream) override;
+	std::wstring DoStage(std::wstring& inputString);
 
 	std::wstring GetStageName() override { return L"Lexer"; };
 
 	struct TokenRule
 	{
-		TokenRule() {};
+		TokenRule() : DeleteDuplicates(false), NeedExport(true){};
 		TokenRule(std::wstring regExp, std::wstring type, bool delDupl, bool needExp) : Regexpr(regExp), Type(type), DeleteDuplicates(delDupl), NeedExport(needExp) {}
 		std::wregex  Regexpr;
 		std::wstring Type;
@@ -34,6 +36,7 @@ protected:
 	void ReadText(std::wistream& inputStream);
 	void ParseText();
 	void SaveTokens(std::wostream& outputStream);
+	void Clear();
 	void InitRules(WDocument& doc);
 
 	std::vector<TokenRule>	  m_tokenRules;

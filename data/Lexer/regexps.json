@@ -16,71 +16,22 @@
         {
             "Regexp" : "(;|\r\n|\r|\n|\\s|$)",
             "Type"   : "Separator",
-            "DeleteDuplicates" : true,
-            "NeedExport" : false
+            "DeleteDuplicates" : true
         },
         {
             "Regexp" : "[-+]?(\\.[0-9]*|[0-9]+\\.|[0-9]*|[0-9]+)[eE]?[-+]?[0-9]+[flFL]?",
             "Type"   : "DoubleLiteral"
         },
         {
-            "Regexp" : "(let)|(var)",
-            "Type"   : "variableDeclaration"
+            "Regexp" : "==|!=|>=|<=|>|<",
+            "Type"   : "LogicOperator"
         },
         {
-            "Regexp" : "while",
-            "Type"   : "WhileLoop"
+            "Regexp" : "\\+\\+|--|!|~",
+            "Type"   : "UnaryOperator"
         },
         {
-            "Regexp" : "for",
-            "Type"   : "ForLoop"
-        },
-        {
-            "Regexp" : "do",
-            "Type"   : "Do"
-        },
-        {
-            "Regexp" : "break",
-            "Type"   : "Break"
-        },
-        {
-            "Regexp" : "switch",
-            "Type"   : "Switch"
-        },
-        {
-            "Regexp" : "case",
-            "Type"   : "SwitchCase"
-        },
-        {
-            "Regexp" : "default",
-            "Type"   : "SwitchDefault"
-        },
-        {
-            "Regexp" : "if",
-            "Type"   : "If"
-        },
-        {
-            "Regexp" : "else",
-            "Type"   : "Else"
-        },
-        {
-            "Regexp" : "function",
-            "Type"   : "Function"
-        },
-        {
-            "Regexp" : "return",
-            "Type"   : "Return"
-        },
-        {
-            "Regexp" : "++",
-            "Type"   : "Increment"
-        },
-        {
-            "Regexp" : "--",
-            "Type"   : "Decrement"
-        },
-        {
-            "Regexp" : "+=",
+            "Regexp" : "\\+=",
             "Type"   : "PlusEqual"
         },
         {
@@ -88,11 +39,11 @@
             "Type"   : "MinusEqual"
         },
         {
-            "Regexp" : "/=",
+            "Regexp" : "\\/=",
             "Type"   : "DivEqual"
         },
         {
-            "Regexp" : "*=",
+            "Regexp" : "\\*=",
             "Type"   : "MulEqual"
         },
         {
@@ -100,72 +51,20 @@
             "Type"   : "ModEqual"
         },
         {
-            "Regexp" : "<=",
-            "Type"   : "LessEqual"
-        },
-        {
-            "Regexp" : ">=",
-            "Type"   : "MoreEqual"
-        },
-        {
-            "Regexp" : "!=",
-            "Type"   : "NotEqual"
-        },
-        {
-            "Regexp" : "==",
-            "Type"   : "LogicEqual"
-        },
-        {
             "Regexp" : "=",
             "Type"   : "Assignment"
         },
         {
-            "Regexp" : "+",
-            "Type"   : "Addition"
+            "Regexp" : "[\\+\\*\\-\/%&&\\\\]",
+            "Type"   : "BinaryOperator"
         },
         {
-            "Regexp" : "*",
-            "Type"   : "Multiplication"
+            "Regexp" : "(let|var|while|for|do|break|switch|case|default|if|else|function|return|NaN|Infinity|undefined)(?=\\W)",
+            "Type"   : "KeyWord"
         },
         {
-            "Regexp" : "-",
-            "Type"   : "Subtraction"
-        },
-        {
-            "Regexp" : "/",
-            "Type"   : "Division"
-        },
-        {
-            "Regexp" : "%",
-            "Type"   : "Modulus"
-        },
-        {
-            "Regexp" : "&&",
-            "Type"   : "And"
-        },
-        {
-            "Regexp" : "||",
-            "Type"   : "Or"
-        },
-        {
-            "Regexp" : "!",
-            "Type"   : "Not"
-        },
-        {
-            "Regexp" : "(\\w[\\d\\w_]?)",
+            "Regexp" : "_?[a-zA-Z]+[\\w\\d]*",
             "Type"   : "Identificator"
-        },
-        {
-            "Regexp" : "NaN",
-            "Type"   : "NaN"
-        },
-        {
-            "Regexp" : "Infinity",
-            "Type"   : "Infinity"
-        },
-        {
-            "Regexp" : "undefined",
-            "Type"   : "Undefined"
         }
     ]
 }

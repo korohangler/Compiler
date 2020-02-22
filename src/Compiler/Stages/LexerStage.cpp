@@ -22,6 +22,15 @@ void LexerStage::DoStage(std::wistream& inputStream, std::wostream& outputStream
 	ReadText(inputStream);
 	ParseText();
 	SaveTokens(outputStream);
+	Clear();
+}
+
+std::wstring LexerStage::DoStage(std::wstring& inputString)
+{
+	std::wstringstream input(inputString);
+	std::wstringstream output;
+	DoStage(input, output);
+	return output.str();
 }
 
 void LexerStage::ReadText(std::wistream& inputStream)
@@ -105,6 +114,12 @@ void LexerStage::SaveTokens(std::wostream& outputStream)
 	std::wstring result = strbuf.GetString();
 
 	outputStream.write(result.c_str(), result.length());
+}
+
+void LexerStage::Clear()
+{
+	m_inputText.clear();
+	m_tokens.clear();
 }
 
 void LexerStage::InitRules(WDocument& doc)
