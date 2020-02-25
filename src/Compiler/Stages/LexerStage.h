@@ -35,11 +35,21 @@ public:
 protected:
 	void ReadText(std::wistream& inputStream);
 	void ParseText();
+	void OptimizeTokens();
 	void SaveTokens(std::wostream& outputStream);
 	void Clear();
 	void InitRules(WDocument& doc);
 
-	std::vector<TokenRule>	  m_tokenRules;
-	std::vector<Token>		  m_tokens;
-	std::wstring m_inputText;
+	struct ExportOptimizationRule
+	{
+		std::wstring Type;
+		std::wstring From;
+		std::wstring To;
+	};
+
+	std::vector<ExportOptimizationRule> m_optimizationRules;
+
+	std::vector<TokenRule> m_tokenRules;
+	std::vector<Token>	   m_tokens;
+	std::wstring		   m_inputText;
 };

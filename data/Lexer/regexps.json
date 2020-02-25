@@ -1,20 +1,21 @@
 {
-    "Rules":
-    [
+    "Rules": [
         {
-            "Regexp" : "\".*\"",
-            "Type"   : "ConstantString"
-        },
-        {
-            "Regexp" : "\/\\*([^*]|[\r\n]|(\\*+([^*/]|[\r\n])))*\\*\/+",
-            "Type"   : "Comment"
+            "Regexp" : "\/\\*(.|\n)*?\\*\/",
+            "Type"   : "Comment",
+            "NeedExport" : false
         },
         {
             "Regexp" : "\/\/.*\n",
-            "Type"   : "Comment"
+            "Type"   : "Comment",
+            "NeedExport" : false
         },
         {
-            "Regexp" : "(;|\r\n|\r|\n|\\s|$)",
+            "Regexp" : "\".*\"",
+            "Type"   : "StringLiteral"
+        },
+        {
+            "Regexp" : "(;|\r\n|\r|\n|\\s|$|\\(|\\)|\\{|\\}|\t)",
             "Type"   : "Separator",
             "DeleteDuplicates" : true
         },
@@ -65,6 +66,38 @@
         {
             "Regexp" : "_?[a-zA-Z]+[\\w\\d]*",
             "Type"   : "Identificator"
+        }
+    ],
+    "Optimize" : [
+        {
+            "Type" : "Separator",
+            "From" : "; ",
+            "To"   : ";"
+        },
+        {
+            "Type" : "Separator",
+            "From" : " ;",
+            "To"   : ";"
+        },
+        {
+            "Type" : "Separator",
+            "From" : "\n;",
+            "To"   : ";"
+        },
+        {
+            "Type" : "Separator",
+            "From" : ";\n",
+            "To"   : ";"
+        },
+        {
+            "Type" : "Separator",
+            "From" : " \n",
+            "To"   : "\n"
+        },
+        {
+            "Type" : "Separator",
+            "From" : "\n ",
+            "To"   : "\n"
         }
     ]
 }

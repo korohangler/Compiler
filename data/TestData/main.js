@@ -1,7 +1,1 @@
-let 
-a
- =
-  1;
-
-
-let b = 2;
+for(var i = 0; i < 100; i++){consoleLog(i);}

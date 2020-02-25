@@ -21,6 +21,7 @@ void LexerStage::DoStage(std::wistream& inputStream, std::wostream& outputStream
 {
 	ReadText(inputStream);
 	ParseText();
+	OptimizeTokens();
 	SaveTokens(outputStream);
 	Clear();
 }
@@ -70,7 +71,7 @@ void LexerStage::ParseText()
 				for (auto& iter : resultedString) if (iter == L'\n') currentLine++;
 
 				if (!m_tokenRules[i].NeedExport) break;
-				if (currCharIdx != 0 && m_tokenRules[i].DeleteDuplicates && m_tokens.back().Value == resultedString && m_tokens.back().Type == m_tokenRules[i].Type) break;
+				if (m_tokens.size() > 0 && m_tokenRules[i].DeleteDuplicates && m_tokens.back().Value == resultedString && m_tokens.back().Type == m_tokenRules[i].Type) break;
 
 				m_tokens.emplace_back(resultedString, m_tokenRules[i].Type);
 
@@ -79,6 +80,25 @@ void LexerStage::ParseText()
 		}
 
 		ASSERT2(foundCorrectType, std::wstring(L"Cannot recognize token at line: ") + std::to_wstring(currentLine));
+	}
+}
+
+void LexerStage::OptimizeTokens()
+{
+	for (size_t i = 0; i < m_tokens.size() - 1; i++)
+	{
+		for (size_t j = 0; j < m_optimizationRules.size(); j++)
+		{
+			if (m_tokens[i].Type == m_optimizationRules[j].Type 
+				&& m_tokens[i].Type == m_tokens[i + 1].Type 
+				&& (m_tokens[i].Value + m_tokens[i + 1].Value == m_optimizationRules[j].From))
+			{
+				m_tokens[i].Value = m_optimizationRules[j].To;
+				m_tokens.erase(m_tokens.begin() + i + 1);
+				i--;
+				break;
+			}
+		}
 	}
 }
 
@@ -129,12 +149,27 @@ void LexerStage::InitRules(WDocument& doc)
 	for (auto i = rules.Begin(); i < rules.End(); i++)
 	{
 		TokenRule newRule;
-		newRule.Regexpr = (*i)[L"Regexp"].GetString();
+		newRule.Regexpr = std::wregex((*i)[L"Regexp"].GetString(), std::regex_constants::ECMAScript);
 		newRule.Type	= (*i)[L"Type"].GetString();
 
 		newRule.NeedExport = (*i).HasMember(L"NeedExport") ? (*i)[L"NeedExport"].GetBool() : true;
 		newRule.DeleteDuplicates = (*i).HasMember(L"DeleteDuplicates") ? (*i)[L"DeleteDuplicates"].GetBool() : false;
 
 		m_tokenRules.emplace_back(newRule);
+	}
+
+	if (doc.HasMember(L"Optimize"))
+	{
+		const auto& optimizationRules = doc[L"Optimize"];
+
+		for (auto i = optimizationRules.Begin(); i < optimizationRules.End(); i++)
+		{
+			ExportOptimizationRule newRule;
+			newRule.Type = (*i).HasMember(L"Type") ? (*i)[L"Type"].GetString() : L"InvalidType";
+			newRule.From = (*i).HasMember(L"From") ? (*i)[L"From"].GetString() : L"";
+			newRule.To   = (*i).HasMember(L"To")   ? (*i)[L"To"].GetString()   : L"";
+
+			m_optimizationRules.emplace_back(newRule);
+		}
 	}
 }
