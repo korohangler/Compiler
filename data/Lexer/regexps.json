@@ -15,9 +15,26 @@
             "Type"   : "StringLiteral"
         },
         {
-            "Regexp" : "(;|\r\n|\r|\n|\\s|$|\\(|\\)|\\{|\\}|\t)",
+            "Regexp" : "([;,]|\\(|\\)|\\{|\\}|\t|\\[|\\]|\\.)",
+            "Type"   : "Separator"
+        },
+        {
+            "Regexp" : "(\r\n|\r|\n|\\s|$)",
             "Type"   : "Separator",
             "DeleteDuplicates" : true
+        },
+        {
+            "Regexp" : "$",
+            "Type"   : "Separator",
+            "DeleteDuplicates" : true
+        },
+        {
+            "Regexp" : "0x[ABCDEF0123456789]+",
+            "Type"   : "HexLiteral"
+        },
+        {
+            "Regexp" : "0[01234567]+",
+            "Type"   : "OctLiteral"
         },
         {
             "Regexp" : "[-+]?(\\.[0-9]*|[0-9]+\\.|[0-9]*|[0-9]+)[eE]?[-+]?[0-9]+[flFL]?",
@@ -98,6 +115,36 @@
             "Type" : "Separator",
             "From" : "\n ",
             "To"   : "\n"
+        },
+        {
+            "Type" : "Separator",
+            "From" : ", ",
+            "To"   : ","
+        },
+        {
+            "Type" : "Separator",
+            "From" : " ,",
+            "To"   : ","
+        },
+        {
+            "Type" : "Separator",
+            "From" : " [",
+            "To"   : "["
+        },
+        {
+            "Type" : "Separator",
+            "From" : "[ ",
+            "To"   : "["
+        },
+        {
+            "Type" : "Separator",
+            "From" : " ]",
+            "To"   : "]"
+        },
+        {
+            "Type" : "Separator",
+            "From" : "] ",
+            "To"   : "]"
         }
     ]
 }

@@ -15,7 +15,7 @@ public:
 
 	struct TokenRule
 	{
-		TokenRule() : DeleteDuplicates(false), NeedExport(true){};
+		TokenRule() : DeleteDuplicates(false), NeedExport(true) {};
 		TokenRule(std::wstring regExp, std::wstring type, bool delDupl, bool needExp) : Regexpr(regExp), Type(type), DeleteDuplicates(delDupl), NeedExport(needExp) {}
 		std::wregex  Regexpr;
 		std::wstring Type;
@@ -35,6 +35,7 @@ public:
 protected:
 	void ReadText(std::wistream& inputStream);
 	void ParseText();
+	bool ApplyRules();
 	void OptimizeTokens();
 	void SaveTokens(std::wostream& outputStream);
 	void Clear();
@@ -52,4 +53,5 @@ protected:
 	std::vector<TokenRule> m_tokenRules;
 	std::vector<Token>	   m_tokens;
 	std::wstring		   m_inputText;
+	std::wstring::iterator m_currTextPos;
 };
