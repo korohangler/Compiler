@@ -18,6 +18,12 @@
     <Filter Include="Source Files\CompilerParts">
       <UniqueIdentifier>{3d3bc3f5-165a-44f3-8470-42ac34b63263}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Stages\StageOutputSerializers">
+      <UniqueIdentifier>{117686d6-6a13-4783-b063-978d2e8e2015}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\CompilerParts\Observers">
+      <UniqueIdentifier>{17f1c4ec-74ed-4459-8008-9414bb47cbf5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\Compiler\main.cpp">
@@ -38,6 +44,15 @@
     <ClCompile Include="..\src\Compiler\CompilerParts\ConfigReader.cpp">
       <Filter>Source Files\CompilerParts</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\Compiler\Stages\ParserStage.cpp">
+      <Filter>Source Files\Stages</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Compiler\CompilerParts\IdentificatorTable.cpp">
+      <Filter>Source Files\CompilerParts</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Compiler\Stages\StageOutputSerializers\LexerStageOutputSerializer.cpp">
+      <Filter>Source Files\Stages\StageOutputSerializers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\Compiler\stdafx.h">
@@ -57,6 +72,24 @@
     </ClInclude>
     <ClInclude Include="..\src\Compiler\CompilerParts\ConfigReader.h">
       <Filter>Source Files\CompilerParts</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Compiler\Stages\ParserStage.h">
+      <Filter>Source Files\Stages</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Compiler\CompilerParts\IdentificatorTable.h">
+      <Filter>Source Files\CompilerParts</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Compiler\Stages\StageOutputSerializers\IStageOutputSerializer.h">
+      <Filter>Source Files\Stages\StageOutputSerializers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Compiler\CompilerParts\Observers\INewLexerTokenObserver.h">
+      <Filter>Source Files\CompilerParts\Observers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Compiler\CompilerParts\Observers\IObserver.h">
+      <Filter>Source Files\CompilerParts\Observers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Compiler\Stages\StageOutputSerializers\LexerStageOutputSerializer.h">
+      <Filter>Source Files\Stages\StageOutputSerializers</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -17,6 +17,7 @@
 #include <stringbuffer.h>
 #include <writer.h>
 #include <istreamwrapper.h>
+#include <functional>
 
 #include <Utils.h>
 

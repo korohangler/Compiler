@@ -8,9 +8,7 @@ Config ConfigReader::ReadConfigFromArgv(int argc, char* argv[])
 	m_config.ExecutionFolder = std::filesystem::absolute(std::filesystem::path(argv[0])).remove_filename();
 
 	for (m_currentOptionIdx = 1; m_currentOptionIdx < argc; m_currentOptionIdx++)
-	{
 		ProcessOption(argc, argv);
-	}
 
 	return m_config;
 }
@@ -32,6 +30,10 @@ void ConfigReader::ProcessOption(int argc, char* argv[])
 
 		m_config.OutputFileName = Utils::StringConverter::StrToWstr(argv[m_currentOptionIdx + 1]);
 		m_currentOptionIdx++;
+	}
+	else if (strcmp(opt, "-log") == 0)
+	{
+		m_config.NeedLog = true;
 	}
 	else
 	{

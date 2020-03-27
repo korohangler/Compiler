@@ -4,6 +4,8 @@
 
 int main(int argc, char*argv[])
 {
+	std::istream::sync_with_stdio(false);
+
 	setlocale(LC_ALL, "en_US.UTF-8");
 
 	try

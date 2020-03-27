@@ -17,10 +17,13 @@
   <ItemGroup>
     <ClCompile Include="..\src\Compiler\Compiler.cpp" />
     <ClCompile Include="..\src\Compiler\CompilerParts\ConfigReader.cpp" />
+    <ClCompile Include="..\src\Compiler\CompilerParts\IdentificatorTable.cpp" />
     <ClCompile Include="..\src\Compiler\main.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='UnitTests|x64'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\src\Compiler\Stages\LexerStage.cpp" />
+    <ClCompile Include="..\src\Compiler\Stages\ParserStage.cpp" />
+    <ClCompile Include="..\src\Compiler\Stages\StageOutputSerializers\LexerStageOutputSerializer.cpp" />
     <ClCompile Include="..\src\Compiler\stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
@@ -36,8 +39,14 @@
     <ClInclude Include="..\src\Compiler\Compiler.h" />
     <ClInclude Include="..\src\Compiler\CompilerParts\Config.h" />
     <ClInclude Include="..\src\Compiler\CompilerParts\ConfigReader.h" />
+    <ClInclude Include="..\src\Compiler\CompilerParts\IdentificatorTable.h" />
+    <ClInclude Include="..\src\Compiler\CompilerParts\Observers\INewLexerTokenObserver.h" />
+    <ClInclude Include="..\src\Compiler\CompilerParts\Observers\IObserver.h" />
     <ClInclude Include="..\src\Compiler\Stages\IStage.h" />
     <ClInclude Include="..\src\Compiler\Stages\LexerStage.h" />
+    <ClInclude Include="..\src\Compiler\Stages\ParserStage.h" />
+    <ClInclude Include="..\src\Compiler\Stages\StageOutputSerializers\IStageOutputSerializer.h" />
+    <ClInclude Include="..\src\Compiler\Stages\StageOutputSerializers\LexerStageOutputSerializer.h" />
     <ClInclude Include="..\src\Compiler\stdafx.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

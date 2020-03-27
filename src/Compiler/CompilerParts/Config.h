@@ -9,4 +9,6 @@ struct Config
 	std::wstring LastStage  = L"Lexer";
 
 	std::wstring ExecutionFolder;
+
+	bool NeedLog = false;
 };

@@ -1,57 +1,54 @@
 #pragma once
 #include "IStage.h"
 
+class INewLexerTokenObserver;
+
 class LexerStage : public IStage
 {
 public:
-	LexerStage() {}
-	LexerStage(std::wstring runningDirectory);
+	LexerStage(std::wstring runningDirectory, const std::wstring& file, bool needLog);
 	~LexerStage() override {}
 
-	void DoStage(std::wistream& inputStream, std::wostream& outputStream) override;
-	std::wstring DoStage(std::wstring& inputString);
+	void DoStage() override;
 
 	std::wstring GetStageName() override { return L"Lexer"; };
 
 	struct TokenRule
 	{
-		TokenRule() : DeleteDuplicates(false), NeedExport(true) {};
-		TokenRule(std::wstring regExp, std::wstring type, bool delDupl, bool needExp) : Regexpr(regExp), Type(type), DeleteDuplicates(delDupl), NeedExport(needExp) {}
+		TokenRule() : NeedAdditionalCheck(false) {};
 		std::wregex  Regexpr;
 		std::wstring Type;
-		bool		 DeleteDuplicates;
-		bool		 NeedExport;
+		bool		 NeedAdditionalCheck;
+		std::wregex	 AdditionalCheck;
 	};
 
 	struct Token
 	{
-		Token() {};
-		Token(std::wstring val, std::wstring type) : Value(val), Type(type) {};
+		Token() : Line(0) {};
+		Token(std::wstring val, std::wstring type, size_t line) : Value(val), Type(type), Line(line) {};
 
 		std::wstring Value;
 		std::wstring Type;
+		size_t Line;
 	};
+
+	void RegisterListener(INewLexerTokenObserver* observer) { m_observers.push_back(observer); }
+	void UnRegisterListener(INewLexerTokenObserver* observer) { m_observers.erase(std::find(m_observers.begin(), m_observers.end(), observer)); }
 
 protected:
-	void ReadText(std::wistream& inputStream);
-	void ParseText();
-	bool ApplyRules();
-	void OptimizeTokens();
-	void SaveTokens(std::wostream& outputStream);
-	void Clear();
-	void InitRules(WDocument& doc);
+	LexerStage();
 
-	struct ExportOptimizationRule
-	{
-		std::wstring Type;
-		std::wstring From;
-		std::wstring To;
-	};
+	void  ReadText(std::wistream& inputStream);
+	Token ParseToken();
+	void  Clear();
+	void  InitRules(WDocument& doc);
 
-	std::vector<ExportOptimizationRule> m_optimizationRules;
+	bool m_needLog;
 
 	std::vector<TokenRule> m_tokenRules;
-	std::vector<Token>	   m_tokens;
 	std::wstring		   m_inputText;
 	std::wstring::iterator m_currTextPos;
+	std::wstring		   m_inputFileName;
+
+	std::vector<INewLexerTokenObserver*> m_observers;
 };
