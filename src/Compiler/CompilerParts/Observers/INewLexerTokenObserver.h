@@ -5,5 +5,7 @@
 class INewLexerTokenObserver : public IObserver
 {
 public:
-	virtual void Notify(LexerStage::Token) = 0;
+	virtual ~INewLexerTokenObserver() = default;
+	
+	virtual void Notify(const Token&) = 0;
 };

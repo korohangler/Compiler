@@ -1,1 +1,1 @@
-0xff
+    var a

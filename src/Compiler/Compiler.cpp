@@ -3,6 +3,7 @@
 #include "Stages/LexerStage.h"
 #include "Stages/ParserStage.h"
 #include "Stages/StageOutputSerializers/LexerStageOutputSerializer.h"
+#include "Stages/StageOutputSerializers/ParserStageOutputSerializer.h"
 
 Compiler::Compiler() : m_currentStageIdx(0), m_firstStageIdx(0)
 {
@@ -19,8 +20,12 @@ Compiler::Compiler(Config config) : Compiler()
 	m_stages.push_back(lexer);
 	m_stageOuputSerializers.push_back(lexerSerializer);
 
-	ParserStage* parser = new ParserStage();
+	ParserStage* parser = new ParserStage(config.ExecutionFolder + L"/../../../data/Parser");
+	lexer->RegisterListener(parser);
+	ParserStageOutputSerializer* parserSerializer = new ParserStageOutputSerializer();
+	parser->RegisterListener(parserSerializer);
 	m_stages.push_back(parser);
+	m_stageOuputSerializers.push_back(parserSerializer);
 }
 
 Compiler::~Compiler()

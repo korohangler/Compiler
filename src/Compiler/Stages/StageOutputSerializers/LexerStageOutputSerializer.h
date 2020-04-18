@@ -8,13 +8,13 @@ public:
 	LexerStageOutputSerializer();
 
 	/// INewLexerTokenObserver override
-	void Notify(LexerStage::Token token) override;
+	void Notify(const Token& token) override;
 	///
 
 	/// IStageOutputSerializer override
 	void OpenDocToSave(const std::wstring& path) override;
 
-	void Finalize() override;
+	void Finalize() override {};
 	///
 
 private:

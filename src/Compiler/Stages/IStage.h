@@ -3,8 +3,9 @@
 class IStage
 {
 public:
+	IStage() = default;
 
-	virtual ~IStage() {}
+	virtual ~IStage() = default;
 	
 	virtual void DoStage() = 0;
 

@@ -2,6 +2,8 @@
 #include "LexerStage.h"
 #include "CompilerParts/Observers/INewLexerTokenObserver.h"
 
+const Token LexerStage::FinalToken = Token(L"FINAL", L"FINAL", -1);
+
 LexerStage::LexerStage(std::wstring runningDirectory, const std::wstring& file, bool needLog) : m_needLog(needLog), m_inputFileName(file)
 {
 	std::wstring pathToConfig = runningDirectory + L"../../../data/Lexer/regexps.json";
@@ -25,11 +27,14 @@ void LexerStage::DoStage()
 
 	while (m_currTextPos < m_inputText.end())
 	{
-		Token newToken = ParseToken();
+		const Token newToken = ParseToken();
 
 		for (auto& observer : m_observers)
 			observer->Notify(newToken);
 	}
+
+	for (auto& observer : m_observers)
+		observer->Notify(FinalToken);
 
 	Clear();
 }
@@ -42,7 +47,7 @@ void LexerStage::ReadText(std::wistream& inputStream)
 	if (m_needLog) Utils::Logger::Log("LEXER: Reading text completed!\n");
 }
 
-LexerStage::Token LexerStage::ParseToken()
+Token LexerStage::ParseToken()
 {
 	std::wcmatch match;
 
@@ -93,7 +98,7 @@ void LexerStage::InitRules(WDocument& doc)
 			newRule.NeedAdditionalCheck = rule.HasMember(L"NeedAdditionalCheck") ? rule[L"NeedAdditionalCheck"].GetBool() : false;
 			newRule.AdditionalCheck	    = rule.HasMember(L"AdditionalCheck")	 ? rule[L"AdditionalCheck"].GetString()   : L"";
 			
-			m_tokenRules.emplace_back(newRule);
+			m_tokenRules.emplace_back(std::move(newRule));
 		}
 	}
 }

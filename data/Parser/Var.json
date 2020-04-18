@@ -1,0 +1,27 @@
+{
+    "States": [
+        {
+            "StateName": "Var",
+            "StateModifiers": [
+                {
+                    "Type": "CommonSeparator",
+                    "NextState": "VarAfterSeparator"
+                }
+            ]
+        },
+        {
+            "StateName": "VarAfterSeparator",
+            "StateModifiers": [
+                {
+                    "Type": "CommonSeparator",
+                    "NextState": "VarAfterSeparator"
+                },
+                {
+                    "Type": "Identificator",
+                    "NextState": "MainState",
+                    "AddToTree": true
+                }
+            ]
+        }
+    ]
+}

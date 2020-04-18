@@ -1,0 +1,20 @@
+{
+    "States" : [
+        {
+            "StateName" : "MainState",
+
+            "StateModifiers" : [
+                {
+                    "Type" : "CommonSeparator",
+                    "NextState" : "MainState"
+                },
+                {
+                    "Type" : "Let",
+                    "NextState" : "Var",
+                    "AddToTree" : true,
+                    "Descend"   : true
+                }
+            ]
+        }
+    ]
+}

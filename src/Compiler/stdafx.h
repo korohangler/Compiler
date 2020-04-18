@@ -18,6 +18,8 @@
 #include <writer.h>
 #include <istreamwrapper.h>
 #include <functional>
+#include <unordered_set>
+#include <stack>
 
 #include <Utils.h>
 

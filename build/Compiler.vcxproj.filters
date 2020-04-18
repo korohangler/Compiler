@@ -53,6 +53,9 @@
     <ClCompile Include="..\src\Compiler\Stages\StageOutputSerializers\LexerStageOutputSerializer.cpp">
       <Filter>Source Files\Stages\StageOutputSerializers</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\Compiler\Stages\StageOutputSerializers\ParserStageOutputSerializer.cpp">
+      <Filter>Source Files\Stages\StageOutputSerializers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\Compiler\stdafx.h">
@@ -90,6 +93,15 @@
     </ClInclude>
     <ClInclude Include="..\src\Compiler\Stages\StageOutputSerializers\LexerStageOutputSerializer.h">
       <Filter>Source Files\Stages\StageOutputSerializers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Compiler\Stages\StageOutputSerializers\ParserStageOutputSerializer.h">
+      <Filter>Source Files\Stages\StageOutputSerializers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Compiler\CompilerParts\Observers\INewParserTreeObserver.h">
+      <Filter>Source Files\CompilerParts\Observers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Compiler\CompilerParts\StageOutputStructs.h">
+      <Filter>Source Files\CompilerParts</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
