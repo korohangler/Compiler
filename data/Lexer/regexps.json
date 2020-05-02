@@ -21,20 +21,8 @@
             "Type"   : "Dot"
         },
         {
-            "Regexp" : "\\{",
-            "Type"   : "CurlyOpeningBracket"
-        },
-        {
-            "Regexp" : "\\}",
-            "Type"   : "CurlyCloseBracket"
-        },
-        {
-            "Regexp" : "\\(",
-            "Type"   : "RoundOpeningBracket"
-        },
-        {
-            "Regexp" : "\\)",
-            "Type"   : "RoundCloseBracket"
+            "Regexp" : "(\\{|\\}|\\(|\\)|\\[|\\])",
+            "Type"   : "Bracket"
         },
         {
             "Regexp" : ",",
@@ -43,14 +31,6 @@
         {
             "Regexp" : ";",
             "Type"   : "Semicolon"
-        },
-        {
-            "Regexp" : "\\[",
-            "Type"   : "SquareOpeningBracket"
-        },
-        {
-            "Regexp" : "\\]",
-            "Type"   : "SquareCloseBracket"
         },
         {
             "Regexp" : "(\t|\r\n|\r|\n|\\s|$)",
@@ -77,180 +57,44 @@
             "Type"   : "DoubleLiteral"
         },
         {
-            "Regexp" : "<<",
-            "Type"   : "BitwiseLeftShift"
-        },
-        {
-            "Regexp" : ">>",
-            "Type"   : "BitwiseRightShift"
-        },
-        {
-            "Regexp" : "\\|\\|",
-            "Type"   : "LogicOr"
-        },
-        {
-            "Regexp" : "===",
-            "Type"   : "LogicEqualTypeCheck"
+            "Regexp" : "(<<|>>|(\\|\\|)|===)",
+            "Type"   : "BinaryOperator"
         },
         {
             "Regexp" : "==",
-            "Type"   : "LogicEqual"
+            "Type"   : "BinaryOperator"
         },
         {
-            "Regexp" : "!=",
-            "Type"   : "NotEqual"
+            "Regexp" : "(!=|>=|<=)",
+            "Type"   : "BinaryOperator"
         },
         {
-            "Regexp" : ">=",
-            "Type"   : "MoreOrEqual"
+            "Regexp" : "(~|(\\+\\+)|--|!)",
+            "Type"   : "UnaryOperator"
         },
         {
-            "Regexp" : "<=",
-            "Type"   : "LessOrEqual"
-        },
-        {
-            "Regexp" : ">",
-            "Type"   : "More"
-        },
-        {
-            "Regexp" : "<",
-            "Type"   : "Less"
-        },
-        {
-            "Regexp" : "~",
-            "Type"   : "Tilde"
-        },
-        {
-            "Regexp" : "\\+\\+",
-            "Type"   : "Plusplus"
-        },
-        {
-            "Regexp" : "--",
-            "Type"   : "MinusMinus"
-        },
-        {
-            "Regexp" : "!",
-            "Type"   : "ExclamationMark"
-        },
-        {
-            "Regexp" : "\\+=",
-            "Type"   : "PlusEqual"
-        },
-        {
-            "Regexp" : "-=",
-            "Type"   : "MinusEqual"
-        },
-        {
-            "Regexp" : "\\/=",
-            "Type"   : "DivEqual"
-        },
-        {
-            "Regexp" : "\\*=",
-            "Type"   : "MulEqual"
-        },
-        {
-            "Regexp" : "%=",
-            "Type"   : "ModEqual"
+            "Regexp" : "(>|<)|([\\+\\*\\-\/%&&\\\\])",
+            "Type"   : "BinaryOperator"
         },
         {
             "Regexp" : "=",
             "Type"   : "Assignment"
         },
         {
-            "Regexp" : "[\\+\\*\\-\/%&&\\\\]",
-            "Type"   : "BinaryOperator"
-        },
-        {
             "Regexp" : "\\?",
             "Type"   : "QuestionMark"
         },
         {
-            "Regexp" : "new(?=\\W)",
-            "Type"   : "New"
+            "Regexp" : "(new|static|class|export|constructor|switch|case|default)(?=\\W)",
+            "Type"   : "NotImplementedKeyword"
         },
         {
-            "Regexp" : "static(?=\\W)",
-            "Type"   : "Static"
+            "Regexp" : "(const|let|var|while|for|do|break|if|else|function|return)(?=\\W)",
+            "Type"   : "Keyword"
         },
         {
-            "Regexp" : "class(?=\\W)",
-            "Type"   : "Class"
-        },
-        {
-            "Regexp" : "export(?=\\W)",
-            "Type"   : "Export"
-        },
-        {
-            "Regexp" : "constructor(?=\\W)",
-            "Type"   : "Constructor"
-        },
-        {
-            "Regexp" : "const(?=\\W)",
-            "Type"   : "Const"
-        },
-        {
-            "Regexp" : "let(?=\\W)",
-            "Type"   : "Let"
-        },
-        {
-            "Regexp" : "var(?=\\W)",
-            "Type"   : "Let"
-        },
-        {
-            "Regexp" : "while(?=\\W)",
-            "Type"   : "While"
-        },
-        {
-            "Regexp" : "for(?=\\W)",
-            "Type"   : "For"
-        },
-        {
-            "Regexp" : "do(?=\\W)",
-            "Type"   : "Do"
-        },
-        {
-            "Regexp" : "break(?=\\W)",
-            "Type"   : "Break"
-        },
-        {
-            "Regexp" : "switch(?=\\W)",
-            "Type"   : "Switch"
-        },
-        {
-            "Regexp" : "case(?=\\W)",
-            "Type"   : "Case"
-        },
-        {
-            "Regexp" : "default(?=\\W)",
-            "Type"   : "Default"
-        },
-        {
-            "Regexp" : "if(?=\\W)",
-            "Type"   : "If"
-        },
-        {
-            "Regexp" : "else(?=\\W)",
-            "Type"   : "Else"
-        },
-        {
-            "Regexp" : "function(?=\\W)",
-            "Type"   : "Function"
-        },
-        {
-            "Regexp" : "return(?=\\W)",
-            "Type"   : "Return"
-        },
-        {
-            "Regexp" : "NaN(?=\\W)",
-            "Type"   : "NaN"
-        },
-        {
-            "Regexp" : "Infinity(?=\\W)",
-            "Type"   : "Infinity"
-        },
-        {
-            "Regexp" : "undefined(?=\\W)",
-            "Type"   : "Undifined"
+            "Regexp" : "(NaN|Infinity|undefined)(?=\\W)",
+            "Type"   : "Keyword"
         },
         {
             "Regexp" : "_?[a-zA-Z]+[\\w\\d]*",

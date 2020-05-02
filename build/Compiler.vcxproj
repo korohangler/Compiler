@@ -18,10 +18,18 @@
     <ClCompile Include="..\src\Compiler\Compiler.cpp" />
     <ClCompile Include="..\src\Compiler\CompilerParts\ConfigReader.cpp" />
     <ClCompile Include="..\src\Compiler\CompilerParts\IdentificatorTable.cpp" />
+    <ClCompile Include="..\src\Compiler\CompilerParts\ParserHelper.cpp" />
     <ClCompile Include="..\src\Compiler\main.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='UnitTests|x64'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\src\Compiler\Stages\LexerStage.cpp" />
+    <ClCompile Include="..\src\Compiler\Stages\ParserElements\Expression.cpp" />
+    <ClCompile Include="..\src\Compiler\Stages\ParserElements\For.cpp" />
+    <ClCompile Include="..\src\Compiler\Stages\ParserElements\Identificator.cpp" />
+    <ClCompile Include="..\src\Compiler\Stages\ParserElements\If.cpp" />
+    <ClCompile Include="..\src\Compiler\Stages\ParserElements\Let.cpp" />
+    <ClCompile Include="..\src\Compiler\Stages\ParserElements\Scope.cpp" />
+    <ClCompile Include="..\src\Compiler\Stages\ParserElements\While.cpp" />
     <ClCompile Include="..\src\Compiler\Stages\ParserStage.cpp" />
     <ClCompile Include="..\src\Compiler\Stages\StageOutputSerializers\LexerStageOutputSerializer.cpp" />
     <ClCompile Include="..\src\Compiler\Stages\StageOutputSerializers\ParserStageOutputSerializer.cpp" />
@@ -44,9 +52,23 @@
     <ClInclude Include="..\src\Compiler\CompilerParts\Observers\INewLexerTokenObserver.h" />
     <ClInclude Include="..\src\Compiler\CompilerParts\Observers\INewParserTreeObserver.h" />
     <ClInclude Include="..\src\Compiler\CompilerParts\Observers\IObserver.h" />
+    <ClInclude Include="..\src\Compiler\CompilerParts\ParserHelper.h" />
     <ClInclude Include="..\src\Compiler\CompilerParts\StageOutputStructs.h" />
     <ClInclude Include="..\src\Compiler\Stages\IStage.h" />
     <ClInclude Include="..\src\Compiler\Stages\LexerStage.h" />
+    <ClInclude Include="..\src\Compiler\Stages\ParserElements\Expression.h" />
+    <ClInclude Include="..\src\Compiler\Stages\ParserElements\For.h" />
+    <ClInclude Include="..\src\Compiler\Stages\ParserElements\Identificator.h" />
+    <ClInclude Include="..\src\Compiler\Stages\ParserElements\If.h" />
+    <ClInclude Include="..\src\Compiler\Stages\ParserElements\Let.h" />
+    <ClInclude Include="..\src\Compiler\Stages\ParserElements\MathOperations\BasicOperation.h" />
+    <ClInclude Include="..\src\Compiler\Stages\ParserElements\MathOperations\DivideOperation.h" />
+    <ClInclude Include="..\src\Compiler\Stages\ParserElements\MathOperations\IOperation.h" />
+    <ClInclude Include="..\src\Compiler\Stages\ParserElements\MathOperations\MinusOperation.h" />
+    <ClInclude Include="..\src\Compiler\Stages\ParserElements\MathOperations\MultiplyOperation.h" />
+    <ClInclude Include="..\src\Compiler\Stages\ParserElements\MathOperations\SummOperation.h" />
+    <ClInclude Include="..\src\Compiler\Stages\ParserElements\Scope.h" />
+    <ClInclude Include="..\src\Compiler\Stages\ParserElements\While.h" />
     <ClInclude Include="..\src\Compiler\Stages\ParserStage.h" />
     <ClInclude Include="..\src\Compiler\Stages\StageOutputSerializers\IStageOutputSerializer.h" />
     <ClInclude Include="..\src\Compiler\Stages\StageOutputSerializers\LexerStageOutputSerializer.h" />

@@ -24,6 +24,12 @@
     <Filter Include="Source Files\CompilerParts\Observers">
       <UniqueIdentifier>{17f1c4ec-74ed-4459-8008-9414bb47cbf5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Stages\ParserElements">
+      <UniqueIdentifier>{e2d8f6e0-e3e5-4962-aa96-8915194202c9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Stages\ParserElements\MathOperations">
+      <UniqueIdentifier>{2d8b549c-4676-4a62-9374-3deaecec1256}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\Compiler\main.cpp">
@@ -55,6 +61,30 @@
     </ClCompile>
     <ClCompile Include="..\src\Compiler\Stages\StageOutputSerializers\ParserStageOutputSerializer.cpp">
       <Filter>Source Files\Stages\StageOutputSerializers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Compiler\Stages\ParserElements\Scope.cpp">
+      <Filter>Source Files\Stages\ParserElements</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Compiler\Stages\ParserElements\Identificator.cpp">
+      <Filter>Source Files\Stages\ParserElements</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Compiler\CompilerParts\ParserHelper.cpp">
+      <Filter>Source Files\CompilerParts</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Compiler\Stages\ParserElements\Let.cpp">
+      <Filter>Source Files\Stages\ParserElements</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Compiler\Stages\ParserElements\Expression.cpp">
+      <Filter>Source Files\Stages\ParserElements</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Compiler\Stages\ParserElements\If.cpp">
+      <Filter>Source Files\Stages\ParserElements</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Compiler\Stages\ParserElements\For.cpp">
+      <Filter>Source Files\Stages\ParserElements</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Compiler\Stages\ParserElements\While.cpp">
+      <Filter>Source Files\Stages\ParserElements</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -102,6 +132,48 @@
     </ClInclude>
     <ClInclude Include="..\src\Compiler\CompilerParts\StageOutputStructs.h">
       <Filter>Source Files\CompilerParts</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Compiler\Stages\ParserElements\Scope.h">
+      <Filter>Source Files\Stages\ParserElements</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Compiler\Stages\ParserElements\Identificator.h">
+      <Filter>Source Files\Stages\ParserElements</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Compiler\CompilerParts\ParserHelper.h">
+      <Filter>Source Files\CompilerParts</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Compiler\Stages\ParserElements\Let.h">
+      <Filter>Source Files\Stages\ParserElements</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Compiler\Stages\ParserElements\Expression.h">
+      <Filter>Source Files\Stages\ParserElements</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Compiler\Stages\ParserElements\If.h">
+      <Filter>Source Files\Stages\ParserElements</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Compiler\Stages\ParserElements\For.h">
+      <Filter>Source Files\Stages\ParserElements</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Compiler\Stages\ParserElements\While.h">
+      <Filter>Source Files\Stages\ParserElements</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Compiler\Stages\ParserElements\MathOperations\IOperation.h">
+      <Filter>Source Files\Stages\ParserElements\MathOperations</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Compiler\Stages\ParserElements\MathOperations\SummOperation.h">
+      <Filter>Source Files\Stages\ParserElements\MathOperations</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Compiler\Stages\ParserElements\MathOperations\MinusOperation.h">
+      <Filter>Source Files\Stages\ParserElements\MathOperations</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Compiler\Stages\ParserElements\MathOperations\MultiplyOperation.h">
+      <Filter>Source Files\Stages\ParserElements\MathOperations</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Compiler\Stages\ParserElements\MathOperations\DivideOperation.h">
+      <Filter>Source Files\Stages\ParserElements\MathOperations</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Compiler\Stages\ParserElements\MathOperations\BasicOperation.h">
+      <Filter>Source Files\Stages\ParserElements\MathOperations</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

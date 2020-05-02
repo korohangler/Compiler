@@ -1,29 +1,16 @@
 #include "stdafx.h"
 #include "ParserStage.h"
+#include "ParserElements/Scope.h"
+#include "CompilerParts/ParserHelper.h"
+#include "CompilerParts/IdentificatorTable.h"
 
 ParserStage::ParserStage(const std::wstring& directoryConfigPath)
+	: m_needCreateNewNode(true)
 {
+	m_root = std::make_shared<Scope>();
+	m_root->SetScopeName(L"Root");
 
-	for(std::filesystem::directory_iterator dirIt(directoryConfigPath); !dirIt._At_end(); dirIt++)
-	{
-		if (dirIt->is_directory()) continue;
-
-		std::wifstream docInp(*dirIt);
-		rapidjson::WIStreamWrapper wrappedInp(docInp);
-		
-		WDocument doc;
-		doc.ParseStream(wrappedInp);
-
-		std::vector<ParserState> newStates = CreateNewStates(doc);
-
-		for (auto& state : newStates)
-			m_states.emplace(state.stateName, state);
-	}
-
-	m_root = new AbstractTreeNode();
-	m_root->type = L"Root";
-
-	m_currNode = m_root;
+	IdentificatorTable::GetInstance().AddScope(L"Root", L"l0m0");
 }
 
 void ParserStage::DoStage()
@@ -34,76 +21,27 @@ void ParserStage::Notify(const Token& token)
 {
 	if(token == LexerStage::FinalToken)
 	{
+		ASSERT2(m_root->m_childs.back()->IsComplete(), L"Unexpected end of tokens!");
+		
 		for (auto& observer : m_observers)
-			observer->Notify(m_root);
+			observer->Notify(m_root.get());
 
 		return;
 	}
-	
-	ParserState& currState = m_states[m_currentState];
 
-	ParserState::TokenRule& currRule = currState.TokenToStageMap[token.Type];
-
-	m_currentState = currRule.nextState;
-	
-	if (currRule.addToTree)
+	if (m_needCreateNewNode)
 	{
-		AbstractTreeNode newNode;
-		newNode.parent = m_currNode;
-		newNode.type = currRule.type;
-		newNode.data = token.Value;
-
-		m_currNode->m_childs.emplace_back(std::move(newNode));
-
-		if (currRule.descend)
-			m_currNode = &(m_currNode->m_childs.back());
-		else if (currRule.ascend)
-			m_currNode = m_currNode->parent;
+		if (token.Type == L"CommonSeparator") return;
+		
+		m_root->m_childs.emplace_back(ParserHelper::CreateNewNodeFromToken(token));
+		m_currNode = m_root->m_childs.back();
+		m_currNode->parent = m_root.get();
+		m_currNode->SetScopeName(std::wstring(L"l0m0"));
 	}
-}
-
-std::vector<ParserStage::ParserState> ParserStage::CreateNewStates(WDocument& doc)
-{
-	std::vector<ParserState> newStates;
 	
-	if (doc.HasMember(L"States"))
-	{
-		auto states = doc[L"States"].GetArray();
+	m_currNode->Compute(token);
 
-		for (auto& state : states)
-		{
-			ParserState newState;
-
-			newState.stateName = state.HasMember(L"StateName") ? state[L"StateName"].GetString() : L"";
-
-			if (state.HasMember(L"StateModifiers"))
-			{
-				auto stateModifiers = state[L"StateModifiers"].GetArray();
-
-				for (auto& modifier : stateModifiers)
-				{
-					std::wstring tokenType = modifier.HasMember(L"Type") ? modifier[L"Type"].GetString() : L"";
-
-					ParserState::TokenRule newRule;
-
-					newRule.addToIdentificatorTable = modifier.HasMember(L"AddToIdentificatorTable") ? modifier[L"AddToIdentificatorTable"].GetBool() : false;
-
-					newRule.nextState = modifier.HasMember(L"NextState") ? modifier[L"NextState"].GetString() : L"";
-
-					newRule.type = modifier.HasMember(L"Type") ? modifier[L"Type"].GetString() : L"";
-
-					newRule.descend = modifier.HasMember(L"Descend") ? modifier[L"Descend"].GetBool() : false;
-					newRule.ascend = modifier.HasMember(L"Ascend") ? modifier[L"Ascend"].GetBool() : false;
-
-					newRule.addToTree = modifier.HasMember(L"AddToTree") ? modifier[L"AddToTree"].GetBool() : false;
-
-					newState.TokenToStageMap.emplace(std::move(tokenType), std::move(newRule));
-				}
-			}
-
-			newStates.push_back(std::move(newState));
-		}
-	}
-
-	return newStates;
+	while (m_currNode->NeedRecompute()) m_currNode->Compute(token);
+	
+	m_needCreateNewNode = m_currNode->IsComplete();
 }

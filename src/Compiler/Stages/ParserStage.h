@@ -2,7 +2,6 @@
 #include "IStage.h"
 #include "CompilerParts/Observers/INewLexerTokenObserver.h"
 #include "CompilerParts/Observers/INewParserTreeObserver.h"
-#include "CompilerParts/StageOutputStructs.h"
 
 class ParserStage final : public IStage, public INewLexerTokenObserver
 {
@@ -22,34 +21,10 @@ public:
 
 private:
 
-	struct ParserState
-	{
-		struct TokenRule
-		{
-			bool addToIdentificatorTable = false;
-			std::wstring nextState;
-
-			std::wstring type;
-			
-			bool descend = false;
-			bool ascend = false;
-			bool addToTree = false;
-		};
-		
-		std::unordered_map<std::wstring, TokenRule> TokenToStageMap;
-
-		std::wstring stateName;
-	};
-
-	AbstractTreeNode* m_root;
-
-	AbstractTreeNode* m_currNode;
-
-	static std::vector<ParserState> CreateNewStates(WDocument& doc);
-
-	std::wstring m_currentState = L"MainState";
-
-	std::unordered_map<std::wstring, ParserState> m_states;
+	bool m_needCreateNewNode;
+	
+	std::shared_ptr<AbstractTreeNode> m_root;
+	std::shared_ptr<AbstractTreeNode> m_currNode;
 
 	std::vector<INewParserTreeObserver*> m_observers;
 };

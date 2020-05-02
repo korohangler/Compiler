@@ -34,13 +34,21 @@ WValue ParserStageOutputSerializer::SerializeNode(const AbstractTreeNode* node) 
 {
 	WValue res(rapidjson::kObjectType);
 
-	WValue val(node->data.c_str(), node->data.length());
-	
-	res.AddMember(L"Value", val, *m_allocator);
+	WValue val;
+	val.SetString(rapidjson::StringRef(node->GetTypeName().c_str()), *m_allocator);
+	res.AddMember(L"Type", val, *m_allocator);
+
+	const auto& serializationData = node->GetSerializeData();
+
+	if(!serializationData.empty())
+	{
+		val.SetString(rapidjson::StringRef(node->GetSerializeData().c_str()), *m_allocator);
+		res.AddMember(L"Value", val, *m_allocator);
+	}
 	
 	WValue arr(rapidjson::kArrayType);
-	for (const AbstractTreeNode& child : node->m_childs)
-		arr.PushBack(SerializeNode(&child), *m_allocator);
+	for (const auto& child : node->m_childs)
+		arr.PushBack(SerializeNode(child.get()), *m_allocator);
 
 	res.AddMember(L"Nodes", arr, *m_allocator);
 	

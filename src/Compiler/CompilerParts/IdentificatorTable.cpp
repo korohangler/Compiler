@@ -1,9 +1,9 @@
 #include "stdafx.h"
 #include "IdentificatorTable.h"
 
-IdentificatorTable* IdentificatorTable::m_instance = nullptr;
+IdentificatorTable IdentificatorTable::m_instance;
 
-void IdentificatorTable::AddScope(const std::string& parentScope, const std::string& scope)
+void IdentificatorTable::AddScope(const std::wstring& parentScope, const std::wstring& scope)
 {
 	ScopeInfo newScope;
 	newScope.ParentScope = parentScope;
@@ -11,12 +11,12 @@ void IdentificatorTable::AddScope(const std::string& parentScope, const std::str
 	m_scopes.emplace(scope, newScope);
 }
 
-void IdentificatorTable::AddIdentificator(const std::string& scope, const std::string& identificator)
+void IdentificatorTable::AddIdentificator(const std::wstring& scope, const std::wstring& identificator)
 {
 	m_scopes.find(scope)->second.Identificators.insert(identificator);
 }
 
-bool IdentificatorTable::IsVariableExist(std::string scope, std::string variable)
+bool IdentificatorTable::IsVariableExist(std::wstring scope, std::wstring variable)
 {
 	auto treeScope = m_scopes.find(scope);
 	if (treeScope == m_scopes.end()) return false;

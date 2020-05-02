@@ -2,27 +2,32 @@
 
 struct ScopeInfo
 {
-	std::string ParentScope;
+	std::wstring ParentScope;
 	
-	std::unordered_set<std::string> Identificators;
+	std::unordered_set<std::wstring> Identificators;
 };
 
 class IdentificatorTable
 {
 public:
-	static IdentificatorTable& GetInstance() { if (m_instance == nullptr) m_instance = new IdentificatorTable(); return *m_instance; }
+	IdentificatorTable(const IdentificatorTable& table) = delete;
+	IdentificatorTable(IdentificatorTable&& table) = delete;
+	IdentificatorTable operator=(const IdentificatorTable& a) = delete;
+	IdentificatorTable& operator=(IdentificatorTable&& a) = delete;
+	~IdentificatorTable() = default;
+	
+	static IdentificatorTable& GetInstance() { return m_instance; }
 
-	void AddScope(const std::string& parentScope, const std::string& scope);
+	void AddScope(const std::wstring& parentScope, const std::wstring& scope);
 
-	void AddIdentificator(const std::string& scope, const std::string& identificator);
+	void AddIdentificator(const std::wstring& scope, const std::wstring& identificator);
 
-	bool IsVariableExist(std::string scope, std::string variable);
+	bool IsVariableExist(std::wstring scope, std::wstring variable);
 
 private:
-	IdentificatorTable();
-	IdentificatorTable(const IdentificatorTable& table);
+	IdentificatorTable() = default;
+	
+	static IdentificatorTable m_instance;
 
-	static IdentificatorTable* m_instance;
-
-	std::unordered_map<std::string, ScopeInfo> m_scopes;
+	std::unordered_map<std::wstring, ScopeInfo> m_scopes;
 };
