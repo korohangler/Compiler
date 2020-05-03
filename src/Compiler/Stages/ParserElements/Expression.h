@@ -23,7 +23,7 @@ private:
 
 	[[nodiscard]] static std::vector<Token>::const_iterator GetMinPriorityToken(std::vector<Token>::const_iterator begin, std::vector<Token>::const_iterator end);
 
-	[[nodiscard]] static IOperation::OperationPriority GetOperationPriority(const Token& token);
+	[[nodiscard]] static size_t GetOperationPriority(const Token& token);
 
 	[[nodiscard]] static std::shared_ptr<AbstractTreeNode> CreateNode(const Token& token);
 	

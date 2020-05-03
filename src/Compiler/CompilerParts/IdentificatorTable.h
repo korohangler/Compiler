@@ -22,7 +22,7 @@ public:
 
 	void AddIdentificator(const std::wstring& scope, const std::wstring& identificator);
 
-	bool IsVariableExist(std::wstring scope, std::wstring variable);
+	bool IsVariableExist(const std::wstring& scope, const std::wstring& variable);
 
 private:
 	IdentificatorTable() = default;

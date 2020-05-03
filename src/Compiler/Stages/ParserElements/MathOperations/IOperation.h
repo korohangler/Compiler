@@ -18,16 +18,6 @@ public:
 
 	virtual void SetRight(std::shared_ptr<AbstractTreeNode> right) = 0;
 
-	enum class OperationPriority
-	{
-		Lowest = 0
-		, Low
-		, Medium
-		, High
-		, Highest
-		, Unknown
-	};
-
 	enum class OperationType
 	{
 		Unary

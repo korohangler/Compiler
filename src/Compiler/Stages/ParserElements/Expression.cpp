@@ -3,6 +3,7 @@
 #include "CompilerParts/IdentificatorTable.h"
 #include "Identificator.h"
 #include "Literal.h"
+#include "MathOperations/LogicOperation.h"
 #include "Stages/ParserElements/MathOperations/DivideOperation.h"
 #include "Stages/ParserElements/MathOperations/MinusOperation.h"
 #include "Stages/ParserElements/MathOperations/MultiplyOperation.h"
@@ -36,6 +37,13 @@ void Expression::Compute(const Token& token)
 
 std::shared_ptr<AbstractTreeNode> Expression::ParseExpression(std::vector<Token>::const_iterator begin, std::vector<Token>::const_iterator end)
 {
+	auto last = end - 1;
+	while(begin->Value == L"(" && last->Value == L")" && begin != last)
+	{
+		++begin;
+		--end;
+	}
+	
 	const auto rootToken = GetMinPriorityToken(begin, end);
 
 	std::shared_ptr<AbstractTreeNode> expressionTreeRoot = CreateNode(rootToken == end ? *begin : *rootToken);
@@ -64,7 +72,7 @@ std::vector<Token>::const_iterator Expression::GetMinPriorityToken(std::vector<T
 
 	auto result = end;
 
-	IOperation::OperationPriority currPriority = IOperation::OperationPriority::Highest;
+	size_t currPriority = -1;
 	
 	for (auto it = begin; it != end; ++it)
 	{
@@ -79,7 +87,7 @@ std::vector<Token>::const_iterator Expression::GetMinPriorityToken(std::vector<T
 		{
 			if (openedBrackets == closedBrackets)
 			{
-				const IOperation::OperationPriority newPriority = GetOperationPriority(*it);
+				const size_t newPriority = GetOperationPriority(*it);
 
 				if (newPriority <= currPriority)
 				{
@@ -94,27 +102,46 @@ std::vector<Token>::const_iterator Expression::GetMinPriorityToken(std::vector<T
 	return result;
 }
 
-IOperation::OperationPriority Expression::GetOperationPriority(const Token& token)
+size_t Expression::GetOperationPriority(const Token& token)
 {
-	IOperation::OperationPriority result = IOperation::OperationPriority::Unknown;
-	
-	if (token.Type == L"UnaryOperator")
+	size_t result = -1;
+
+	if(token.Value == L"++"
+		|| token.Value == L"--")
 	{
-		result = IOperation::OperationPriority::Highest;
+		result = 18;
+	}
+	else if (token.Type == L"UnaryOperator")
+	{
+		result = 17;
 	}
 	else if(token.Value == L"*"
 		|| token.Value == L"/")
 	{
-		result = IOperation::OperationPriority::High;
+		result = 15;
 	}
 	else if(token.Value == L"+"
 		|| token.Value == L"-")
 	{
-		result = IOperation::OperationPriority::Medium;
+		result = 14;
+	}
+	else if(token.Value == L">"
+		|| token.Value == L"<"
+		|| token.Value == L">="
+		|| token.Value == L"<=")
+	{
+		result = 12;
+	}
+	else if(token.Value == L"=="
+		|| token.Value == L"!="
+		|| token.Value == L"!=="
+		|| token.Value == L"===")
+	{
+		result = 11;
 	}
 
-	ASSERT2(result != IOperation::OperationPriority::Unknown,
-		std::wstring(L"Cannot compute operator priority for token") + token.Value + std::wstring(L" at line: ") + std::to_wstring(token.Line));
+	ASSERT2(result != -1,
+		std::wstring(L"Cannot compute operator priority for token: ") + token.Value + std::wstring(L" at line: ") + std::to_wstring(token.Line));
 	
 	return result;
 }
@@ -142,6 +169,8 @@ std::shared_ptr<AbstractTreeNode> Expression::CreateNode(const Token& token)
 			result = std::make_shared<SummOperation>();
 		else if (token.Value == L"*")
 			result = std::make_shared<MultiplyOperation>();
+		else
+			result = std::make_shared<LogicOperation>(token);
 	}
 	
 	return result;

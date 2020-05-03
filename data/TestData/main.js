@@ -1,1 +1,6 @@
-var a = "hello world" + a;
+var a;
+
+if(a > 15)
+{
+    a = 0;
+}

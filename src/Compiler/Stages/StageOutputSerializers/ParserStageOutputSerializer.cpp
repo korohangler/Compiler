@@ -40,17 +40,20 @@ WValue ParserStageOutputSerializer::SerializeNode(const AbstractTreeNode* node) 
 
 	const auto& serializationData = node->GetSerializeData();
 
-	if(!serializationData.empty())
+	if (!serializationData.empty())
 	{
 		val.SetString(rapidjson::StringRef(node->GetSerializeData().c_str()), *m_allocator);
 		res.AddMember(L"Value", val, *m_allocator);
 	}
-	
-	WValue arr(rapidjson::kArrayType);
-	for (const auto& child : node->m_childs)
-		arr.PushBack(SerializeNode(child.get()), *m_allocator);
 
-	res.AddMember(L"Nodes", arr, *m_allocator);
+	if (!node->m_childs.empty())
+	{
+		WValue arr(rapidjson::kArrayType);
+		for (const auto& child : node->m_childs)
+			arr.PushBack(SerializeNode(child.get()), *m_allocator);
+
+		res.AddMember(L"Nodes", arr, *m_allocator);
+	}
 	
 	return res;
 }

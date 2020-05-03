@@ -4,23 +4,33 @@
 
 void Scope::Compute(const Token& token)
 {
-	if (m_isFirstToken)
+	if (m_counter == 0)
 	{
-		ASSERT2(token.Type == L"CurlyOpeningBracket", std::wstring(L"token type mismatch! Expected CurlyOpeningBracket, got ") + token.Type + std::wstring(L". At line: ") + std::to_wstring(token.Line));
-		m_isFirstToken = false;
-		return;
-	}
-	
-	m_isCompleted = token.Type == L"CurlyCloseBracket" && (m_childs.empty() || m_childs.back()->IsComplete());
+		if (token.Type == L"CommonSeparator") return;
 
-	if (!m_isCompleted)
+		ASSERT2(token.Type == L"Bracket" && token.Value == L"{",
+			std::wstring(L"token type mismatch! Expected CurlyOpeningBracket, got ") + token.Type + std::wstring(L". At line: ") + std::to_wstring(token.Line));
+
+		m_counter++;
+	}
+	else if(m_counter == 1)
 	{
-		if (m_childs.empty() || m_childs.back()->IsComplete())
+		if (token.Type == L"Bracket" && token.Value == L"}" && (m_childs.empty() || m_childs.back()->IsComplete()))
 		{
-			m_childs.emplace_back(ParserHelper::CreateNewNodeFromToken(token));
-			m_childs.back()->parent = this;
+			m_needRecompute = false;
+			m_isCompleted = true;
 		}
-		
-		m_childs.back()->Compute(token);
+		else
+		{
+			if (m_childs.empty() || m_childs.back()->IsComplete())
+			{
+				m_childs.emplace_back(ParserHelper::CreateNewNodeFromToken(token));
+				m_childs.back()->parent = this;
+			}
+
+			m_childs.back()->Compute(token);
+
+			m_needRecompute = m_childs.back()->NeedRecompute();
+		}
 	}
 }

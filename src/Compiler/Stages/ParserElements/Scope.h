@@ -5,17 +5,17 @@ class Scope : public AbstractTreeNode
 {
 public:
 
-	bool IsComplete() const override { return m_isCompleted; }
+	[[nodiscard]] bool IsComplete() const override { return m_isCompleted; }
 
 	void Compute(const Token& token) override;
 
-	bool NeedRecompute() const override { return false; }
+	[[nodiscard]] bool NeedRecompute() const override { return m_needRecompute; }
 
 	const std::wstring& GetScopeName() override { return m_scopeName; }
 
 	void SetScopeName(const std::wstring& name) override { m_scopeName = name; }
 
-	const std::wstring& GetSerializeData() const override { return m_scopeName; }
+	[[nodiscard]] const std::wstring& GetSerializeData() const override { return m_scopeName; }
 	
 private:
 
@@ -23,5 +23,7 @@ private:
 	
 	bool m_isCompleted = false;
 
-	bool m_isFirstToken = true;
+	bool m_needRecompute = false;
+
+	size_t m_counter = 0;
 };

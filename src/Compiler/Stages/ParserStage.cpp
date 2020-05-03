@@ -21,6 +21,8 @@ void ParserStage::Notify(const Token& token)
 {
 	if(token == LexerStage::FinalToken)
 	{
+		if (!m_currNode->IsComplete()) m_currNode->Compute(token);
+		
 		ASSERT2(m_root->m_childs.back()->IsComplete(), L"Unexpected end of tokens!");
 		
 		for (auto& observer : m_observers)

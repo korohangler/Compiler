@@ -92,6 +92,12 @@
     <ClCompile Include="..\src\Compiler\Stages\ParserElements\Literal.cpp">
       <Filter>Source Files\Stages\ParserElements</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\Compiler\Stages\ParserElements\MathOperations\LogicOperation.cpp">
+      <Filter>Source Files\Stages\ParserElements\MathOperations</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Compiler\Stages\ParserElements\ExpressionStatement.cpp">
+      <Filter>Source Files\Stages\ParserElements</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\Compiler\stdafx.h">
@@ -185,6 +191,12 @@
       <Filter>Tests</Filter>
     </ClInclude>
     <ClInclude Include="..\src\Compiler\Stages\ParserElements\Literal.h">
+      <Filter>Source Files\Stages\ParserElements</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Compiler\Stages\ParserElements\MathOperations\LogicOperation.h">
+      <Filter>Source Files\Stages\ParserElements\MathOperations</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Compiler\Stages\ParserElements\ExpressionStatement.h">
       <Filter>Source Files\Stages\ParserElements</Filter>
     </ClInclude>
   </ItemGroup>
