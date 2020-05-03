@@ -2,7 +2,7 @@
 #include "Compiler.h"
 #include "CompilerParts/ConfigReader.h"
 
-int main(int argc, char*argv[])
+int main(int argc, const char* argv[])
 {
 	std::istream::sync_with_stdio(false);
 

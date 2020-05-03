@@ -28,6 +28,7 @@
     <ClCompile Include="..\src\Compiler\Stages\ParserElements\Identificator.cpp" />
     <ClCompile Include="..\src\Compiler\Stages\ParserElements\If.cpp" />
     <ClCompile Include="..\src\Compiler\Stages\ParserElements\Let.cpp" />
+    <ClCompile Include="..\src\Compiler\Stages\ParserElements\Literal.cpp" />
     <ClCompile Include="..\src\Compiler\Stages\ParserElements\Scope.cpp" />
     <ClCompile Include="..\src\Compiler\Stages\ParserElements\While.cpp" />
     <ClCompile Include="..\src\Compiler\Stages\ParserStage.cpp" />
@@ -37,6 +38,10 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='UnitTests|x64'">Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\src\Tests\LexerTester.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\src\Tests\Test.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
@@ -61,6 +66,7 @@
     <ClInclude Include="..\src\Compiler\Stages\ParserElements\Identificator.h" />
     <ClInclude Include="..\src\Compiler\Stages\ParserElements\If.h" />
     <ClInclude Include="..\src\Compiler\Stages\ParserElements\Let.h" />
+    <ClInclude Include="..\src\Compiler\Stages\ParserElements\Literal.h" />
     <ClInclude Include="..\src\Compiler\Stages\ParserElements\MathOperations\BasicOperation.h" />
     <ClInclude Include="..\src\Compiler\Stages\ParserElements\MathOperations\DivideOperation.h" />
     <ClInclude Include="..\src\Compiler\Stages\ParserElements\MathOperations\IOperation.h" />
@@ -74,6 +80,10 @@
     <ClInclude Include="..\src\Compiler\Stages\StageOutputSerializers\LexerStageOutputSerializer.h" />
     <ClInclude Include="..\src\Compiler\Stages\StageOutputSerializers\ParserStageOutputSerializer.h" />
     <ClInclude Include="..\src\Compiler\stdafx.h" />
+    <ClInclude Include="..\src\Tests\LexerTester.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClInclude>
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
@@ -187,7 +197,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>false</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NDEBUG;_CONSOLE;UNITTEST;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <LanguageStandard>stdcpp17</LanguageStandard>
@@ -203,7 +213,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>Utils.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(SolutionDir)..\lib\$(Platform)\$(Configuration)\;$(SolutionDir)..\lib\boost_1_72_0\stage\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)..\lib\$(Platform)\$(Configuration)\;$(SolutionDir)..\lib\boost_1_72_0\stage\;$(SolutionDir)..\lib\boost_1_72_0\stage\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

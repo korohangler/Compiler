@@ -5,11 +5,11 @@ class ConfigReader
 {
 public:
 
-	Config ReadConfigFromArgv(int argc, char* argv[]);
+	Config ReadConfigFromArgv(int argc, const char* argv[]);
 
 private:
 
-	void ProcessOption(int argc, char* argv[]);
+	void ProcessOption(int argc, const char* argv[]);
 
 	Config m_config;
 

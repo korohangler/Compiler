@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "ConfigReader.h"
 
-Config ConfigReader::ReadConfigFromArgv(int argc, char* argv[])
+Config ConfigReader::ReadConfigFromArgv(int argc, const char* argv[])
 {
 	ASSERT2(argc > 1, "Missing path to source file");
 
@@ -13,9 +13,9 @@ Config ConfigReader::ReadConfigFromArgv(int argc, char* argv[])
 	return m_config;
 }
 
-void ConfigReader::ProcessOption(int argc, char* argv[])
+void ConfigReader::ProcessOption(int argc, const char* argv[])
 {
-	char* opt = argv[m_currentOptionIdx];
+	const char* opt = argv[m_currentOptionIdx];
 
 	if (strcmp(opt, "-s") == 0)
 	{

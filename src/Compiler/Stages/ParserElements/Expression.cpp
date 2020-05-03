@@ -2,6 +2,7 @@
 #include "Expression.h"
 #include "CompilerParts/IdentificatorTable.h"
 #include "Identificator.h"
+#include "Literal.h"
 #include "Stages/ParserElements/MathOperations/DivideOperation.h"
 #include "Stages/ParserElements/MathOperations/MinusOperation.h"
 #include "Stages/ParserElements/MathOperations/MultiplyOperation.h"
@@ -39,7 +40,7 @@ std::shared_ptr<AbstractTreeNode> Expression::ParseExpression(std::vector<Token>
 
 	std::shared_ptr<AbstractTreeNode> expressionTreeRoot = CreateNode(rootToken == end ? *begin : *rootToken);
 
-	size_t distance = std::distance(begin, end);
+	const size_t distance = std::distance(begin, end);
 	
 	if (distance > 2)
 	{
@@ -61,7 +62,7 @@ std::vector<Token>::const_iterator Expression::GetMinPriorityToken(std::vector<T
 	size_t openedBrackets = 0;
 	size_t closedBrackets = 0;
 
-	std::vector<Token>::const_iterator result = end;
+	auto result = end;
 
 	IOperation::OperationPriority currPriority = IOperation::OperationPriority::Highest;
 	
@@ -125,6 +126,13 @@ std::shared_ptr<AbstractTreeNode> Expression::CreateNode(const Token& token)
 	if (token.Type == L"Identificator")
 	{
 		result = std::make_shared<Identificator>(token.Value);
+	}
+	else if(token.Type == L"HexLiteral"
+		|| token.Type == L"OctLiteral"
+		|| token.Type == L"StringLiteral"
+		|| token.Type == L"DoubleLiteral")
+	{
+		result = std::make_shared<Literal>(token);
 	}
 	else
 	{

@@ -26,3 +26,8 @@
 typedef rapidjson::GenericDocument<rapidjson::UTF16<>> WDocument;
 typedef rapidjson::GenericValue<rapidjson::UTF16<>> WValue;
 typedef rapidjson::GenericStringBuffer<rapidjson::UTF16<>> WStringBuffer;
+
+#ifdef UNITTEST
+#define BOOST_TEST_MODULE mytests
+#include <boost/test/unit_test.hpp>
+#endif

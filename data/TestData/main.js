@@ -1,1 +1,1 @@
-var a = a + a;
+var a = "hello world" + a;
