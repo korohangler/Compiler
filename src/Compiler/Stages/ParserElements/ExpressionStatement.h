@@ -35,4 +35,6 @@ private:
 	size_t m_counter = 0;
 
 	StatementType m_type = StatementType::AssignmentExpression;
+
+	std::wstring m_identificator; // function name or variable name
 };

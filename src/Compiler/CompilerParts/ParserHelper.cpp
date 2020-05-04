@@ -4,6 +4,7 @@
 #include "Stages/ParserElements/Let.h"
 #include "Stages/ParserElements/If.h"
 #include "Stages/ParserElements/ExpressionStatement.h"
+#include "Stages/ParserElements/Function.h"
 
 std::shared_ptr<AbstractTreeNode> ParserHelper::CreateNewNodeFromToken(const Token& token)
 {
@@ -17,6 +18,8 @@ std::shared_ptr<AbstractTreeNode> ParserHelper::CreateNewNodeFromToken(const Tok
 		result = std::make_shared<Let>();
 	else if (token.Type == L"Keyword" && token.Value == L"if")
 		result = std::make_shared<If>();
+	else if (token.Type == L"Keyword" && token.Value == L"function")
+		result = std::make_shared<Function>();
 	
 	return result;
 }

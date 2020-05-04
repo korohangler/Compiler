@@ -98,6 +98,9 @@
     <ClCompile Include="..\src\Compiler\Stages\ParserElements\ExpressionStatement.cpp">
       <Filter>Source Files\Stages\ParserElements</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\Compiler\Stages\ParserElements\Function.cpp">
+      <Filter>Source Files\Stages\ParserElements</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\Compiler\stdafx.h">
@@ -197,6 +200,9 @@
       <Filter>Source Files\Stages\ParserElements\MathOperations</Filter>
     </ClInclude>
     <ClInclude Include="..\src\Compiler\Stages\ParserElements\ExpressionStatement.h">
+      <Filter>Source Files\Stages\ParserElements</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Compiler\Stages\ParserElements\Function.h">
       <Filter>Source Files\Stages\ParserElements</Filter>
     </ClInclude>
   </ItemGroup>

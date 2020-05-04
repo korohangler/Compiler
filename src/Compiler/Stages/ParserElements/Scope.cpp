@@ -22,15 +22,19 @@ void Scope::Compute(const Token& token)
 		}
 		else
 		{
-			if (m_childs.empty() || m_childs.back()->IsComplete())
+			if (token.Type != L"CommonSeparator" && (m_childs.empty() || m_childs.back()->IsComplete()))
 			{
 				m_childs.emplace_back(ParserHelper::CreateNewNodeFromToken(token));
 				m_childs.back()->parent = this;
 			}
 
-			m_childs.back()->Compute(token);
+			if (!m_childs.empty())
+			{
+				if (!m_childs.back()->IsComplete())
+					m_childs.back()->Compute(token);
 
-			m_needRecompute = m_childs.back()->NeedRecompute();
+				m_needRecompute = m_childs.back()->NeedRecompute();
+			}
 		}
 	}
 }

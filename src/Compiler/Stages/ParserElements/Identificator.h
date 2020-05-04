@@ -4,7 +4,7 @@
 class Identificator : public AbstractTreeNode
 {
 public:
-	Identificator() = default;
+	Identificator() = delete;
 	Identificator(const std::wstring& name) : m_variableName(name) {}
 
 	bool IsComplete() const override { return !m_variableName.empty(); }

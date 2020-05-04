@@ -1,6 +1,8 @@
-var a;
 
-if(a > 15)
+function main()
 {
-    a = 0;
+
 }
+
+
+main();
