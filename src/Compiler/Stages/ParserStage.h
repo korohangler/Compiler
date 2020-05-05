@@ -2,15 +2,16 @@
 #include "CompilerParts/Observers/IObservable.h"
 #include "IStage.h"
 #include "CompilerParts/StageOutputStructs.h"
+#include "ParserElements/Scope.h"
 
 class __declspec(dllexport) ParserStage final : public IStage, public IObserver<const Token&>, public IObservable<std::shared_ptr<AbstractTreeNode>>
 {
 public:
-	ParserStage();
+	ParserStage() : m_needCreateNewNode(true), m_root(std::make_shared<Scope>()) {};
 	~ParserStage() override = default;
 
 	/// IStage override
-	void DoStage() override;
+	void DoStage() override {}
 
 	[[nodiscard]] std::wstring GetStageName() override { return L"ParserStage"; }
 	///

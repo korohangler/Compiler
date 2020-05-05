@@ -6,8 +6,8 @@ LexerStage::LexerStage(const std::wstring& runningDirectory, std::wstring file, 
 	std::wstring pathToConfig = runningDirectory + L"../../../data/Lexer/regexps.json";
 
 	std::wifstream rulesFile(pathToConfig);
-	
-	ASSERT2(rulesFile.is_open(), "Unable to open Lexer config file!");
+
+	Utils::ASSERT2(rulesFile.is_open(), "Unable to open Lexer config file!");
 
 	rapidjson::WIStreamWrapper isw(rulesFile);
 
@@ -26,10 +26,10 @@ void LexerStage::DoStage()
 	{
 		const Token newToken = ParseToken();
 
-		Notify(newToken);
+		NotifyListeners(newToken);
 	}
 
-	Notify(FinalToken);
+	NotifyListeners(FinalToken);
 
 	Clear();
 }
@@ -62,7 +62,7 @@ Token LexerStage::ParseToken()
 
 	if (rule == m_tokenRules.end() || additionalCheckFailed)
 	{
-		ASSERT(std::string("Cannot recognize token at line: ") + std::to_string(std::count(m_inputText.begin(), m_currTextPos, L'\n')));
+		Utils::ASSERT(std::string("Cannot recognize token at line: ") + std::to_string(std::count(m_inputText.begin(), m_currTextPos, L'\n')));
 	}
 
 	const std::wstring res = match.str(0);

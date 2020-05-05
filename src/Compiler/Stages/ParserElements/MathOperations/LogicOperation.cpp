@@ -71,6 +71,6 @@ LogicOperation::LogicOperation(const Token& token)
 	}
 	else
 	{
-		ASSERT(L"Expected logic operator! How do you even end up here?");
+		Utils::ASSERT(L"Expected logic operator! How do you even end up here?");
 	}
 }

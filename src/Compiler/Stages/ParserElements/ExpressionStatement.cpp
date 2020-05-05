@@ -8,8 +8,8 @@ void ExpressionStatement::Compute(const Token& token)
 	
 	if (m_counter == 0)
 	{
-		ASSERT2(token.Type == L"Identificator",
-			std::wstring(L"Token type mismatch! Expected: Identificator. Got: ") + token.Type + std::wstring(L". At line: ") + std::to_wstring(token.Line));
+		Utils::ASSERT2(token.Type == L"Identificator",
+		               std::wstring(L"Token type mismatch! Expected: Identificator. Got: ") + token.Type + std::wstring(L". At line: ") + std::to_wstring(token.Line));
 
 		m_identificator = token.Value;
 		
@@ -50,23 +50,23 @@ void ExpressionStatement::Compute(const Token& token)
 	}
 	else if(m_counter == 3)
 	{
-		ASSERT2(token.Type == L"Semicolon",
-			std::wstring(L"Token type mismatch! Expected: Semicolon. Got: ") + token.Type + std::wstring(L". At line: ") + std::to_wstring(token.Line));
+		Utils::ASSERT2(token.Type == L"Semicolon",
+		               std::wstring(L"Token type mismatch! Expected: Semicolon. Got: ") + token.Type + std::wstring(L". At line: ") + std::to_wstring(token.Line));
 
 		m_isComplete = true;
 		m_needRecompute = false;
 	}
 	else if(m_counter == 4)
 	{
-		ASSERT2(token.Type == L"Bracket" && token.Value == L")",
-			std::wstring(L"Token type mismatch! Expected Bracket. But got: ") + token.Type + std::wstring(L". At line: ") + std::to_wstring(token.Line));
+		Utils::ASSERT2(token.Type == L"Bracket" && token.Value == L")",
+		               std::wstring(L"Token type mismatch! Expected Bracket. But got: ") + token.Type + std::wstring(L". At line: ") + std::to_wstring(token.Line));
 
 		m_counter++;
 	}
 	else if(m_counter == 5)
 	{
-		ASSERT2(token.Type == L"Semicolon",
-			std::wstring(L"Token type mismatch! Expected Semicolon. But got: ") + token.Type + std::wstring(L". At line: ") + std::to_wstring(token.Line));
+		Utils::ASSERT2(token.Type == L"Semicolon",
+		               std::wstring(L"Token type mismatch! Expected Semicolon. But got: ") + token.Type + std::wstring(L". At line: ") + std::to_wstring(token.Line));
 
 		m_isComplete = true;
 		m_needRecompute = false;

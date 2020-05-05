@@ -9,8 +9,8 @@ void Function::Compute(const Token& token)
 	if (m_counter == 0)
 	{
 		if (token.Type == L"CommonSeparator") return;
-		ASSERT2(token.Type == L"Keyword" && token.Value == L"function",
-			std::wstring(L"Token type mismatch! Expected: Keyword. Got: ") + token.Type + std::wstring(L". At line: ") + std::to_wstring(token.Line));
+		Utils::ASSERT2(token.Type == L"Keyword" && token.Value == L"function",
+		               std::wstring(L"Token type mismatch! Expected: Keyword. Got: ") + token.Type + std::wstring(L". At line: ") + std::to_wstring(token.Line));
 
 		m_counter++;
 	}
@@ -18,8 +18,8 @@ void Function::Compute(const Token& token)
 	{
 		if (token.Type == L"CommonSeparator") return;
 
-		ASSERT2(token.Type == L"Identificator",
-			std::wstring(L"Token type mismatch! Expected: Identificator. Got: ") + token.Type + std::wstring(L". At line: ") + std::to_wstring(token.Line));
+		Utils::ASSERT2(token.Type == L"Identificator",
+		               std::wstring(L"Token type mismatch! Expected: Identificator. Got: ") + token.Type + std::wstring(L". At line: ") + std::to_wstring(token.Line));
 
 		m_functionName = token.Value;
 
@@ -31,8 +31,8 @@ void Function::Compute(const Token& token)
 	{
 		if (token.Type == L"CommonSeparator") return;
 
-		ASSERT2(token.Type == L"Bracket" && token.Value == L"(",
-			std::wstring(L"Token type mismatch! Expected: Bracket. Got: ") + token.Type + std::wstring(L". At line: ") + std::to_wstring(token.Line));
+		Utils::ASSERT2(token.Type == L"Bracket" && token.Value == L"(",
+		               std::wstring(L"Token type mismatch! Expected: Bracket. Got: ") + token.Type + std::wstring(L". At line: ") + std::to_wstring(token.Line));
 
 		m_counter++;
 	}
@@ -45,9 +45,9 @@ void Function::Compute(const Token& token)
 			m_counter = 5;
 			return;
 		}
-		
-		ASSERT2(token.Type == L"Identificator",
-			std::wstring(L"Token type mismatch! Expected: Identificator. Got: ") + token.Type + std::wstring(L". At line: ") + std::to_wstring(token.Line));
+
+		Utils::ASSERT2(token.Type == L"Identificator",
+		               std::wstring(L"Token type mismatch! Expected: Identificator. Got: ") + token.Type + std::wstring(L". At line: ") + std::to_wstring(token.Line));
 
 		m_childs.push_back(std::make_shared<Identificator>(token.Value));
 		
@@ -67,7 +67,7 @@ void Function::Compute(const Token& token)
 		}
 		else
 		{
-			ASSERT(std::wstring(L"Token type mismatch! Expected Comma or Bracket but got: ") + token.Type + std::wstring(L". At line: ") + std::to_wstring(token.Line));
+			Utils::ASSERT(std::wstring(L"Token type mismatch! Expected Comma or Bracket but got: ") + token.Type + std::wstring(L". At line: ") + std::to_wstring(token.Line));
 		}
 	}
 	else if(m_counter == 5)

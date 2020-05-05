@@ -7,17 +7,13 @@
 #include "ParserElements/Identificator.h"
 #include "ParserElements/Let.h"
 
-void SemanticAnalyzer::DoStage()
-{
-}
-
 void SemanticAnalyzer::Notify(std::shared_ptr<AbstractTreeNode> root)
 {
 	const ScopeData rootScopeData = {0, 0};
 
 	ProcessNode(root, rootScopeData);
 
-	for (auto& observer : m_observers) observer->Notify(std::pair< std::shared_ptr<AbstractTreeNode>, std::shared_ptr<IdentificatorTable>>(root, m_identificatorTable));
+	NotifyListeners(std::pair<std::shared_ptr<AbstractTreeNode>, std::shared_ptr<IdentificatorTable>>(root, m_identificatorTable));
 }
 
 void SemanticAnalyzer::ProcessNode(std::shared_ptr<AbstractTreeNode> node, const ScopeData& currScopeData)
@@ -38,8 +34,8 @@ void SemanticAnalyzer::ProcessNode(std::shared_ptr<AbstractTreeNode> node, const
 	}
 	else if(identificator != nullptr)
 	{
-		ASSERT2(m_identificatorTable->IsIdentificatorExist(currScopeData.ToString(), identificator->GetVariableName()),
-			std::wstring(L"Variable: ") + identificator->GetVariableName() + std::wstring(L". Does not exist"));
+		Utils::ASSERT2(m_identificatorTable->IsIdentificatorExist(currScopeData.ToString(), identificator->GetVariableName()),
+		               std::wstring(L"Variable: ") + identificator->GetVariableName() + std::wstring(L". Does not exist"));
 
 		for (auto& child : node->m_childs) ProcessNode(child, currScopeData);
 	}
@@ -57,8 +53,8 @@ void SemanticAnalyzer::ProcessNode(std::shared_ptr<AbstractTreeNode> node, const
 	}
 	else if(expressionStatement != nullptr)
 	{
-		ASSERT2(m_identificatorTable->IsIdentificatorExist(currScopeData.ToString(), expressionStatement->GetIdentificatorName()),
-			std::wstring(L"Use of undefined variable: ") + expressionStatement->GetIdentificatorName());
+		Utils::ASSERT2(m_identificatorTable->IsIdentificatorExist(currScopeData.ToString(), expressionStatement->GetIdentificatorName()),
+		               std::wstring(L"Use of undefined variable: ") + expressionStatement->GetIdentificatorName());
 
 		for (auto& child : node->m_childs) ProcessNode(child, currScopeData);
 	}

@@ -10,7 +10,8 @@
 
 Compiler::Compiler(Config config) : m_config(std::move(config))
 {
-	ASSERT2(std::filesystem::exists(m_config.InputFileName), std::wstring(L"Specified file doesn't exist: ") + m_config.InputFileName)
+	Utils::ASSERT2(std::filesystem::exists(m_config.InputFileName), 
+		std::wstring(L"Specified file doesn't exist: ") + m_config.InputFileName);
 
 	// Stages
 	auto lexer            = std::make_shared<LexerStage>(m_config.ExecutionFolder, m_config.InputFileName, m_config.NeedLog);
@@ -46,11 +47,6 @@ Compiler::Compiler(Config config) : m_config(std::move(config))
 }
 
 void Compiler::PerformCompilation()
-{
-	PerformStages();
-}
-
-void Compiler::PerformStages()
 {
 	for (auto& serializer : m_stageOutputSerializers) serializer->OpenDocToSave(m_config.OutputFileName);
 

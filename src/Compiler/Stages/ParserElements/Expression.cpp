@@ -22,7 +22,7 @@ void Expression::Compute(const Token& token)
 	}
 	else
 	{
-		ASSERT2(!m_tokens.empty(), std::wstring(L"Expected expression at line: ") + std::to_wstring(token.Line));
+		Utils::ASSERT2(!m_tokens.empty(), std::wstring(L"Expected expression at line: ") + std::to_wstring(token.Line));
 		
 		m_childs.emplace_back(ParseExpression(m_tokens.begin(), m_tokens.end()));
 		m_needRecompute = true;
@@ -135,8 +135,8 @@ size_t Expression::GetOperationPriority(const Token& token)
 		result = 11;
 	}
 
-	ASSERT2(result != -1,
-		std::wstring(L"Cannot compute operator priority for token: ") + token.Value + std::wstring(L" at line: ") + std::to_wstring(token.Line));
+	Utils::ASSERT2(result != -1,
+	               std::wstring(L"Cannot compute operator priority for token: ") + token.Value + std::wstring(L" at line: ") + std::to_wstring(token.Line));
 	
 	return result;
 }

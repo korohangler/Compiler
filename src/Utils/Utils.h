@@ -6,11 +6,27 @@ namespace Utils
 
 #define WIN32_LEAN_AND_MEAN             // Exclude rarely-used stuff from Windows headers
 
-#define ASSERT(msg) throw std::runtime_error(Utils::StringConverter::WstrToStr(msg));
+	inline void ASSERT(const std::wstring& msg)
+	{
+		throw std::runtime_error(Utils::StringConverter::WstrToStr(msg));
+	}
 
-#define ASSERT2(expression, msg) if(!(expression)) throw std::runtime_error(Utils::StringConverter::WstrToStr(msg));
+	inline void ASSERT(const std::string& msg)
+	{
+		throw std::runtime_error(Utils::StringConverter::WstrToStr(msg));
+	}
 
-	std::vector<wchar_t> ReadFile(std::wstring_view pathToFile)
+	constexpr void ASSERT2(bool expression, const std::wstring& msg)
+	{
+		if (!expression) throw std::runtime_error(Utils::StringConverter::WstrToStr(msg));
+	}
+
+	constexpr void ASSERT2(bool expression, const std::string& msg)
+	{
+		if (!expression) throw std::runtime_error(Utils::StringConverter::WstrToStr(msg));
+	}
+
+	inline std::vector<wchar_t> ReadFile(std::wstring_view pathToFile)
 	{
 		std::wifstream file(pathToFile.data());
 

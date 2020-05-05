@@ -12,7 +12,7 @@ public:
 	SemanticAnalyzer() : m_identificatorTable(std::make_shared<IdentificatorTable>()) {}
 	~SemanticAnalyzer() override = default;
 	/// IStage override
-	void DoStage() override;
+	void DoStage() override {}
 
 	[[nodiscard]] std::wstring GetStageName() override { return L"CodeGenerator"; }
 	///
@@ -29,7 +29,7 @@ private:
 		size_t level = 0;
 		size_t counter = 0;
 
-		std::wstring ToString() const;
+		[[nodiscard]] std::wstring ToString() const;
 	};
 
 	void ProcessNode(std::shared_ptr<AbstractTreeNode> node, const ScopeData& currScopeData);

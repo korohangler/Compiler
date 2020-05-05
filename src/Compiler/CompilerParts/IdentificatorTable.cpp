@@ -15,7 +15,7 @@ void IdentificatorTable::AddIdentificator(const std::wstring& scope, const std::
 
 	auto& setToInsert = scopeToInsert->second.Identificators;
 
-	ASSERT2(setToInsert.count(identificator) == 0, std::wstring(L"Identificator: ") + identificator + L". Already exists!");
+	Utils::ASSERT2(setToInsert.count(identificator) == 0, std::wstring(L"Identificator: ") + identificator + L". Already exists!");
 	
 	setToInsert.insert(identificator);
 }

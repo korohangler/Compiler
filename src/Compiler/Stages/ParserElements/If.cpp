@@ -10,16 +10,16 @@ void If::Compute(const Token& token)
 	// if
 	if(m_counter == 0)
 	{
-		ASSERT2(token.Type == L"Keyword" && token.Value == L"if", 
-			std::wstring(L"token type mismatch! Expected If, got ") + token.Type + std::wstring(L". At line: ") + std::to_wstring(token.Line));
+		Utils::ASSERT2(token.Type == L"Keyword" && token.Value == L"if", 
+		               std::wstring(L"token type mismatch! Expected If, got ") + token.Type + std::wstring(L". At line: ") + std::to_wstring(token.Line));
 
 		m_counter++;
 	}
 	// (
 	else if(m_counter == 1)
 	{
-		ASSERT2(token.Type == L"Bracket" && token.Value == L"(",
-			std::wstring(L"token type mismatch! Expected RoundOpeningBracket, got ") + token.Type + std::wstring(L". At line: ") + std::to_wstring(token.Line));
+		Utils::ASSERT2(token.Type == L"Bracket" && token.Value == L"(",
+		               std::wstring(L"token type mismatch! Expected RoundOpeningBracket, got ") + token.Type + std::wstring(L". At line: ") + std::to_wstring(token.Line));
 
 		m_childs.emplace_back(std::make_shared<Expression>());
 		

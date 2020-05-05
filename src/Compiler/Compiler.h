@@ -15,9 +15,6 @@ public:
 	void PerformCompilation();
 
 private:
-
-	void PerformStages();
-
 	Config			  m_config;
 
 	std::vector<std::shared_ptr<IStage>> m_stages;

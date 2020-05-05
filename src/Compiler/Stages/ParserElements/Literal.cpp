@@ -28,7 +28,7 @@ Literal::Literal(const Token& token)
 	}
 	else
 	{
-		ASSERT(std::wstring(L"Unexpected token type! Expected: Literal. Got: ") + token.Type + std::wstring(L". At line: ") + std::to_wstring(token.Line));
+		Utils::ASSERT(std::wstring(L"Unexpected token type! Expected: Literal. Got: ") + token.Type + std::wstring(L". At line: ") + std::to_wstring(token.Line));
 	}
 
 	m_serializeData = std::wstring(L"Value: ") + m_data + std::wstring(L". Type: ") + (m_literalType == LiteralType::Number ? L"Number" : L"String");

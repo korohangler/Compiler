@@ -6,22 +6,22 @@ void Let::Compute(const Token& token)
 {
 	if (m_counter == 0)
 	{
-		ASSERT2(token.Type == L"Keyword" && (token.Value == L"var" || token.Value == L"let"), 
-			std::wstring(L"token type mismatch! Expected Let, got ") + token.Type + std::wstring(L". At line: ") + std::to_wstring(token.Line));
+		Utils::ASSERT2(token.Type == L"Keyword" && (token.Value == L"var" || token.Value == L"let"), 
+		               std::wstring(L"token type mismatch! Expected Let, got ") + token.Type + std::wstring(L". At line: ") + std::to_wstring(token.Line));
 
 		m_counter++;
 	}
 	else if(m_counter == 1)
 	{
-		ASSERT2(token.Type == L"CommonSeparator", std::wstring(L"token type mismatch! Expected CommonSeparator, got ") + token.Type + std::wstring(L". At line: ") + std::to_wstring(token.Line));
+		Utils::ASSERT2(token.Type == L"CommonSeparator", std::wstring(L"token type mismatch! Expected CommonSeparator, got ") + token.Type + std::wstring(L". At line: ") + std::to_wstring(token.Line));
 
 		m_counter++;
 	}
 	else if (m_counter == 2)
 	{
 		if (token.Type == L"CommonSeparator") return;
-		
-		ASSERT2(token.Type == L"Identificator", std::wstring(L"token type mismatch! Expected CommonSeparator, got ") + token.Type + std::wstring(L". At line: ") + std::to_wstring(token.Line));
+
+		Utils::ASSERT2(token.Type == L"Identificator", std::wstring(L"token type mismatch! Expected CommonSeparator, got ") + token.Type + std::wstring(L". At line: ") + std::to_wstring(token.Line));
 
 		m_variableName = token.Value;
 		
@@ -62,8 +62,8 @@ void Let::Compute(const Token& token)
 	}
 	else if(m_counter == 5)
 	{
-		ASSERT2(token.Type == L"Semicolon",
-			std::wstring(L"Expected a ; but got: ") + token.Value + std::wstring(L" at line: ") + std::to_wstring(token.Line));
+		Utils::ASSERT2(token.Type == L"Semicolon",
+		               std::wstring(L"Expected a ; but got: ") + token.Value + std::wstring(L" at line: ") + std::to_wstring(token.Line));
 
 		m_needRecompute = false;
 		m_isComplete = true;
