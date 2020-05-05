@@ -1,15 +1,17 @@
 #pragma once
 #include <vector>
+#include "CompilerParts/Observers/IObserver.h"
+#include "CompilerParts/StageOutputStructs.h"
 
-#include "../Compiler/CompilerParts/Observers/INewLexerTokenObserver.h"
-
-class LexerTester : public INewLexerTokenObserver
+class LexerTester : public IObserver<const Token&>
 {
 public:
 	~LexerTester() override = default;
 	LexerTester(const std::vector<Token>& expectedTokens);
 
+	/// IObserver override
 	void Notify(const Token& token) override;
+	///
 
 private:
 
