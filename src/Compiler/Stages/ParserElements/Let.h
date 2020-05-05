@@ -1,31 +1,17 @@
 #pragma once
-#include "CompilerParts/StageOutputStructs.h"
+#include "Stages/ParserElements/BaseNode.h"
 
-class Let : public AbstractTreeNode
+class Let : public BaseNode
 {
 public:
-
-	bool IsComplete() const override;
-
 	void Compute(const Token& token) override;
 
-	bool NeedRecompute() const override { return m_needRecompute; }
+	[[nodiscard]] const std::wstring& GetSerializeData() const override { return m_variableName; };
 
-	const std::wstring& GetScopeName() override { return m_scopeName; }
-
-	void SetScopeName(const std::wstring& name) override { m_scopeName = name; }
-
-	const std::wstring& GetSerializeData() const override { return m_variableName; };
+	[[nodiscard]] const std::wstring& GetVariableName() const { return m_variableName; }
 	
 private:
-
 	std::wstring m_variableName;
-	
-	std::wstring m_scopeName;
-	
-	bool m_isComplete = false;
-
-	bool m_needRecompute = false;
 
 	size_t m_counter = 0;
 };

@@ -4,72 +4,53 @@
 #include "Stages/ParserStage.h"
 #include "Stages/StageOutputSerializers/LexerStageOutputSerializer.h"
 #include "Stages/StageOutputSerializers/ParserStageOutputSerializer.h"
+#include "Stages/CodeGeneratorStage.h"
+#include "Stages/SemanticAnalyzer.h"
 
-Compiler::Compiler() : m_currentStageIdx(0), m_firstStageIdx(0)
+Compiler::Compiler(Config config) : m_config(std::move(config))
 {
-}
+	ASSERT2(std::filesystem::exists(m_config.InputFileName), std::wstring(L"Specified file doesn't exist: ") + m_config.InputFileName)
 
-Compiler::Compiler(Config config) : Compiler()
-{
-	m_config = config;
-	CheckConfig();
+	// Stages
+	std::shared_ptr<LexerStage>		    lexer = std::make_shared<LexerStage>(m_config.ExecutionFolder, m_config.InputFileName, m_config.NeedLog);
+	std::shared_ptr<ParserStage>	    parser = std::make_shared<ParserStage>(config.ExecutionFolder + L"/../../../data/Parser");
+	std::shared_ptr<SemanticAnalyzer>   semanticAnalyzer = std::make_shared<SemanticAnalyzer>();
+	std::shared_ptr<CodeGeneratorStage> codeGenerator = std::make_shared<CodeGeneratorStage>();
 
-	LexerStage* lexer = new LexerStage(m_config.ExecutionFolder, m_config.InputFileName, m_config.NeedLog);
-	LexerStageOutputSerializer* lexerSerializer = new LexerStageOutputSerializer();
-	lexer->RegisterListener(lexerSerializer);
+	// Serializers
+	std::shared_ptr<LexerStageOutputSerializer>  lexerSerializer = std::make_shared<LexerStageOutputSerializer>();
+	std::shared_ptr<ParserStageOutputSerializer> parserSerializer = std::make_shared<ParserStageOutputSerializer>();
+
+	// Bind to lexer
+	lexer->RegisterListener(lexerSerializer.get());
+	lexer->RegisterListener(parser.get());
+
+	// Bind to parser
+	parser->RegisterListener(parserSerializer.get());
+	parser->RegisterListener(semanticAnalyzer.get());
+
+	// Bind to semanticAnalyzer
+	semanticAnalyzer->RegisterListener(codeGenerator.get());
+	
 	m_stages.push_back(lexer);
-	m_stageOuputSerializers.push_back(lexerSerializer);
-
-	ParserStage* parser = new ParserStage(config.ExecutionFolder + L"/../../../data/Parser");
-	lexer->RegisterListener(parser);
-	ParserStageOutputSerializer* parserSerializer = new ParserStageOutputSerializer();
-	parser->RegisterListener(parserSerializer);
 	m_stages.push_back(parser);
+	m_stages.push_back(semanticAnalyzer);
+	m_stages.push_back(codeGenerator);
+
+	m_stageOuputSerializers.push_back(lexerSerializer);
 	m_stageOuputSerializers.push_back(parserSerializer);
-}
-
-Compiler::~Compiler()
-{
-	for (auto& a : m_stages)
-		delete a;
-
-	for (auto& a : m_stageOuputSerializers)
-		delete a;
 }
 
 void Compiler::PerformCompilation()
 {
-	SetFirstStageIdx();
 	PerformStages();
-}
-
-void Compiler::SetFirstStageIdx()
-{
-	if (!m_config.FirstStage.empty())
-	{
-		m_firstStageIdx =  std::find_if(m_stages.begin(), m_stages.end(), [&](IStage* a) { return a->GetStageName() == m_config.FirstStage; }) - m_stages.begin();
-		m_currentStageIdx = m_firstStageIdx;
-	}
-}
-
-void Compiler::CheckConfig()
-{
-	ASSERT2(std::filesystem::exists(m_config.InputFileName), std::wstring(L"Specified file doesn't exist: ") + m_config.InputFileName)
 }
 
 void Compiler::PerformStages()
 {
-	for (auto& serializer : m_stageOuputSerializers)
-		serializer->OpenDocToSave(m_config.OutputFileName);
+	for (auto& serializer : m_stageOuputSerializers) serializer->OpenDocToSave(m_config.OutputFileName);
 
-	for (size_t i = m_firstStageIdx; i < m_stages.size(); i++)
-	{
-		m_stages[i]->DoStage();
+	for (auto& stage : m_stages) stage->DoStage();
 
-		if (m_stages[i]->GetStageName() == m_config.LastStage)
-			break;
-	}
-
-	for (auto& serializer : m_stageOuputSerializers)
-		serializer->Finalize();
+	for (auto& serializer : m_stageOuputSerializers) serializer->Finalize();
 }

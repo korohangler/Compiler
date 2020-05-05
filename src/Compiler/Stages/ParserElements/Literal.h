@@ -14,10 +14,6 @@ public:
 
 	[[nodiscard]] bool NeedRecompute() const override { return false; }
 
-	const std::wstring& GetScopeName() override { return parent->GetScopeName(); }
-
-	void SetScopeName(const std::wstring& name) override {}
-
 	[[nodiscard]] const std::wstring& GetSerializeData() const override { return m_serializeData; }
 
 	enum class LiteralType

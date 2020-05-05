@@ -1,11 +1,6 @@
 #include "stdafx.h"
 #include "For.h"
 
-bool For::IsComplete() const
-{
-	return false;
-}
-
 void For::Compute(const Token& token)
 {
 	// for

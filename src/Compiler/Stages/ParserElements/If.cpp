@@ -22,7 +22,6 @@ void If::Compute(const Token& token)
 			std::wstring(L"token type mismatch! Expected RoundOpeningBracket, got ") + token.Type + std::wstring(L". At line: ") + std::to_wstring(token.Line));
 
 		m_childs.emplace_back(std::make_shared<Expression>());
-		m_childs.back()->SetScopeName(GetScopeName());
 		
 		m_childs.back()->Compute(token);
 
@@ -74,9 +73,4 @@ void If::Compute(const Token& token)
 		
 		m_needRecompute = true;
 	}
-}
-
-bool If::NeedRecompute() const
-{
-	return m_needRecompute;
 }

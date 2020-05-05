@@ -31,10 +31,6 @@ public:
 
 	virtual bool NeedRecompute() const = 0;
 
-	virtual const std::wstring& GetScopeName() = 0;
-
-	virtual void SetScopeName(const std::wstring& name) = 0;
-
 	std::wstring GetTypeName() const { return Utils::StringConverter::StrToWstr(typeid(*this).name()); }
 
 	virtual const std::wstring& GetSerializeData() const = 0;

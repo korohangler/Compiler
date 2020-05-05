@@ -8,9 +8,6 @@ ParserStage::ParserStage(const std::wstring& directoryConfigPath)
 	: m_needCreateNewNode(true)
 {
 	m_root = std::make_shared<Scope>();
-	m_root->SetScopeName(L"l0m0");
-
-	IdentificatorTable::GetInstance().AddScope(L"Root", L"l0m0");
 }
 
 void ParserStage::DoStage()
@@ -38,7 +35,6 @@ void ParserStage::Notify(const Token& token)
 		m_root->m_childs.emplace_back(ParserHelper::CreateNewNodeFromToken(token));
 		m_currNode = m_root->m_childs.back();
 		m_currNode->parent = m_root.get();
-		m_currNode->SetScopeName(std::wstring(L"l0m0"));
 	}
 	
 	m_currNode->Compute(token);

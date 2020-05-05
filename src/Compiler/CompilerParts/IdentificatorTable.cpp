@@ -13,10 +13,16 @@ void IdentificatorTable::AddScope(const std::wstring& parentScope, const std::ws
 
 void IdentificatorTable::AddIdentificator(const std::wstring& scope, const std::wstring& identificator)
 {
-	m_scopes.find(scope)->second.Identificators.insert(identificator);
+	auto scopeToInsert = m_scopes.find(scope);
+
+	auto& setToInsert = scopeToInsert->second.Identificators;
+
+	ASSERT2(setToInsert.count(identificator) == 0, std::wstring(L"Identificator: ") + identificator + L". Already exists!");
+	
+	setToInsert.insert(identificator);
 }
 
-bool IdentificatorTable::IsVariableExist(const std::wstring& scope, const std::wstring& variable)
+bool IdentificatorTable::IsIdentificatorExist(const std::wstring& scope, const std::wstring& variable)
 {
 	auto treeScope = m_scopes.find(scope);
 	if (treeScope == m_scopes.end()) return false;
@@ -24,5 +30,5 @@ bool IdentificatorTable::IsVariableExist(const std::wstring& scope, const std::w
 	if (treeScope->second.Identificators.find(variable) != treeScope->second.Identificators.end())
 		return true;
 
-	return IsVariableExist(treeScope->second.ParentScope, variable);
+	return IsIdentificatorExist(treeScope->second.ParentScope, variable);
 }

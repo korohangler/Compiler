@@ -84,6 +84,6 @@ void Function::Compute(const Token& token)
 
 		m_needRecompute = m_childs.back()->NeedRecompute();
 
-		m_isCompleted = m_childs.back()->IsComplete();
+		m_isComplete = m_childs.back()->IsComplete();
 	}
 }

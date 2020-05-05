@@ -92,6 +92,12 @@
     <ClCompile Include="..\src\Compiler\Dllmain.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\Compiler\Stages\CodeGeneratorStage.cpp">
+      <Filter>Source Files\Stages</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Compiler\Stages\SemanticAnalyzer.cpp">
+      <Filter>Source Files\Stages</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\Compiler\stdafx.h">
@@ -191,6 +197,15 @@
       <Filter>Source Files\Stages\ParserElements</Filter>
     </ClInclude>
     <ClInclude Include="..\src\Compiler\Stages\ParserElements\Function.h">
+      <Filter>Source Files\Stages\ParserElements</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Compiler\Stages\CodeGeneratorStage.h">
+      <Filter>Source Files\Stages</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Compiler\Stages\SemanticAnalyzer.h">
+      <Filter>Source Files\Stages</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Compiler\Stages\ParserElements\BaseNode.h">
       <Filter>Source Files\Stages\ParserElements</Filter>
     </ClInclude>
   </ItemGroup>

@@ -1,11 +1,9 @@
 #pragma once
-#include "CompilerParts/StageOutputStructs.h"
+#include "Stages/ParserElements/BaseNode.h"
 
-class For : public AbstractTreeNode
+class For : public BaseNode
 {
 public:
-	bool IsComplete() const override;
-
 	void Compute(const Token& token) override;
 
 private:

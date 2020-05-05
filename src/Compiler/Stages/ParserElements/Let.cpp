@@ -1,12 +1,6 @@
 #include "stdafx.h"
 #include "Let.h"
 #include "Expression.h"
-#include "CompilerParts/IdentificatorTable.h"
-
-bool Let::IsComplete() const
-{
-	return m_isComplete;
-}
 
 void Let::Compute(const Token& token)
 {
@@ -31,8 +25,6 @@ void Let::Compute(const Token& token)
 
 		m_variableName = token.Value;
 		
-		IdentificatorTable::GetInstance().AddIdentificator(GetScopeName(), token.Value);
-		
 		m_counter++;
 	}
 	else if(m_counter == 3)
@@ -47,7 +39,6 @@ void Let::Compute(const Token& token)
 		{
 			m_childs.emplace_back(std::make_shared<Expression>());
 			m_childs.back()->parent = this;
-			m_childs.back()->SetScopeName(GetScopeName());
 			
 			m_counter++;
 		}

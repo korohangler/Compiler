@@ -18,7 +18,7 @@ void Scope::Compute(const Token& token)
 		if (token.Type == L"Bracket" && token.Value == L"}" && (m_childs.empty() || m_childs.back()->IsComplete()))
 		{
 			m_needRecompute = false;
-			m_isCompleted = true;
+			m_isComplete = true;
 		}
 		else
 		{

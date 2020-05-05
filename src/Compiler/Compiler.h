@@ -8,24 +8,18 @@
 class __declspec(dllexport) Compiler
 {
 public:
-	Compiler();
+	Compiler() = delete;
 	Compiler(Config config);
-	~Compiler();
+	~Compiler() = default;
 
 	void PerformCompilation();
 
 private:
 
-	void SetFirstStageIdx();
-
-	void CheckConfig();
-
 	void PerformStages();
 
 	Config			  m_config;
-	size_t			  m_currentStageIdx;
-	size_t			  m_firstStageIdx;
 
-	std::vector<IStage*> m_stages;
-	std::vector<IStageOutputSerializer*> m_stageOuputSerializers;
+	std::vector<std::shared_ptr<IStage>> m_stages;
+	std::vector<std::shared_ptr<IStageOutputSerializer>> m_stageOuputSerializers;
 };

@@ -13,13 +13,8 @@ void Expression::Compute(const Token& token)
 {
 	if (token.Type == L"CommonSeparator") return;
 	
-	if (token.Type == L"Identificator")
-	{
-		ASSERT2(IdentificatorTable::GetInstance().IsVariableExist(GetScopeName(),token.Value), 
-			std::wstring(L"Error! Use of undefined value: ") + token.Value + std::wstring(L" at line: ") + std::to_wstring(token.Line));
-		m_tokens.push_back(token);
-	}
-	else if(token.Type == L"BinaryOperator" || token.Type == L"UnaryOperator"
+	if (token.Type == L"Identificator" 
+		|| token.Type == L"BinaryOperator" || token.Type == L"UnaryOperator"
 		|| token.Type == L"Bracket" && (token.Value == L"(" || token.Value == L")")
 		|| token.Type == L"StringLiteral" || token.Type == L"DoubleLiteral" || token.Type == L"OctLiteral" || token.Type == L"HexLiteral")
 	{

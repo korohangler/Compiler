@@ -1,36 +1,23 @@
 #pragma once
 #include "CompilerParts/StageOutputStructs.h"
+#include "Stages/ParserElements/BaseNode.h"
 
-class ExpressionStatement : public AbstractTreeNode
+class ExpressionStatement : public BaseNode
 {
 public:
 	~ExpressionStatement() override = default;
 
-	[[nodiscard]] bool IsComplete() const override { return m_isComplete; }
-
 	void Compute(const Token& token) override;
-
-	[[nodiscard]] bool NeedRecompute() const override { return m_needRecompute; }
-
-	[[nodiscard]] const std::wstring& GetScopeName() override { return parent->GetScopeName(); }
-
-	void SetScopeName(const std::wstring& name) override {}
-
-	[[nodiscard]] const std::wstring& GetSerializeData() const override { return m_serializeData; }
 
 	enum class StatementType
 	{
 		CallExpression
 		, AssignmentExpression
 	};
+
+	const std::wstring& GetIdentificatorName() const { return m_identificator; }
 	
 private:
-
-	bool m_isComplete = false;
-
-	bool m_needRecompute = false;
-
-	std::wstring m_serializeData;
 
 	size_t m_counter = 0;
 
