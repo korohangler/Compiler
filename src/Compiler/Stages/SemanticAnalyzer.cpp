@@ -11,7 +11,7 @@ void SemanticAnalyzer::DoStage()
 {
 }
 
-void SemanticAnalyzer::Notify(const AbstractTreeNode* root)
+void SemanticAnalyzer::Notify(std::shared_ptr<AbstractTreeNode> root)
 {
 	const ScopeData rootScopeData = {0, 0};
 
@@ -20,13 +20,13 @@ void SemanticAnalyzer::Notify(const AbstractTreeNode* root)
 	for (auto& observer : m_observers) observer->Notify(root);
 }
 
-void SemanticAnalyzer::ProcessNode(const AbstractTreeNode* node, const ScopeData& currScopeData)
+void SemanticAnalyzer::ProcessNode(std::shared_ptr<AbstractTreeNode> node, const ScopeData& currScopeData)
 {
-	const auto* scope		  = dynamic_cast<const Scope*>		  (node);
-	const auto* identificator = dynamic_cast<const Identificator*>(node);
-	const auto* let			  = dynamic_cast<const Let*>		  (node);
-	const auto* function	  = dynamic_cast<const Function*>     (node);
-	const auto* expressionStatement = dynamic_cast<const ExpressionStatement*>(node);
+	const auto scope = std::dynamic_pointer_cast<Scope>(node);
+	const auto identificator = std::dynamic_pointer_cast<Identificator>(node);
+	const auto let = std::dynamic_pointer_cast<Let>(node);
+	const auto function = std::dynamic_pointer_cast<Function>(node);
+	const auto expressionStatement = std::dynamic_pointer_cast<ExpressionStatement>(node);
 
 	if (scope != nullptr)
 	{
@@ -34,37 +34,37 @@ void SemanticAnalyzer::ProcessNode(const AbstractTreeNode* node, const ScopeData
 		
 		IdentificatorTable::GetInstance().AddScope(currScopeData.ToString(), newScopeData.ToString());
 
-		for (auto& child : node->m_childs) ProcessNode(child.get(), newScopeData);
+		for (auto& child : node->m_childs) ProcessNode(child, newScopeData);
 	}
 	else if(identificator != nullptr)
 	{
 		ASSERT2(IdentificatorTable::GetInstance().IsIdentificatorExist(currScopeData.ToString(), identificator->GetVariableName()),
 			std::wstring(L"Variable: ") + identificator->GetVariableName() + std::wstring(L". Does not exist"));
 
-		for (auto& child : node->m_childs) ProcessNode(child.get(), currScopeData);
+		for (auto& child : node->m_childs) ProcessNode(child, currScopeData);
 	}
 	else if(let != nullptr)
 	{
 		IdentificatorTable::GetInstance().AddIdentificator(currScopeData.ToString(), let->GetVariableName());
 		
-		for (auto& child : node->m_childs) ProcessNode(child.get(), currScopeData);
+		for (auto& child : node->m_childs) ProcessNode(child, currScopeData);
 	}
 	else if(function != nullptr)
 	{
 		IdentificatorTable::GetInstance().AddIdentificator(currScopeData.ToString(), function->GetFunctionName());
 
-		for (auto& child : node->m_childs) ProcessNode(child.get(), currScopeData);
+		for (auto& child : node->m_childs) ProcessNode(child, currScopeData);
 	}
 	else if(expressionStatement != nullptr)
 	{
 		ASSERT2(IdentificatorTable::GetInstance().IsIdentificatorExist(currScopeData.ToString(), expressionStatement->GetIdentificatorName()),
 			std::wstring(L"Use of undefined variable: ") + expressionStatement->GetIdentificatorName());
 
-		for (auto& child : node->m_childs) ProcessNode(child.get(), currScopeData);
+		for (auto& child : node->m_childs) ProcessNode(child, currScopeData);
 	}
 	else
 	{
-		for (auto& child : node->m_childs) ProcessNode(child.get(), currScopeData);
+		for (auto& child : node->m_childs) ProcessNode(child, currScopeData);
 	}
 }
 

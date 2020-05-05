@@ -7,5 +7,5 @@ class __declspec(dllexport) INewParserTreeObserver : public IObserver
 public:
 	virtual ~INewParserTreeObserver() = default;
 	
-	virtual void Notify(const AbstractTreeNode* root) = 0;
+	virtual void Notify(std::shared_ptr<AbstractTreeNode> root) = 0;
 };

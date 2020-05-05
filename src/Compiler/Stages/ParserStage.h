@@ -6,7 +6,7 @@
 class __declspec(dllexport) ParserStage final : public IStage, public INewLexerTokenObserver
 {
 public:
-	ParserStage(const std::wstring& directoryConfigPath);
+	ParserStage();
 	~ParserStage() = default;
 	void DoStage() override;
 

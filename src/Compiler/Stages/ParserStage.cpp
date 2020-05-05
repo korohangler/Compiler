@@ -2,9 +2,8 @@
 #include "ParserStage.h"
 #include "ParserElements/Scope.h"
 #include "CompilerParts/ParserHelper.h"
-#include "CompilerParts/IdentificatorTable.h"
 
-ParserStage::ParserStage(const std::wstring& directoryConfigPath)
+ParserStage::ParserStage()
 	: m_needCreateNewNode(true)
 {
 	m_root = std::make_shared<Scope>();
@@ -16,14 +15,14 @@ void ParserStage::DoStage()
 
 void ParserStage::Notify(const Token& token)
 {
-	if(token == LexerStage::FinalToken)
+	if (token == LexerStage::FinalToken)
 	{
 		if (!m_currNode->IsComplete()) m_currNode->Compute(token);
 		
 		ASSERT2(m_root->m_childs.back()->IsComplete(), L"Unexpected end of tokens!");
 		
 		for (auto& observer : m_observers)
-			observer->Notify(m_root.get());
+			observer->Notify(m_root);
 
 		return;
 	}

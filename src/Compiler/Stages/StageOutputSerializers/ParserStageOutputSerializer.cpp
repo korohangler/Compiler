@@ -9,7 +9,7 @@ ParserStageOutputSerializer::ParserStageOutputSerializer()
 	m_allocator = &m_docToSave.GetAllocator();
 }
 
-void ParserStageOutputSerializer::Notify(const AbstractTreeNode* root)
+void ParserStageOutputSerializer::Notify(std::shared_ptr<AbstractTreeNode> root)
 {
 	WValue tree = SerializeNode(root);
 	
@@ -30,7 +30,7 @@ void ParserStageOutputSerializer::Finalize()
 	m_resFile.write(strbuf.GetString(), strbuf.GetLength());
 }
 
-WValue ParserStageOutputSerializer::SerializeNode(const AbstractTreeNode* node) const
+WValue ParserStageOutputSerializer::SerializeNode(std::shared_ptr<AbstractTreeNode> node) const
 {
 	WValue res(rapidjson::kObjectType);
 
@@ -50,7 +50,7 @@ WValue ParserStageOutputSerializer::SerializeNode(const AbstractTreeNode* node) 
 	{
 		WValue arr(rapidjson::kArrayType);
 		for (const auto& child : node->m_childs)
-			arr.PushBack(SerializeNode(child.get()), *m_allocator);
+			arr.PushBack(SerializeNode(child), *m_allocator);
 
 		res.AddMember(L"Nodes", arr, *m_allocator);
 	}

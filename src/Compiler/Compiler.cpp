@@ -13,7 +13,7 @@ Compiler::Compiler(Config config) : m_config(std::move(config))
 
 	// Stages
 	std::shared_ptr<LexerStage>		    lexer = std::make_shared<LexerStage>(m_config.ExecutionFolder, m_config.InputFileName, m_config.NeedLog);
-	std::shared_ptr<ParserStage>	    parser = std::make_shared<ParserStage>(config.ExecutionFolder + L"/../../../data/Parser");
+	std::shared_ptr<ParserStage>	    parser = std::make_shared<ParserStage>();
 	std::shared_ptr<SemanticAnalyzer>   semanticAnalyzer = std::make_shared<SemanticAnalyzer>();
 	std::shared_ptr<CodeGeneratorStage> codeGenerator = std::make_shared<CodeGeneratorStage>();
 

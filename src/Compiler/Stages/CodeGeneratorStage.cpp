@@ -5,6 +5,6 @@ void CodeGeneratorStage::DoStage()
 {
 }
 
-void CodeGeneratorStage::Notify(const AbstractTreeNode* root)
+void CodeGeneratorStage::Notify(std::shared_ptr<AbstractTreeNode> root)
 {
 }

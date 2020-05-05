@@ -9,5 +9,5 @@ public:
 
 	[[nodiscard]] std::wstring GetStageName() override { return L"CodeGenerator"; }
 
-	void Notify(const AbstractTreeNode* root) override;
+	void Notify(std::shared_ptr<AbstractTreeNode> root) override;
 };

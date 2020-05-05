@@ -8,7 +8,7 @@ public:
 	ParserStageOutputSerializer();
 	
 	/// INewParserTreeObserver override
-	void Notify(const AbstractTreeNode* root) override;
+	void Notify(std::shared_ptr<AbstractTreeNode> root) override;
 	///
 	
 	/// IStageOutputSerializer override
@@ -18,7 +18,7 @@ public:
 
 private:
 
-	WValue SerializeNode(const AbstractTreeNode* node) const;
+	WValue SerializeNode(std::shared_ptr<AbstractTreeNode> node) const;
 
 	WDocument m_docToSave;
 	WDocument::AllocatorType* m_allocator;
