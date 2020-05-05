@@ -24,7 +24,6 @@
     <ClCompile Include="..\src\Compiler\Stages\LexerStage.cpp" />
     <ClCompile Include="..\src\Compiler\Stages\ParserElements\Expression.cpp" />
     <ClCompile Include="..\src\Compiler\Stages\ParserElements\ExpressionStatement.cpp" />
-    <ClCompile Include="..\src\Compiler\Stages\ParserElements\For.cpp" />
     <ClCompile Include="..\src\Compiler\Stages\ParserElements\Function.cpp" />
     <ClCompile Include="..\src\Compiler\Stages\ParserElements\Identificator.cpp" />
     <ClCompile Include="..\src\Compiler\Stages\ParserElements\If.cpp" />
@@ -59,7 +58,6 @@
     <ClInclude Include="..\src\Compiler\Stages\ParserElements\BaseNode.h" />
     <ClInclude Include="..\src\Compiler\Stages\ParserElements\Expression.h" />
     <ClInclude Include="..\src\Compiler\Stages\ParserElements\ExpressionStatement.h" />
-    <ClInclude Include="..\src\Compiler\Stages\ParserElements\For.h" />
     <ClInclude Include="..\src\Compiler\Stages\ParserElements\Function.h" />
     <ClInclude Include="..\src\Compiler\Stages\ParserElements\Identificator.h" />
     <ClInclude Include="..\src\Compiler\Stages\ParserElements\If.h" />

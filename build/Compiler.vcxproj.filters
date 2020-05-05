@@ -71,9 +71,6 @@
     <ClCompile Include="..\src\Compiler\Stages\ParserElements\If.cpp">
       <Filter>Source Files\Stages\ParserElements</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\Compiler\Stages\ParserElements\For.cpp">
-      <Filter>Source Files\Stages\ParserElements</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\Compiler\Stages\ParserElements\While.cpp">
       <Filter>Source Files\Stages\ParserElements</Filter>
     </ClCompile>
@@ -158,9 +155,6 @@
       <Filter>Source Files\Stages\ParserElements</Filter>
     </ClInclude>
     <ClInclude Include="..\src\Compiler\Stages\ParserElements\If.h">
-      <Filter>Source Files\Stages\ParserElements</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\Compiler\Stages\ParserElements\For.h">
       <Filter>Source Files\Stages\ParserElements</Filter>
     </ClInclude>
     <ClInclude Include="..\src\Compiler\Stages\ParserElements\While.h">

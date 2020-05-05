@@ -21,6 +21,12 @@ public:
 	
 private:
 
+	void HandleAwaitIdentificatorState(const Token& token);
+	void HandleTypeChoiseState(const Token& token);
+	void HandleExpressionComputingState(const Token& token);
+	void HandleSemicolonAwaitState(const Token& token);
+	void HandleClosingBracketAwaitState(const Token& token);
+
 	size_t m_counter = 0;
 
 	StatementType m_type = StatementType::AssignmentExpression;

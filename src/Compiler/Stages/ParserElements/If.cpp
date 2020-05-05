@@ -7,70 +7,97 @@ void If::Compute(const Token& token)
 {
 	if (token.Type == L"CommonSeparator") return;
 
-	// if
-	if(m_counter == 0)
+	switch(m_state)
 	{
-		Utils::ASSERT2(token.Type == L"Keyword" && token.Value == L"if", 
-		               std::wstring(L"token type mismatch! Expected If, got ") + token.Type + std::wstring(L". At line: ") + std::to_wstring(token.Line));
-
-		m_counter++;
+	case States::IfKeyword:
+		HandleIfKeyword(token);
+		break;
+	case States::OpeningBracket:
+		HandleOpeningBracket(token);
+		break;
+	case States::ExpressionComputation:
+		HandleExpressionComputation(token);
+		break;
+	case States::ScopeCreation:
+		HandleScopeCreation(token);
+		break;
+	case States::ScopeComputation:
+		HandleScopeComputation(token);
+		break;
+	case States::ElseKeyword:
+		HandleElseKeyword(token);
+		break;
+	case States::ElseIfPossibility:
+		HandleElseIfPossibility(token);
+		break;
+	default:
+		Utils::ASSERT(std::string("Unknown state! At: ") + __FILE__);
 	}
-	// (
-	else if(m_counter == 1)
+}
+
+void If::HandleIfKeyword(const Token& token)
+{
+	Utils::ASSERT2(token.Type == L"Keyword" && token.Value == L"if",
+		std::wstring(L"token type mismatch! Expected If, got ") + token.Type + std::wstring(L". At line: ") + std::to_wstring(token.Line));
+
+	m_state = States::OpeningBracket;
+}
+
+void If::HandleOpeningBracket(const Token& token)
+{
+	Utils::ASSERT2(token.Type == L"Bracket" && token.Value == L"(",
+		std::wstring(L"token type mismatch! Expected RoundOpeningBracket, got ") + token.Type + std::wstring(L". At line: ") + std::to_wstring(token.Line));
+
+	m_childs.emplace_back(std::make_shared<Expression>());
+	
+	m_needRecompute = true;
+
+	m_state = States::ExpressionComputation;
+}
+
+void If::HandleExpressionComputation(const Token& token)
+{
+	m_childs.back()->Compute(token);
+
+	if (m_childs.back()->IsComplete()) m_state = States::ScopeCreation;
+
+	m_needRecompute = m_childs.back()->NeedRecompute();
+}
+
+void If::HandleScopeCreation(const Token& token)
+{
+	m_childs.emplace_back(std::make_shared<Scope>());
+
+	m_needRecompute = true;
+
+	m_state = States::ScopeComputation;
+}
+
+void If::HandleScopeComputation(const Token& token)
+{
+	m_childs.back()->Compute(token);
+
+	if (m_childs.back()->IsComplete()) m_state = States::ElseKeyword;
+
+	m_needRecompute = m_childs.back()->NeedRecompute();
+}
+
+void If::HandleElseKeyword(const Token& token)
+{
+	if (token.Type == L"Keyword" && token.Value == L"else")
 	{
-		Utils::ASSERT2(token.Type == L"Bracket" && token.Value == L"(",
-		               std::wstring(L"token type mismatch! Expected RoundOpeningBracket, got ") + token.Type + std::wstring(L". At line: ") + std::to_wstring(token.Line));
-
-		m_childs.emplace_back(std::make_shared<Expression>());
-		
-		m_childs.back()->Compute(token);
-
-		m_counter++;
+		m_state = States::ElseIfPossibility;
 	}
-	else if(m_counter == 2)
+	else
 	{
-		m_childs.back()->Compute(token);
-		
-		if (m_childs.back()->IsComplete()) m_counter++;
-
-		m_needRecompute = m_childs.back()->NeedRecompute();
-	}
-	// {body}
-	else if(m_counter == 3)
-	{
-		m_childs.emplace_back(std::make_shared<Scope>());
-
-		m_childs.back()->Compute(token);
-
-		m_needRecompute = m_childs.back()->NeedRecompute();
-		
-		m_counter++;
-	}
-	else if(m_counter == 4)
-	{
-		m_childs.back()->Compute(token);
-
-		if (m_childs.back()->IsComplete()) m_counter++;
-
-		m_needRecompute = m_childs.back()->NeedRecompute();
-	}
-	// else
-	else if(m_counter == 5)
-	{
-		if (token.Type == L"Keyword" && token.Value == L"else")
-		{
-			m_counter++;
-		}
-		else
-		{
-			m_needRecompute = true;
-			m_isComplete = true;
-		}
-	}
-	else if(m_counter == 6)
-	{
-		m_counter = (token.Type == L"Keyword" && token.Value == L"if") ? 0 : 5;
-		
 		m_needRecompute = true;
+		m_isComplete = true;
 	}
+}
+
+void If::HandleElseIfPossibility(const Token& token)
+{
+	m_state = (token.Type == L"Keyword" && token.Value == L"if") ? States::IfKeyword : States::ScopeCreation;
+
+	m_needRecompute = true;
 }
