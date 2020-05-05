@@ -12,9 +12,6 @@
     <Filter Include="Source Files\Stages">
       <UniqueIdentifier>{53000743-800a-4530-95b7-43986c1cc519}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Tests">
-      <UniqueIdentifier>{266a6b2d-40c9-425b-bed3-86588dbe1be0}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\CompilerParts">
       <UniqueIdentifier>{3d3bc3f5-165a-44f3-8470-42ac34b63263}</UniqueIdentifier>
     </Filter>
@@ -32,14 +29,8 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\src\Compiler\main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\Compiler\stdafx.cpp">
       <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\Tests\Test.cpp">
-      <Filter>Tests</Filter>
     </ClCompile>
     <ClCompile Include="..\src\Compiler\Stages\LexerStage.cpp">
       <Filter>Source Files\Stages</Filter>
@@ -86,9 +77,6 @@
     <ClCompile Include="..\src\Compiler\Stages\ParserElements\While.cpp">
       <Filter>Source Files\Stages\ParserElements</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\Tests\LexerTester.cpp">
-      <Filter>Tests</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\Compiler\Stages\ParserElements\Literal.cpp">
       <Filter>Source Files\Stages\ParserElements</Filter>
     </ClCompile>
@@ -100,6 +88,9 @@
     </ClCompile>
     <ClCompile Include="..\src\Compiler\Stages\ParserElements\Function.cpp">
       <Filter>Source Files\Stages\ParserElements</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Compiler\Dllmain.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -189,9 +180,6 @@
     </ClInclude>
     <ClInclude Include="..\src\Compiler\Stages\ParserElements\MathOperations\BasicOperation.h">
       <Filter>Source Files\Stages\ParserElements\MathOperations</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\Tests\LexerTester.h">
-      <Filter>Tests</Filter>
     </ClInclude>
     <ClInclude Include="..\src\Compiler\Stages\ParserElements\Literal.h">
       <Filter>Source Files\Stages\ParserElements</Filter>

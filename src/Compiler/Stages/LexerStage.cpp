@@ -2,8 +2,6 @@
 #include "LexerStage.h"
 #include "CompilerParts/Observers/INewLexerTokenObserver.h"
 
-const Token LexerStage::FinalToken = Token(L"FINAL", L"FINAL", -1);
-
 LexerStage::LexerStage(std::wstring runningDirectory, const std::wstring& file, bool needLog) : m_needLog(needLog), m_inputFileName(file)
 {
 	std::wstring pathToConfig = runningDirectory + L"../../../data/Lexer/regexps.json";

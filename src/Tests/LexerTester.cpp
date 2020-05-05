@@ -1,6 +1,8 @@
 #include "stdafx.h"
 #include "LexerTester.h"
 
+#include <iostream>
+
 LexerTester::LexerTester(const std::vector<Token>& expectedTokens)
 	: m_expectedTokens(expectedTokens)
 	, m_currToken(0)

@@ -1,5 +1,7 @@
 #pragma once
-#include "CompilerParts/Observers/INewLexerTokenObserver.h"
+#include <vector>
+
+#include "../Compiler/CompilerParts/Observers/INewLexerTokenObserver.h"
 
 class LexerTester : public INewLexerTokenObserver
 {

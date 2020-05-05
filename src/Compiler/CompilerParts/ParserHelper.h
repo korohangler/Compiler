@@ -2,7 +2,7 @@
 
 #include "StageOutputStructs.h"
 
-class ParserHelper
+class __declspec(dllexport) ParserHelper
 {
 public:
 

@@ -1,9 +1,11 @@
 #pragma once
+#include <vector>
+
 #include "CompilerParts/Config.h"
 #include "Stages/IStage.h"
 #include "Stages/StageOutputSerializers/IStageOutputSerializer.h"
 
-class Compiler
+class __declspec(dllexport) Compiler
 {
 public:
 	Compiler();

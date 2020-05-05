@@ -1,7 +1,7 @@
 #pragma once
 #include "Config.h"
 
-class ConfigReader
+class __declspec(dllexport) ConfigReader
 {
 public:
 

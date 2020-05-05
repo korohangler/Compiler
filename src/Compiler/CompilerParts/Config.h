@@ -1,6 +1,6 @@
 #pragma once
 
-struct Config
+struct __declspec(dllexport) Config
 {
 	std::wstring InputFileName;
 	std::wstring OutputFileName = L"a.json";

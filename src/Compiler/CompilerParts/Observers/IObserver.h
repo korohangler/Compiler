@@ -1,6 +1,6 @@
 #pragma once
 
-class IObserver
+class __declspec(dllexport) IObserver
 {
 
 };

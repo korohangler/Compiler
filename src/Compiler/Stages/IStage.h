@@ -1,6 +1,6 @@
 #pragma once
 
-class IStage
+class __declspec(dllexport) IStage
 {
 public:
 	IStage() = default;

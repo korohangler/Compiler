@@ -20,6 +20,7 @@
 #include <functional>
 #include <unordered_set>
 #include <stack>
+#include <Windows.h>
 
 #include <Utils.h>
 

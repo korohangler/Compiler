@@ -3,7 +3,7 @@
 class ParserStage;
 class IStageOutputSerializer;
 
-struct Token
+struct __declspec(dllexport) Token
 {
 	Token() : Line(0) {};
 	Token(std::wstring val, std::wstring type, size_t line) : Value(std::move(val)), Type(std::move(type)), Line(line) {};
@@ -15,7 +15,7 @@ struct Token
 	bool operator==(const Token& tok) const { return tok.Line == Line && tok.Type == Type && tok.Value == Value; }
 };
 
-class AbstractTreeNode
+class __declspec(dllexport) AbstractTreeNode
 {
 public:
 	virtual ~AbstractTreeNode() = default;

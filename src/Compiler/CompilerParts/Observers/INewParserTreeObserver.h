@@ -2,7 +2,7 @@
 #include "IObserver.h"
 #include "CompilerParts/StageOutputStructs.h"
 
-class INewParserTreeObserver : public IObserver
+class __declspec(dllexport) INewParserTreeObserver : public IObserver
 {
 public:
 	virtual ~INewParserTreeObserver() = default;

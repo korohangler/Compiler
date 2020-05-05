@@ -1,4 +1,8 @@
 #include "stdafx.h"
+#include <clocale>
+#include <iostream>
+#include <stdexcept>
+
 #include "Compiler.h"
 #include "CompilerParts/ConfigReader.h"
 
@@ -16,7 +20,7 @@ int main(int argc, const char* argv[])
 
 		compiler.PerformCompilation();
 	}
-	catch (std::runtime_error err)
+	catch (std::runtime_error& err)
 	{
 		std::cout << err.what() << std::endl;
 		std::cout << "Unable to compile file!\n";

@@ -4,7 +4,7 @@
 
 class INewLexerTokenObserver;
 
-class LexerStage : public IStage
+class __declspec(dllexport) LexerStage : public IStage
 {
 public:
 	LexerStage(std::wstring runningDirectory, const std::wstring& file, bool needLog);
@@ -26,7 +26,7 @@ public:
 	void RegisterListener(INewLexerTokenObserver* observer) { m_observers.push_back(observer); }
 	void UnRegisterListener(INewLexerTokenObserver* observer) { m_observers.erase(std::find(m_observers.begin(), m_observers.end(), observer)); }
 
-	static const Token FinalToken;
+	static inline const Token FinalToken = Token(L"FINAL", L"FINAL", -1);
 	
 protected:
 	LexerStage();

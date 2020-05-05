@@ -1,3 +1,6 @@
 bin/
 obj/
 .vs/
+lib/x64/
+lib/Compiler/
+*.vcxproj.user

@@ -1,8 +1,9 @@
 #pragma once
 #include "Stages/LexerStage.h"
 #include "IObserver.h"
+#include "CompilerParts/StageOutputStructs.h"
 
-class INewLexerTokenObserver : public IObserver
+class __declspec(dllexport) INewLexerTokenObserver : public IObserver
 {
 public:
 	virtual ~INewLexerTokenObserver() = default;

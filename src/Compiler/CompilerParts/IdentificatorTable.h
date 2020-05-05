@@ -1,13 +1,13 @@
 #pragma once
 
-struct ScopeInfo
+struct __declspec(dllexport) ScopeInfo
 {
 	std::wstring ParentScope;
 	
 	std::unordered_set<std::wstring> Identificators;
 };
 
-class IdentificatorTable
+class __declspec(dllexport) IdentificatorTable
 {
 public:
 	IdentificatorTable(const IdentificatorTable& table) = delete;

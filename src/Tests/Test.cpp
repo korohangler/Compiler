@@ -1,8 +1,12 @@
 #include "stdafx.h"
 
-#include "Stages/LexerStage.h"
-#include "CompilerParts/ConfigReader.h"
+#include "../Compiler/CompilerParts/Config.h"
+#include "../Compiler/CompilerParts/ConfigReader.h"
+#include "../Compiler/Stages/LexerStage.h"
+#include "../Compiler/CompilerParts/ConfigReader.h"
 #include "LexerTester.h"
+
+#define BOOST_TEST_MAIN
 
 Config TestConfig;
 
