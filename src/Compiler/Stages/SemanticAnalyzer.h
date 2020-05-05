@@ -2,10 +2,10 @@
 #include "CompilerParts/IdentificatorTable.h"
 #include "IStage.h"
 #include "CompilerParts/StageOutputStructs.h"
-#include "CompilerParts/Observers/IObservable.h"
+#include "CompilerParts/Observers/Observable.h"
 
 class __declspec(dllexport) SemanticAnalyzer : public IStage,
-	public IObservable<std::pair<std::shared_ptr<AbstractTreeNode>, std::shared_ptr<IdentificatorTable>>>,
+	public Observable<std::pair<std::shared_ptr<AbstractTreeNode>, std::shared_ptr<IdentificatorTable>>>,
 	public IObserver<std::shared_ptr<AbstractTreeNode>>
 {
 public:

@@ -1,9 +1,9 @@
 #pragma once
 #include "CompilerParts/StageOutputStructs.h"
 #include "IStage.h"
-#include "CompilerParts/Observers/IObservable.h"
+#include "CompilerParts/Observers/Observable.h"
 
-class __declspec(dllexport) LexerStage : public IStage, public IObservable<const Token&>
+class __declspec(dllexport) LexerStage : public IStage, public Observable<const Token&>
 {
 public:
 	LexerStage() = delete;
