@@ -1,9 +1,10 @@
 #pragma once
+#include "CompilerParts/IdentificatorTable.h"
 #include "IStage.h"
 #include "CompilerParts/Observers/IObservable.h"
 #include "CompilerParts/StageOutputStructs.h"
 
-class __declspec(dllexport) CodeGeneratorStage : public IStage, public IObserver<std::shared_ptr<AbstractTreeNode>>
+class __declspec(dllexport) CodeGeneratorStage : public IStage, public IObserver<std::pair<std::shared_ptr<AbstractTreeNode>, std::shared_ptr<IdentificatorTable>>>
 {
 public:
 	/// IStage override
@@ -13,6 +14,6 @@ public:
 	///
 
 	/// INewParserTreeObserver override
-	void Notify(std::shared_ptr<AbstractTreeNode> root) override;
+	void Notify(std::pair<std::shared_ptr<AbstractTreeNode>, std::shared_ptr<IdentificatorTable>> data) override;
 	///
 };

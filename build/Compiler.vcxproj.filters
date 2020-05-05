@@ -98,6 +98,9 @@
     <ClCompile Include="..\src\Compiler\Stages\SemanticAnalyzer.cpp">
       <Filter>Source Files\Stages</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\Compiler\Stages\StageOutputSerializers\IdentificatorTableSerializer.cpp">
+      <Filter>Source Files\Stages\StageOutputSerializers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\Compiler\stdafx.h">
@@ -204,6 +207,9 @@
     </ClInclude>
     <ClInclude Include="..\src\Compiler\CompilerParts\Observers\IObservable.h">
       <Filter>Source Files\CompilerParts\Observers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Compiler\Stages\StageOutputSerializers\IdentificatorTableSerializer.h">
+      <Filter>Source Files\Stages\StageOutputSerializers</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -10,13 +10,7 @@ struct __declspec(dllexport) ScopeInfo
 class __declspec(dllexport) IdentificatorTable
 {
 public:
-	IdentificatorTable(const IdentificatorTable& table) = delete;
-	IdentificatorTable(IdentificatorTable&& table) = delete;
-	IdentificatorTable operator=(const IdentificatorTable& a) = delete;
-	IdentificatorTable& operator=(IdentificatorTable&& a) = delete;
-	~IdentificatorTable() = default;
-	
-	[[nodiscard]] static IdentificatorTable& GetInstance() { return m_instance; }
+	IdentificatorTable() = default;
 
 	void AddScope(const std::wstring& parentScope, const std::wstring& scope);
 
@@ -24,10 +18,9 @@ public:
 
 	[[nodiscard]] bool IsIdentificatorExist(const std::wstring& scope, const std::wstring& variable);
 
-private:
-	IdentificatorTable() = default;
+	const std::unordered_map<std::wstring, ScopeInfo>& GetScopesMap() { return m_scopes; }
 	
-	static IdentificatorTable m_instance;
+private:
 
 	std::unordered_map<std::wstring, ScopeInfo> m_scopes;
 };

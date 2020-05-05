@@ -5,6 +5,6 @@ void CodeGeneratorStage::DoStage()
 {
 }
 
-void CodeGeneratorStage::Notify(std::shared_ptr<AbstractTreeNode> root)
+void CodeGeneratorStage::Notify(std::pair<std::shared_ptr<AbstractTreeNode>, std::shared_ptr<IdentificatorTable>> data)
 {
 }

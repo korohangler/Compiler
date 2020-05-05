@@ -21,5 +21,5 @@ private:
 	Config			  m_config;
 
 	std::vector<std::shared_ptr<IStage>> m_stages;
-	std::vector<std::shared_ptr<IStageOutputSerializer>> m_stageOuputSerializers;
+	std::vector<std::shared_ptr<IStageOutputSerializer>> m_stageOutputSerializers;
 };

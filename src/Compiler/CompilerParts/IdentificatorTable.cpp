@@ -1,8 +1,6 @@
 #include "stdafx.h"
 #include "IdentificatorTable.h"
 
-IdentificatorTable IdentificatorTable::m_instance;
-
 void IdentificatorTable::AddScope(const std::wstring& parentScope, const std::wstring& scope)
 {
 	ScopeInfo newScope;
