@@ -3,7 +3,7 @@
 #include "IStage.h"
 #include "CompilerParts/StageOutputStructs.h"
 
-class __declspec(dllexport) ParserStage final : public IStage, public IObserver<const Token&>, public IObservable<IObserver<std::shared_ptr<AbstractTreeNode>>, std::shared_ptr<AbstractTreeNode>>
+class __declspec(dllexport) ParserStage final : public IStage, public IObserver<const Token&>, public IObservable<std::shared_ptr<AbstractTreeNode>>
 {
 public:
 	ParserStage();

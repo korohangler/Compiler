@@ -3,7 +3,7 @@
 #include "IStage.h"
 #include "CompilerParts/Observers/IObservable.h"
 
-class __declspec(dllexport) LexerStage : public IStage, public IObservable<IObserver<const Token&>, const Token&>
+class __declspec(dllexport) LexerStage : public IStage, public IObservable<const Token&>
 {
 public:
 	LexerStage() = delete;

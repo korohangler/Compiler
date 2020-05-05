@@ -3,7 +3,7 @@
 #include "CompilerParts/StageOutputStructs.h"
 #include "CompilerParts/Observers/IObservable.h"
 
-class __declspec(dllexport) SemanticAnalyzer : public IStage, public IObservable<IObserver<std::shared_ptr<AbstractTreeNode>>, std::shared_ptr<AbstractTreeNode>>, public IObserver<std::shared_ptr<AbstractTreeNode>>
+class __declspec(dllexport) SemanticAnalyzer : public IStage, public IObservable<std::shared_ptr<AbstractTreeNode>>, public IObserver<std::shared_ptr<AbstractTreeNode>>
 {
 public:
 	~SemanticAnalyzer() override = default;
