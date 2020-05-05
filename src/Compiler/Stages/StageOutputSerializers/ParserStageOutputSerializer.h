@@ -8,7 +8,7 @@ class __declspec(dllexport) ParserStageOutputSerializer : public IStageOutputSer
 public:
 	ParserStageOutputSerializer();
 	
-	/// INewParserTreeObserver override
+	/// IObserver override
 	void Notify(std::shared_ptr<AbstractTreeNode> root) override;
 	///
 	

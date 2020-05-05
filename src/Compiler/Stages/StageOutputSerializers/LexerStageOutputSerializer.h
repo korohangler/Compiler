@@ -8,7 +8,7 @@ class __declspec(dllexport) LexerStageOutputSerializer : public IStageOutputSeri
 public:
 	LexerStageOutputSerializer();
 
-	/// INewLexerTokenObserver override
+	/// IObserver override
 	void Notify(const Token& token) override;
 	///
 
