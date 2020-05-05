@@ -8,6 +8,7 @@ public:
 	Literal(const Token& token);
 	~Literal() override = default;
 
+	/// AbstractTreeNode override
 	[[nodiscard]] bool IsComplete() const override { return true; }
 
 	void Compute(const Token& token) override {}
@@ -15,6 +16,7 @@ public:
 	[[nodiscard]] bool NeedRecompute() const override { return false; }
 
 	[[nodiscard]] const std::wstring& GetSerializeData() const override { return m_serializeData; }
+	///
 
 	enum class LiteralType
 	{

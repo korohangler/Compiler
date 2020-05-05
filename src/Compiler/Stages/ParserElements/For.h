@@ -4,7 +4,9 @@
 class __declspec(dllexport) For : public BaseNode
 {
 public:
+	/// AbstractTreeNode override
 	void Compute(const Token& token) override;
+	///
 
 private:
 

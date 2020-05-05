@@ -1,14 +1,11 @@
 #pragma once
 #include "CompilerParts/StageOutputStructs.h"
 
-class Expression;
-
-class __declspec(dllexport) IOperation : public AbstractTreeNode
+class __declspec(dllexport) IOperation
 {
 public:
 	virtual ~IOperation() = default;
 	IOperation() = default;
-	IOperation(size_t childsCount) : AbstractTreeNode(childsCount) {}
 
 	[[nodiscard]] virtual std::shared_ptr<AbstractTreeNode> GetLeft() const = 0;
 

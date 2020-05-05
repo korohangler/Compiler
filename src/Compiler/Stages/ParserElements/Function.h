@@ -5,8 +5,10 @@ class __declspec(dllexport) Function : public BaseNode
 {
 public:
 	~Function() override = default;
-	
+
+	/// AbstractTreeNode override
 	void Compute(const Token& token) override;
+	///
 
 	[[nodiscard]] const std::wstring& GetFunctionName() const { return m_functionName; }
 	

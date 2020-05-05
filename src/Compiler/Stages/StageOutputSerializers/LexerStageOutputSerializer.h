@@ -1,8 +1,9 @@
 #pragma once
 #include "IStageOutputSerializer.h"
-#include "CompilerParts/Observers/INewLexerTokenObserver.h"
+#include "CompilerParts/StageOutputStructs.h"
+#include "CompilerParts/Observers/IObserver.h"
 
-class __declspec(dllexport) LexerStageOutputSerializer : public IStageOutputSerializer, public INewLexerTokenObserver
+class __declspec(dllexport) LexerStageOutputSerializer : public IStageOutputSerializer, public IObserver<const Token&>
 {
 public:
 	LexerStageOutputSerializer();

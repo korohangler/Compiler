@@ -1,19 +1,20 @@
 #pragma once
 #include "CompilerParts/StageOutputStructs.h"
 #include "IStage.h"
+#include "CompilerParts/Observers/IObservable.h"
 
-class INewLexerTokenObserver;
-
-class __declspec(dllexport) LexerStage : public IStage
+class __declspec(dllexport) LexerStage : public IStage, public IObservable<IObserver<const Token&>, const Token&>
 {
 public:
 	LexerStage() = delete;
-	LexerStage(std::wstring runningDirectory, const std::wstring& file, bool needLog);
-	~LexerStage() override {}
+	LexerStage(const std::wstring& runningDirectory, std::wstring file, bool needLog);
+	~LexerStage() override = default;
 
+	/// IStage override
 	void DoStage() override;
 
-	[[nodiscard]] std::wstring GetStageName() override { return L"Lexer"; };
+	[[nodiscard]] std::wstring GetStageName() override { return L"Lexer"; }
+	///
 
 	struct TokenRule
 	{
@@ -23,9 +24,6 @@ public:
 		bool		 NeedAdditionalCheck;
 		std::wregex	 AdditionalCheck;
 	};
-
-	void RegisterListener(INewLexerTokenObserver* observer) { m_observers.push_back(observer); }
-	void UnRegisterListener(INewLexerTokenObserver* observer) { m_observers.erase(std::find(m_observers.begin(), m_observers.end(), observer)); }
 
 	static inline const Token FinalToken = Token(L"FINAL", L"FINAL", -1);
 	
@@ -42,6 +40,4 @@ protected:
 	std::wstring		   m_inputText;
 	std::wstring::iterator m_currTextPos;
 	std::wstring		   m_inputFileName;
-
-	std::vector<INewLexerTokenObserver*> m_observers;
 };

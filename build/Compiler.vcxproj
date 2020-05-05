@@ -48,8 +48,7 @@
     <ClInclude Include="..\src\Compiler\CompilerParts\Config.h" />
     <ClInclude Include="..\src\Compiler\CompilerParts\ConfigReader.h" />
     <ClInclude Include="..\src\Compiler\CompilerParts\IdentificatorTable.h" />
-    <ClInclude Include="..\src\Compiler\CompilerParts\Observers\INewLexerTokenObserver.h" />
-    <ClInclude Include="..\src\Compiler\CompilerParts\Observers\INewParserTreeObserver.h" />
+    <ClInclude Include="..\src\Compiler\CompilerParts\Observers\IObservable.h" />
     <ClInclude Include="..\src\Compiler\CompilerParts\Observers\IObserver.h" />
     <ClInclude Include="..\src\Compiler\CompilerParts\ParserHelper.h" />
     <ClInclude Include="..\src\Compiler\CompilerParts\StageOutputStructs.h" />

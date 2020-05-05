@@ -1,23 +1,23 @@
 #pragma once
+#include "CompilerParts/Observers/IObservable.h"
 #include "IStage.h"
-#include "CompilerParts/Observers/INewLexerTokenObserver.h"
-#include "CompilerParts/Observers/INewParserTreeObserver.h"
+#include "CompilerParts/StageOutputStructs.h"
 
-class __declspec(dllexport) ParserStage final : public IStage, public INewLexerTokenObserver
+class __declspec(dllexport) ParserStage final : public IStage, public IObserver<const Token&>, public IObservable<IObserver<std::shared_ptr<AbstractTreeNode>>, std::shared_ptr<AbstractTreeNode>>
 {
 public:
 	ParserStage();
-	~ParserStage() = default;
+	~ParserStage() override = default;
+
+	/// IStage override
 	void DoStage() override;
+
+	[[nodiscard]] std::wstring GetStageName() override { return L"ParserStage"; }
+	///
 
 	/// INewLexerTokenObserver override
 	void Notify(const Token& token) override;
 	///
-
-	void RegisterListener(INewParserTreeObserver* observer) { m_observers.push_back(observer); }
-	void UnRegisterListener(INewParserTreeObserver* observer) { m_observers.erase(std::find(m_observers.begin(), m_observers.end(), observer)); }
-	
-	[[nodiscard]] std::wstring GetStageName() override { return L"ParserStage"; }
 
 private:
 
@@ -25,6 +25,4 @@ private:
 	
 	std::shared_ptr<AbstractTreeNode> m_root;
 	std::shared_ptr<AbstractTreeNode> m_currNode;
-
-	std::vector<INewParserTreeObserver*> m_observers;
 };

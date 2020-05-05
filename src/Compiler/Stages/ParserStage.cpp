@@ -2,6 +2,7 @@
 #include "ParserStage.h"
 #include "ParserElements/Scope.h"
 #include "CompilerParts/ParserHelper.h"
+#include "LexerStage.h"
 
 ParserStage::ParserStage()
 	: m_needCreateNewNode(true)

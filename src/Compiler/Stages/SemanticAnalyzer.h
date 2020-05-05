@@ -1,18 +1,21 @@
 #pragma once
 #include "IStage.h"
-#include "CompilerParts/Observers/INewParserTreeObserver.h"
+#include "CompilerParts/StageOutputStructs.h"
+#include "CompilerParts/Observers/IObservable.h"
 
-class __declspec(dllexport) SemanticAnalyzer : public IStage, public INewParserTreeObserver
+class __declspec(dllexport) SemanticAnalyzer : public IStage, public IObservable<IObserver<std::shared_ptr<AbstractTreeNode>>, std::shared_ptr<AbstractTreeNode>>, public IObserver<std::shared_ptr<AbstractTreeNode>>
 {
 public:
+	~SemanticAnalyzer() override = default;
+	/// IStage override
 	void DoStage() override;
 
 	[[nodiscard]] std::wstring GetStageName() override { return L"CodeGenerator"; }
+	///
 
+	/// IObserver override
 	void Notify(std::shared_ptr<AbstractTreeNode> root) override;
-
-	void RegisterListener(INewParserTreeObserver* observer) { m_observers.push_back(observer); }
-	void UnRegisterListener(INewParserTreeObserver* observer) { m_observers.erase(std::find(m_observers.begin(), m_observers.end(), observer)); }
+	///
 	
 private:
 
@@ -25,6 +28,4 @@ private:
 	};
 
 	void ProcessNode(std::shared_ptr<AbstractTreeNode> node, const ScopeData& currScopeData);
-	
-	std::vector<INewParserTreeObserver*> m_observers;
 };

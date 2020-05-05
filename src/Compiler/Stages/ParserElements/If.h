@@ -4,7 +4,9 @@
 class __declspec(dllexport) If : public BaseNode
 {
 public:
+	/// AbstractTreeNode override
 	void Compute(const Token& token) override;
+	///
 	
 private:
 	size_t m_counter = 0;

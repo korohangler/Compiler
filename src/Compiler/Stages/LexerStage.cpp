@@ -1,8 +1,7 @@
 #include "stdafx.h"
 #include "LexerStage.h"
-#include "CompilerParts/Observers/INewLexerTokenObserver.h"
 
-LexerStage::LexerStage(std::wstring runningDirectory, const std::wstring& file, bool needLog) : m_needLog(needLog), m_inputFileName(file)
+LexerStage::LexerStage(const std::wstring& runningDirectory, std::wstring file, bool needLog) : m_needLog(needLog), m_inputFileName(std::move(file))
 {
 	std::wstring pathToConfig = runningDirectory + L"../../../data/Lexer/regexps.json";
 
@@ -27,12 +26,10 @@ void LexerStage::DoStage()
 	{
 		const Token newToken = ParseToken();
 
-		for (auto& observer : m_observers)
-			observer->Notify(newToken);
+		Notify(newToken);
 	}
 
-	for (auto& observer : m_observers)
-		observer->Notify(FinalToken);
+	Notify(FinalToken);
 
 	Clear();
 }
@@ -51,8 +48,8 @@ Token LexerStage::ParseToken()
 
 	bool additionalCheckFailed = false;
 
-	auto rule = std::find_if(m_tokenRules.begin(), m_tokenRules.end(), [&](TokenRule& currRule) {
-		bool res = std::regex_search(&(*m_currTextPos),
+	const auto rule = std::find_if(m_tokenRules.begin(), m_tokenRules.end(), [&](TokenRule& currRule) {
+		const bool res = std::regex_search(&(*m_currTextPos),
 			   match,
 			   currRule.Regexpr,
 			   std::regex_constants::match_continuous); 
@@ -68,7 +65,7 @@ Token LexerStage::ParseToken()
 		ASSERT(std::string("Cannot recognize token at line: ") + std::to_string(std::count(m_inputText.begin(), m_currTextPos, L'\n')));
 	}
 
-	std::wstring res = match.str(0);
+	const std::wstring res = match.str(0);
 
 	m_currTextPos += res.length();
 

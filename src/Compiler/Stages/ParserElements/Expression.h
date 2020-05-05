@@ -1,11 +1,12 @@
 #pragma once
-#include "MathOperations/IOperation.h"
 #include "Stages/ParserElements/BaseNode.h"
 
 class __declspec(dllexport) Expression : public BaseNode
 {
 public:
+	/// AbstractTreeNode override
 	void Compute(const Token& token) override;
+	///
 	
 private:
 

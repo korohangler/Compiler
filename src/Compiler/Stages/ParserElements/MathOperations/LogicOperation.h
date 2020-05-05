@@ -24,9 +24,13 @@ public:
 		, Unknown
 	};
 
+	/// AbstractTreeNode override
 	[[nodiscard]] const std::wstring& GetSerializeData() const override { return m_serializationData; }
+	///
 
+	/// IOperation override
 	[[nodiscard]] OperationType GetOperationType() const override { return m_operationType; }
+	///
 	
 private:
 

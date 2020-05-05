@@ -127,9 +127,6 @@
     <ClInclude Include="..\src\Compiler\Stages\StageOutputSerializers\IStageOutputSerializer.h">
       <Filter>Source Files\Stages\StageOutputSerializers</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\Compiler\CompilerParts\Observers\INewLexerTokenObserver.h">
-      <Filter>Source Files\CompilerParts\Observers</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\Compiler\CompilerParts\Observers\IObserver.h">
       <Filter>Source Files\CompilerParts\Observers</Filter>
     </ClInclude>
@@ -138,9 +135,6 @@
     </ClInclude>
     <ClInclude Include="..\src\Compiler\Stages\StageOutputSerializers\ParserStageOutputSerializer.h">
       <Filter>Source Files\Stages\StageOutputSerializers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\Compiler\CompilerParts\Observers\INewParserTreeObserver.h">
-      <Filter>Source Files\CompilerParts\Observers</Filter>
     </ClInclude>
     <ClInclude Include="..\src\Compiler\CompilerParts\StageOutputStructs.h">
       <Filter>Source Files\CompilerParts</Filter>
@@ -207,6 +201,9 @@
     </ClInclude>
     <ClInclude Include="..\src\Compiler\Stages\ParserElements\BaseNode.h">
       <Filter>Source Files\Stages\ParserElements</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Compiler\CompilerParts\Observers\IObservable.h">
+      <Filter>Source Files\CompilerParts\Observers</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "LexerStageOutputSerializer.h"
+#include "Stages/LexerStage.h"
 
 LexerStageOutputSerializer::LexerStageOutputSerializer()
 {

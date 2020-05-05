@@ -7,7 +7,9 @@ class __declspec(dllexport) ExpressionStatement : public BaseNode
 public:
 	~ExpressionStatement() override = default;
 
+	/// AbstractTreeNode override
 	void Compute(const Token& token) override;
+	///
 
 	enum class StatementType
 	{
