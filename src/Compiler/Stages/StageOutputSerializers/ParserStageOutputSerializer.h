@@ -2,7 +2,7 @@
 #include "CompilerParts/Observers/INewParserTreeObserver.h"
 #include "IStageOutputSerializer.h"
 
-class ParserStageOutputSerializer : public IStageOutputSerializer, public INewParserTreeObserver
+class __declspec(dllexport) ParserStageOutputSerializer : public IStageOutputSerializer, public INewParserTreeObserver
 {
 public:
 	ParserStageOutputSerializer();

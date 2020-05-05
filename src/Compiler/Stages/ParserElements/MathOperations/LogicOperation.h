@@ -2,7 +2,7 @@
 #include "BasicOperation.h"
 
 
-class LogicOperation : public BasicOperation
+class __declspec(dllexport) LogicOperation : public BasicOperation
 {
 public:
 	LogicOperation() = delete;

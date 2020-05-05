@@ -6,5 +6,5 @@ class __declspec(dllexport) ParserHelper
 {
 public:
 
-	static std::shared_ptr<AbstractTreeNode> CreateNewNodeFromToken(const Token& token);
+	[[nodiscard]] static std::shared_ptr<AbstractTreeNode> CreateNewNodeFromToken(const Token& token);
 };

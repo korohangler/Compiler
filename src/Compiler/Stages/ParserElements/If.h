@@ -1,7 +1,7 @@
 #pragma once
 #include "Stages/ParserElements/BaseNode.h"
 
-class If : public BaseNode
+class __declspec(dllexport) If : public BaseNode
 {
 public:
 	void Compute(const Token& token) override;

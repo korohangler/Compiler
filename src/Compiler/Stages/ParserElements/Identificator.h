@@ -1,7 +1,7 @@
 #pragma once
 #include "CompilerParts/StageOutputStructs.h"
 
-class Identificator : public AbstractTreeNode
+class __declspec(dllexport) Identificator : public AbstractTreeNode
 {
 public:
 	Identificator() = delete;

@@ -7,12 +7,13 @@ class INewLexerTokenObserver;
 class __declspec(dllexport) LexerStage : public IStage
 {
 public:
+	LexerStage() = delete;
 	LexerStage(std::wstring runningDirectory, const std::wstring& file, bool needLog);
 	~LexerStage() override {}
 
 	void DoStage() override;
 
-	std::wstring GetStageName() override { return L"Lexer"; };
+	[[nodiscard]] std::wstring GetStageName() override { return L"Lexer"; };
 
 	struct TokenRule
 	{
@@ -29,7 +30,6 @@ public:
 	static inline const Token FinalToken = Token(L"FINAL", L"FINAL", -1);
 	
 protected:
-	LexerStage();
 
 	void  ReadText(std::wistream& inputStream);
 	Token ParseToken();

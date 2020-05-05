@@ -2,7 +2,7 @@
 #include "CompilerParts/StageOutputStructs.h"
 #include "Stages/ParserElements/BaseNode.h"
 
-class ExpressionStatement : public BaseNode
+class __declspec(dllexport) ExpressionStatement : public BaseNode
 {
 public:
 	~ExpressionStatement() override = default;
@@ -15,7 +15,7 @@ public:
 		, AssignmentExpression
 	};
 
-	const std::wstring& GetIdentificatorName() const { return m_identificator; }
+	[[nodiscard]] const std::wstring& GetIdentificatorName() const { return m_identificator; }
 	
 private:
 

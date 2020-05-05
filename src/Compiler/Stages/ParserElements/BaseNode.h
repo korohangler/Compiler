@@ -1,7 +1,7 @@
 #pragma once
 #include "CompilerParts/StageOutputStructs.h"
 
-class BaseNode : public AbstractTreeNode
+class __declspec(dllexport) BaseNode : public AbstractTreeNode
 {
 public:
 	[[nodiscard]] bool IsComplete() const override { return m_isComplete; }

@@ -1,7 +1,7 @@
 #pragma once
 #include "CompilerParts/StageOutputStructs.h"
 
-class Literal : public AbstractTreeNode
+class __declspec(dllexport) Literal : public AbstractTreeNode
 {
 public:
 	Literal() = delete;

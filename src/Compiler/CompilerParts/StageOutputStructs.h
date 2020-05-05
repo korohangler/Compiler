@@ -25,13 +25,13 @@ public:
 	AbstractTreeNode* parent = nullptr;
 	std::vector<std::shared_ptr<AbstractTreeNode>> m_childs;
 
-	virtual bool IsComplete() const = 0;
+	[[nodiscard]] virtual bool IsComplete() const = 0;
 
 	virtual void Compute(const Token& token) = 0;
 
-	virtual bool NeedRecompute() const = 0;
+	[[nodiscard]] virtual bool NeedRecompute() const = 0;
 
-	std::wstring GetTypeName() const { return Utils::StringConverter::StrToWstr(typeid(*this).name()); }
+	[[nodiscard]] std::wstring GetTypeName() const { return Utils::StringConverter::StrToWstr(typeid(*this).name()); }
 
-	virtual const std::wstring& GetSerializeData() const = 0;
+	[[nodiscard]] virtual const std::wstring& GetSerializeData() const = 0;
 };

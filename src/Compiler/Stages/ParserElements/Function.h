@@ -1,7 +1,7 @@
 #pragma once
 #include "Stages/ParserElements/BaseNode.h"
 
-class Function : public BaseNode
+class __declspec(dllexport) Function : public BaseNode
 {
 public:
 	~Function() override = default;

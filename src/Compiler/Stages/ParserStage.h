@@ -17,7 +17,7 @@ public:
 	void RegisterListener(INewParserTreeObserver* observer) { m_observers.push_back(observer); }
 	void UnRegisterListener(INewParserTreeObserver* observer) { m_observers.erase(std::find(m_observers.begin(), m_observers.end(), observer)); }
 	
-	std::wstring GetStageName() override { return L"ParserStage"; }
+	[[nodiscard]] std::wstring GetStageName() override { return L"ParserStage"; }
 
 private:
 

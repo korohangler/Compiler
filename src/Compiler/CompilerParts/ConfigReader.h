@@ -13,5 +13,5 @@ private:
 
 	Config m_config;
 
-	int m_currentOptionIdx;
+	int m_currentOptionIdx = 0;
 };

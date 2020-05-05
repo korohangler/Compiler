@@ -1,7 +1,7 @@
 #pragma once
 #include <string>
 
-class IStageOutputSerializer
+class __declspec(dllexport) IStageOutputSerializer
 {
 public:
 	virtual ~IStageOutputSerializer() {}

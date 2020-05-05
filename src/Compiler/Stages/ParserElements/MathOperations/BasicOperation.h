@@ -1,7 +1,7 @@
 #pragma once
 #include "IOperation.h"
 
-class BasicOperation : public IOperation
+class __declspec(dllexport) BasicOperation : public IOperation
 {
 public:
 	~BasicOperation() override = default;

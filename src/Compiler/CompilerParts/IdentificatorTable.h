@@ -16,13 +16,13 @@ public:
 	IdentificatorTable& operator=(IdentificatorTable&& a) = delete;
 	~IdentificatorTable() = default;
 	
-	static IdentificatorTable& GetInstance() { return m_instance; }
+	[[nodiscard]] static IdentificatorTable& GetInstance() { return m_instance; }
 
 	void AddScope(const std::wstring& parentScope, const std::wstring& scope);
 
 	void AddIdentificator(const std::wstring& scope, const std::wstring& identificator);
 
-	bool IsIdentificatorExist(const std::wstring& scope, const std::wstring& variable);
+	[[nodiscard]] bool IsIdentificatorExist(const std::wstring& scope, const std::wstring& variable);
 
 private:
 	IdentificatorTable() = default;

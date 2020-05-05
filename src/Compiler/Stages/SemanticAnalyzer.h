@@ -2,12 +2,12 @@
 #include "IStage.h"
 #include "CompilerParts/Observers/INewParserTreeObserver.h"
 
-class SemanticAnalyzer : public IStage, public INewParserTreeObserver
+class __declspec(dllexport) SemanticAnalyzer : public IStage, public INewParserTreeObserver
 {
 public:
 	void DoStage() override;
 
-	std::wstring GetStageName() override { return L"CodeGenerator"; }
+	[[nodiscard]] std::wstring GetStageName() override { return L"CodeGenerator"; }
 
 	void Notify(const AbstractTreeNode* root) override;
 

@@ -2,7 +2,7 @@
 #include "MathOperations/IOperation.h"
 #include "Stages/ParserElements/BaseNode.h"
 
-class Expression : public BaseNode
+class __declspec(dllexport) Expression : public BaseNode
 {
 public:
 	void Compute(const Token& token) override;

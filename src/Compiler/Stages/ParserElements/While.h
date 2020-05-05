@@ -1,7 +1,7 @@
 #pragma once
 #include "Stages/ParserElements/BaseNode.h"
 
-class While : public BaseNode
+class __declspec(dllexport) While : public BaseNode
 {
 public:
 	~While() override = default;

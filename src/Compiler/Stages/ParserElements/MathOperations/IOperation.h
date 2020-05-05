@@ -3,7 +3,7 @@
 
 class Expression;
 
-class IOperation : public AbstractTreeNode
+class __declspec(dllexport) IOperation : public AbstractTreeNode
 {
 public:
 	virtual ~IOperation() = default;

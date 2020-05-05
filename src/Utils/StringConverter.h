@@ -4,7 +4,7 @@
 class StringConverter
 {
 public:
-	static std::wstring StrToWstr(std::wstring str) { return std::wstring(str); }
+	[[nodiscard]] static std::wstring StrToWstr(std::wstring str) { return std::wstring(str); }
 
 	static std::wstring StrToWstr(std::string str) 
 	{ 
@@ -13,7 +13,7 @@ public:
 		return std::wstring(stream.str());
 	}
 
-	static std::string WstrToStr(std::string str) { return str; }
-	static std::string WstrToStr(std::wstring str) { return std::string(str.begin(), str.end()); }
+	[[nodiscard]] static std::string WstrToStr(std::string str) { return str; }
+	[[nodiscard]] static std::string WstrToStr(std::wstring str) { return std::string(str.begin(), str.end()); }
 
 };

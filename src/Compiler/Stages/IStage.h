@@ -9,5 +9,5 @@ public:
 	
 	virtual void DoStage() = 0;
 
-	virtual std::wstring GetStageName() = 0;
+	[[nodiscard]] virtual std::wstring GetStageName() = 0;
 };

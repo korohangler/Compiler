@@ -1,7 +1,7 @@
 #pragma once
 #include "BasicOperation.h"
 
-class SummOperation : public BasicOperation
+class __declspec(dllexport) SummOperation : public BasicOperation
 {
 public:
 	~SummOperation() override = default;

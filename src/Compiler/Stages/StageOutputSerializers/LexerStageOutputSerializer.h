@@ -2,7 +2,7 @@
 #include "IStageOutputSerializer.h"
 #include "CompilerParts/Observers/INewLexerTokenObserver.h"
 
-class LexerStageOutputSerializer : public IStageOutputSerializer, public INewLexerTokenObserver
+class __declspec(dllexport) LexerStageOutputSerializer : public IStageOutputSerializer, public INewLexerTokenObserver
 {
 public:
 	LexerStageOutputSerializer();
