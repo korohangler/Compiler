@@ -11,9 +11,9 @@ public:
 
 	bool NeedRecompute() const override { return m_needRecompute; }
 
-	const std::wstring& GetScopeName() override { return m_scopeName; }
+	const std::wstring& GetScopeName() override { return parent->GetScopeName(); }
 
-	void SetScopeName(const std::wstring& name) override { m_scopeName = name; }
+	void SetScopeName(const std::wstring& name) override {}
 
 	const std::wstring& GetSerializeData() const override { return m_serializeData; }
 	
@@ -28,8 +28,6 @@ private:
 	[[nodiscard]] static std::shared_ptr<AbstractTreeNode> CreateNode(const Token& token);
 	
 	std::wstring m_serializeData;
-
-	std::wstring m_scopeName;
 
 	std::vector<Token> m_tokens;
 

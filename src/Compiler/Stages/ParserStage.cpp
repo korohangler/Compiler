@@ -8,7 +8,7 @@ ParserStage::ParserStage(const std::wstring& directoryConfigPath)
 	: m_needCreateNewNode(true)
 {
 	m_root = std::make_shared<Scope>();
-	m_root->SetScopeName(L"Root");
+	m_root->SetScopeName(L"l0m0");
 
 	IdentificatorTable::GetInstance().AddScope(L"Root", L"l0m0");
 }

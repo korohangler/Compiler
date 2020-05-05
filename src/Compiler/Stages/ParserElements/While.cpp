@@ -17,6 +17,7 @@ void While::Compute(const Token& token)
 	else if (m_counter == 1)
 	{
 		m_childs.emplace_back(std::make_shared<Expression>());
+		m_childs.back()->parent = this;
 
 		m_needRecompute = true;
 

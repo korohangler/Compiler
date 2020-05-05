@@ -45,7 +45,7 @@ void Compiler::PerformCompilation()
 
 void Compiler::SetFirstStageIdx()
 {
-	if (m_config.FirstStage != L"")
+	if (!m_config.FirstStage.empty())
 	{
 		m_firstStageIdx =  std::find_if(m_stages.begin(), m_stages.end(), [&](IStage* a) { return a->GetStageName() == m_config.FirstStage; }) - m_stages.begin();
 		m_currentStageIdx = m_firstStageIdx;
