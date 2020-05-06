@@ -11,7 +11,23 @@ public:
 	///
 
 private:
+
+	enum class States
+	{
+		KeywordWhile,
+		ExpressionCreation,
+		ExpressionComputation,
+		ScopeCreation,
+		ScopeComputation
+	};
+
+	void HandleKeywordWhile(const Token& token);
+	void HandleExpressionCreation(const Token& token);
+	void HandleExpressionComputation(const Token& token);
+	void HandleScopeCreation(const Token& token);
+	void HandleScopeComputation(const Token& token);
+	
 	std::wstring m_functionName;
 
-	size_t m_counter = 0;
+	States m_state = States::KeywordWhile;
 };

@@ -13,7 +13,25 @@ public:
 	[[nodiscard]] const std::wstring& GetVariableName() const { return m_variableName; }
 	
 private:
+
+	enum class States
+	{
+		LetKeyword,
+		CommonSeparator,
+		Identificator,
+		SemicolonOrAssign,
+		ExpressionComputation,
+		Semicolon
+	};
+
+	void HandleKeyWord(const Token& token);
+	void HandleCommonSeparator(const Token& token);
+	void HandleIdentificator(const Token& token);
+	void HandleSemicolonOrAssign(const Token& token);
+	void HandleExpressionComputation(const Token& token);
+	void HandleSemicolon(const Token& token);
+	
 	std::wstring m_variableName;
 
-	size_t m_counter = 0;
+	States m_state = States::LetKeyword;
 };

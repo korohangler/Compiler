@@ -21,13 +21,22 @@ public:
 	
 private:
 
+	enum class States
+	{
+		AwaitIdentificator,
+		TypeChoise,
+		ExpressionComputation,
+		SemicolonAwait,
+		AwaitCloseBracket
+	};
+	
 	void HandleAwaitIdentificatorState(const Token& token);
 	void HandleTypeChoiseState(const Token& token);
 	void HandleExpressionComputingState(const Token& token);
 	void HandleSemicolonAwaitState(const Token& token);
 	void HandleClosingBracketAwaitState(const Token& token);
 
-	size_t m_counter = 0;
+	States m_state = States::AwaitIdentificator;
 
 	StatementType m_type = StatementType::AssignmentExpression;
 

@@ -6,45 +6,70 @@
 
 void While::Compute(const Token& token)
 {
-	if (m_counter == 0)
+	switch(m_state)
 	{
-		if (token.Type == L"CommonSeparator") return;
-		Utils::ASSERT2(token.Type == L"Keyword" && token.Value == L"while",
-		               std::wstring(L"Token type mismatch! Expected: Keyword. Got: ") + token.Type + std::wstring(L". At line: ") + std::to_wstring(token.Line));
-
-		m_counter++;
+	case States::KeywordWhile:
+		HandleKeywordWhile(token);
+		break;
+	case States::ExpressionCreation:
+		HandleExpressionCreation(token);
+		break;
+	case States::ExpressionComputation:
+		HandleExpressionComputation(token);
+		break;
+	case States::ScopeCreation:
+		HandleScopeCreation(token);
+		break;
+	case States::ScopeComputation:
+		HandleScopeComputation(token);
+		break;
+	default:
+		Utils::ASSERT(std::string("Unknown state! At line: ") + std::to_string(__LINE__) + std::string(". In file: ") + __FILE__);
 	}
-	else if (m_counter == 1)
-	{
-		m_childs.emplace_back(std::make_shared<Expression>());
-		m_childs.back()->parent = this;
+}
 
-		m_needRecompute = true;
+void While::HandleKeywordWhile(const Token& token)
+{
+	if (token.Type == L"CommonSeparator") return;
+	Utils::ASSERT2(token.Type == L"Keyword" && token.Value == L"while",
+		std::wstring(L"Token type mismatch! Expected: Keyword. Got: ") + token.Type + std::wstring(L". At line: ") + std::to_wstring(token.Line));
 
-		m_counter++;
-	}
-	else if (m_counter == 2)
-	{
-		m_childs.back()->Compute(token);
+	m_state = States::ExpressionCreation;
+}
 
-		m_needRecompute = m_childs.back()->NeedRecompute();
+void While::HandleExpressionCreation(const Token& token)
+{
+	m_childs.emplace_back(std::make_shared<Expression>());
+	m_childs.back()->parent = this;
 
-		if (m_childs.back()->IsComplete()) m_counter++;
-	}
-	else if (m_counter == 3)
-	{
-		m_childs.emplace_back(std::make_shared<Scope>());
+	m_needRecompute = true;
 
-		m_needRecompute = true;
-		
-		m_counter++;
-	}
-	else if (m_counter == 4)
-	{
-		m_childs.back()->Compute(token);
+	m_state = States::ExpressionComputation;
+}
 
-		m_needRecompute = m_childs.back()->NeedRecompute();
+void While::HandleExpressionComputation(const Token& token)
+{
+	m_childs.back()->Compute(token);
 
-		m_isComplete = m_childs.back()->IsComplete();
-	}
+	m_needRecompute = m_childs.back()->NeedRecompute();
+
+	if (m_childs.back()->IsComplete()) m_state = States::ScopeCreation;
+}
+
+void While::HandleScopeCreation(const Token& token)
+{
+	m_childs.emplace_back(std::make_shared<Scope>());
+
+	m_needRecompute = true;
+
+	m_state = States::ScopeComputation;
+}
+
+void While::HandleScopeComputation(const Token& token)
+{
+	m_childs.back()->Compute(token);
+
+	m_needRecompute = m_childs.back()->NeedRecompute();
+
+	m_isComplete = m_childs.back()->IsComplete();
 }

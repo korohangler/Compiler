@@ -10,5 +10,14 @@ public:
 	
 private:
 
-	size_t m_counter = 0;
+	enum class States
+	{
+		OpenBracket,
+		ComputeChildsOrBracket
+	};
+
+	void HandleOpenBracket(const Token& token);
+	void HandleComputation(const Token& token);
+
+	States m_state = States::OpenBracket;
 };

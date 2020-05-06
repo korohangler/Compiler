@@ -6,27 +6,27 @@
 
 void Function::Compute(const Token& token)
 {
-	switch(m_counter)
+	switch(m_state)
 	{
-	case 0:
+	case States::FunctionKeyword:
 		HandleFunctionKeyword(token);
 		break;
-	case 1:
+	case States::Identificator:
 		HandleIdentificator(token);
 		break;
-	case 2:
+	case States::OpeningBracket:
 		HandleOpeningBracket(token);
 		break;
-	case 3:
+	case States::ArgumentOrBracket:
 		HandleArgumentOrBracket(token);
 		break;
-	case 4:
+	case States::CommaOrBracket:
 		HandleCommaOrBracket(token);
 		break;
-	case 5:
+	case States::ScopeCreation:
 		HandleScopeCreation(token);
 		break;
-	case 6:
+	case States::ScopeComputation:
 		HandleScopeComputation(token);
 		break;
 	default:
@@ -40,7 +40,7 @@ void Function::HandleFunctionKeyword(const Token& token)
 	Utils::ASSERT2(token.Type == L"Keyword" && token.Value == L"function",
 		std::wstring(L"Token type mismatch! Expected: Keyword. Got: ") + token.Type + std::wstring(L". At line: ") + std::to_wstring(token.Line));
 
-	m_counter++;
+	m_state = States::Identificator;
 }
 
 void Function::HandleIdentificator(const Token& token)
@@ -52,7 +52,7 @@ void Function::HandleIdentificator(const Token& token)
 
 	m_serializeData = m_functionName = token.Value;
 
-	m_counter++;
+	m_state = States::OpeningBracket;
 }
 
 void Function::HandleOpeningBracket(const Token& token)
@@ -62,7 +62,7 @@ void Function::HandleOpeningBracket(const Token& token)
 	Utils::ASSERT2(token.Type == L"Bracket" && token.Value == L"(",
 		std::wstring(L"Token type mismatch! Expected: Bracket. Got: ") + token.Type + std::wstring(L". At line: ") + std::to_wstring(token.Line));
 
-	m_counter++;
+	m_state = States::ArgumentOrBracket;
 }
 
 void Function::HandleArgumentOrBracket(const Token& token)
@@ -71,7 +71,7 @@ void Function::HandleArgumentOrBracket(const Token& token)
 
 	if (token.Type == L"Bracket" && token.Value == L")")
 	{
-		m_counter = 5;
+		m_state = States::ScopeCreation;
 		return;
 	}
 
@@ -80,7 +80,7 @@ void Function::HandleArgumentOrBracket(const Token& token)
 
 	m_childs.push_back(std::make_shared<Identificator>(token.Value));
 
-	m_counter++;
+	m_state = States::CommaOrBracket;
 }
 
 void Function::HandleCommaOrBracket(const Token& token)
@@ -89,11 +89,11 @@ void Function::HandleCommaOrBracket(const Token& token)
 
 	if (token.Type == L"Comma")
 	{
-		m_counter = 3;
+		m_state = States::ArgumentOrBracket;
 	}
 	else if (token.Type == L"Bracket" && token.Value == L")")
 	{
-		m_counter++;
+		m_state = States::ScopeCreation;
 	}
 	else
 	{
@@ -105,7 +105,7 @@ void Function::HandleScopeCreation(const Token& token)
 {
 	m_childs.emplace_back(std::make_shared<Scope>());
 
-	m_counter++;
+	m_state = States::ScopeComputation;
 
 	m_needRecompute = true;
 }

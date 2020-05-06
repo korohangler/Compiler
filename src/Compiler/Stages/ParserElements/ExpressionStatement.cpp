@@ -6,25 +6,22 @@ void ExpressionStatement::Compute(const Token& token)
 {
 	if (token.Type == L"CommonSeparator") return;
 
-	switch(m_counter)
+	switch(m_state)
 	{
-	case 0:
+	case States::AwaitIdentificator:
 		HandleAwaitIdentificatorState(token);
 		break;
-	case 1:
+	case States::TypeChoise:
 		HandleTypeChoiseState(token);
 		break;
-	case 2:
+	case States::ExpressionComputation:
 		HandleExpressionComputingState(token);
 		break;
-	case 3:
+	case States::SemicolonAwait:
 		HandleSemicolonAwaitState(token);
 		break;
-	case 4:
+	case States::AwaitCloseBracket:
 		HandleClosingBracketAwaitState(token);
-		break;
-	case 5:
-		HandleSemicolonAwaitState(token);
 		break;
 	default:
 		Utils::ASSERT(std::string("Unknown state! At: ") + __FILE__);
@@ -40,7 +37,7 @@ void ExpressionStatement::HandleAwaitIdentificatorState(const Token& token)
 
 	m_identificator = token.Value;
 
-	m_counter++;
+	m_state = States::TypeChoise;
 }
 
 void ExpressionStatement::HandleTypeChoiseState(const Token& token)
@@ -51,7 +48,7 @@ void ExpressionStatement::HandleTypeChoiseState(const Token& token)
 	{
 		m_type = StatementType::CallExpression;
 
-		m_counter = 4;
+		m_state = States::AwaitCloseBracket;
 	}
 	else if (token.Type == L"Assignment")
 	{
@@ -60,7 +57,7 @@ void ExpressionStatement::HandleTypeChoiseState(const Token& token)
 		// Simple expression
 		m_childs.push_back(std::make_shared<Expression>());
 
-		m_counter++;
+		m_state = States::ExpressionComputation;
 	}
 
 	if (m_type == StatementType::AssignmentExpression)
@@ -75,7 +72,7 @@ void ExpressionStatement::HandleExpressionComputingState(const Token& token)
 {
 	m_childs.back()->Compute(token);
 
-	if (m_childs.back()->IsComplete()) m_counter++;
+	if (m_childs.back()->IsComplete()) m_state = States::SemicolonAwait;
 
 	m_needRecompute = m_childs.back()->NeedRecompute();
 }
@@ -94,5 +91,5 @@ void ExpressionStatement::HandleClosingBracketAwaitState(const Token& token)
 	Utils::ASSERT2(token.Type == L"Bracket" && token.Value == L")",
 		std::wstring(L"Token type mismatch! Expected Bracket. But got: ") + token.Type + std::wstring(L". At line: ") + std::to_wstring(token.Line));
 
-	m_counter++;
+	m_state = States::SemicolonAwait;
 }

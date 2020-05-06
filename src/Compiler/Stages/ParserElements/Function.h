@@ -13,6 +13,17 @@ public:
 	[[nodiscard]] const std::wstring& GetFunctionName() const { return m_functionName; }
 	
 private:
+	enum class States
+	{
+		FunctionKeyword,
+		Identificator,
+		OpeningBracket,
+		ArgumentOrBracket,
+		CommaOrBracket,
+		ScopeCreation,
+		ScopeComputation
+	};
+	
 	void HandleFunctionKeyword(const Token& token);
 	void HandleIdentificator(const Token& token);
 	void HandleOpeningBracket(const Token& token);
@@ -23,5 +34,5 @@ private:
 
 	std::wstring m_functionName;
 
-	size_t m_counter = 0;
+	States m_state = States::FunctionKeyword;
 };
