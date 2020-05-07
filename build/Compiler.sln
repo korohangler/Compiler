@@ -16,6 +16,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Starter", "Starter.vcxproj"
 		{CDE7EC86-F049-4417-80AD-740A5C4E75D1} = {CDE7EC86-F049-4417-80AD-740A5C4E75D1}
 	EndProjectSection
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AsmTemplateProject", "ASMToExe.vcxproj", "{F52D32AF-B737-4D33-85FE-609FAD893733}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -53,6 +55,18 @@ Global
 		{F9524D0A-8475-42E3-9B00-90B1ABC25C74}.UnitTests|x64.ActiveCfg = UnitTests|x64
 		{F9524D0A-8475-42E3-9B00-90B1ABC25C74}.UnitTests|x64.Build.0 = UnitTests|x64
 		{F9524D0A-8475-42E3-9B00-90B1ABC25C74}.UnitTests|x86.ActiveCfg = UnitTests|x64
+		{F52D32AF-B737-4D33-85FE-609FAD893733}.Debug|x64.ActiveCfg = Debug|x64
+		{F52D32AF-B737-4D33-85FE-609FAD893733}.Debug|x64.Build.0 = Debug|x64
+		{F52D32AF-B737-4D33-85FE-609FAD893733}.Debug|x86.ActiveCfg = Debug|Win32
+		{F52D32AF-B737-4D33-85FE-609FAD893733}.Debug|x86.Build.0 = Debug|Win32
+		{F52D32AF-B737-4D33-85FE-609FAD893733}.Release|x64.ActiveCfg = Release|x64
+		{F52D32AF-B737-4D33-85FE-609FAD893733}.Release|x64.Build.0 = Release|x64
+		{F52D32AF-B737-4D33-85FE-609FAD893733}.Release|x86.ActiveCfg = Release|Win32
+		{F52D32AF-B737-4D33-85FE-609FAD893733}.Release|x86.Build.0 = Release|Win32
+		{F52D32AF-B737-4D33-85FE-609FAD893733}.UnitTests|x64.ActiveCfg = Release|x64
+		{F52D32AF-B737-4D33-85FE-609FAD893733}.UnitTests|x64.Build.0 = Release|x64
+		{F52D32AF-B737-4D33-85FE-609FAD893733}.UnitTests|x86.ActiveCfg = Release|Win32
+		{F52D32AF-B737-4D33-85FE-609FAD893733}.UnitTests|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
