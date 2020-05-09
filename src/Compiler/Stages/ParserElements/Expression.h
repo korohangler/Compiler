@@ -7,6 +7,8 @@ public:
 	/// AbstractTreeNode override
 	void Compute(const Token& token) override;
 	///
+
+	[[nodiscard]] std::shared_ptr<AbstractTreeNode> GetRoot() { return m_childs[0]; }
 	
 private:
 

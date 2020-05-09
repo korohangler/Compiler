@@ -16,10 +16,12 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\Compiler\Compiler.cpp" />
+    <ClCompile Include="..\src\Compiler\CompilerParts\ASMConstructor.cpp" />
     <ClCompile Include="..\src\Compiler\CompilerParts\ConfigReader.cpp" />
     <ClCompile Include="..\src\Compiler\CompilerParts\IdentificatorTable.cpp" />
     <ClCompile Include="..\src\Compiler\CompilerParts\ParserHelper.cpp" />
     <ClCompile Include="..\src\Compiler\Dllmain.cpp" />
+    <ClCompile Include="..\src\Compiler\Stages\ASMCompilerStage.cpp" />
     <ClCompile Include="..\src\Compiler\Stages\CodeGeneratorStage.cpp" />
     <ClCompile Include="..\src\Compiler\Stages\LexerStage.cpp" />
     <ClCompile Include="..\src\Compiler\Stages\ParserElements\Expression.cpp" />
@@ -45,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\Compiler\Compiler.h" />
+    <ClInclude Include="..\src\Compiler\CompilerParts\ASMConstructor.h" />
     <ClInclude Include="..\src\Compiler\CompilerParts\Config.h" />
     <ClInclude Include="..\src\Compiler\CompilerParts\ConfigReader.h" />
     <ClInclude Include="..\src\Compiler\CompilerParts\IdentificatorTable.h" />
@@ -52,6 +55,7 @@
     <ClInclude Include="..\src\Compiler\CompilerParts\Observers\IObserver.h" />
     <ClInclude Include="..\src\Compiler\CompilerParts\ParserHelper.h" />
     <ClInclude Include="..\src\Compiler\CompilerParts\StageOutputStructs.h" />
+    <ClInclude Include="..\src\Compiler\Stages\ASMCompilerStage.h" />
     <ClInclude Include="..\src\Compiler\Stages\CodeGeneratorStage.h" />
     <ClInclude Include="..\src\Compiler\Stages\IStage.h" />
     <ClInclude Include="..\src\Compiler\Stages\LexerStage.h" />

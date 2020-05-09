@@ -1,18 +1,24 @@
 #pragma once
 #include "CompilerParts/IdentificatorTable.h"
 #include "IStage.h"
-#include "CompilerParts/Observers/IObserver.h"
+#include "CompilerParts/Observers/Observable.h"
 #include "CompilerParts/StageOutputStructs.h"
+#include "CompilerParts/ASMConstructor.h"
 
 class Let;
 class ExpressionStatement;
 class If;
 class While;
 class Function;
+class Expression;
 
-class __declspec(dllexport) CodeGeneratorStage : public IStage, public IObserver<std::pair<std::shared_ptr<AbstractTreeNode>, std::shared_ptr<IdentificatorTable>>>
+class __declspec(dllexport) CodeGeneratorStage : public IStage,
+public IObserver<std::pair<std::shared_ptr<AbstractTreeNode>, std::shared_ptr<IdentificatorTable>>>,
+public Observable<std::shared_ptr<ASMConstructor>>
 {
 public:
+	CodeGeneratorStage() : m_constructor(std::make_shared<ASMConstructor>()) {}
+	
 	/// IStage override
 	void DoStage() override {}
 
@@ -25,13 +31,7 @@ public:
 
 private:
 
-	enum class Registers
-	{
-		AX,
-		BX,
-		CX,
-		DX
-	};
+	std::shared_ptr<ASMConstructor> m_constructor;
 
 	void TranslateNode(std::shared_ptr<AbstractTreeNode> node);
 
@@ -40,6 +40,10 @@ private:
 	void TranslateIfElement(std::shared_ptr<If> node);
 	void TranslateWhileElement(std::shared_ptr<While> node);
 	void TranslateFunction(std::shared_ptr<Function> node);
+
+	// result of this will be saved in eax register
+	void TranslateExpression(std::shared_ptr<Expression> node, std::wstring whereToStore);
+	void TranslateExpressionNode(std::shared_ptr<AbstractTreeNode> node);
 	
 	std::shared_ptr<IdentificatorTable> m_table;
 };

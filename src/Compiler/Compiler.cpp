@@ -1,5 +1,7 @@
 #include "stdafx.h"
 #include "Compiler.h"
+
+#include "Stages/ASMCompilerStage.h"
 #include "Stages/LexerStage.h"
 #include "Stages/ParserStage.h"
 #include "Stages/CodeGeneratorStage.h"
@@ -18,6 +20,7 @@ Compiler::Compiler(Config config) : m_config(std::move(config))
 	auto parser           = std::make_shared<ParserStage>();
 	auto semanticAnalyzer = std::make_shared<SemanticAnalyzer>();
 	auto codeGenerator    = std::make_shared<CodeGeneratorStage>();
+	auto asmCompiler	  = std::make_shared<ASMCompilerStage>(m_config.ExecutionFolder, m_config.OutputFileName);
 
 	// Serializers
 	auto lexerSerializer   = std::make_shared<LexerStageOutputSerializer>();
@@ -35,11 +38,15 @@ Compiler::Compiler(Config config) : m_config(std::move(config))
 	// Bind to semanticAnalyzer
 	semanticAnalyzer->RegisterListener(codeGenerator.get());
 	semanticAnalyzer->RegisterListener(IDTableSerializer.get());
+
+	// Bind to codeGenerator
+	codeGenerator->RegisterListener(asmCompiler.get());
 	
 	m_stages.push_back(lexer);
 	m_stages.push_back(parser);
 	m_stages.push_back(semanticAnalyzer);
 	m_stages.push_back(codeGenerator);
+	m_stages.push_back(asmCompiler);
 
 	m_stageOutputSerializers.push_back(lexerSerializer);
 	m_stageOutputSerializers.push_back(parserSerializer);

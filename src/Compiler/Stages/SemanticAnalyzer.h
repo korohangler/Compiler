@@ -32,5 +32,5 @@ private:
 		[[nodiscard]] std::wstring ToString() const;
 	};
 
-	void ProcessNode(std::shared_ptr<AbstractTreeNode> node, const ScopeData& currScopeData);
+	void ProcessNode(std::shared_ptr<AbstractTreeNode> node, const ScopeData& currScopeData, size_t childIdx);
 };

@@ -98,6 +98,12 @@
     <ClCompile Include="..\src\Compiler\Stages\StageOutputSerializers\IdentificatorTableSerializer.cpp">
       <Filter>Source Files\Stages\StageOutputSerializers</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\Compiler\CompilerParts\ASMConstructor.cpp">
+      <Filter>Source Files\CompilerParts</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Compiler\Stages\ASMCompilerStage.cpp">
+      <Filter>Source Files\Stages</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\Compiler\stdafx.h">
@@ -204,6 +210,12 @@
     </ClInclude>
     <ClInclude Include="..\src\Compiler\CompilerParts\Observers\IObserver.h">
       <Filter>Source Files\CompilerParts\Observers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Compiler\CompilerParts\ASMConstructor.h">
+      <Filter>Source Files\CompilerParts</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Compiler\Stages\ASMCompilerStage.h">
+      <Filter>Source Files\Stages</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

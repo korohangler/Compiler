@@ -1,6 +1,7 @@
 #pragma once
 #include "CompilerParts/StageOutputStructs.h"
 #include "Stages/ParserElements/BaseNode.h"
+#include "Stages/ParserElements/Expression.h"
 
 class __declspec(dllexport) ExpressionStatement : public BaseNode
 {
@@ -18,6 +19,8 @@ public:
 	};
 
 	[[nodiscard]] const std::wstring& GetIdentificatorName() const { return m_identificator; }
+
+	[[nodiscard]] std::shared_ptr<Expression> GetExpression() { return std::dynamic_pointer_cast<Expression>(m_childs.back()); }
 	
 private:
 

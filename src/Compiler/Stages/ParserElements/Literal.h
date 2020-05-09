@@ -18,6 +18,10 @@ public:
 	[[nodiscard]] const std::wstring& GetSerializeData() const override { return m_serializeData; }
 	///
 
+	[[nodiscard]] const std::wstring& GetData() const { return m_data; }
+
+	[[nodiscard]] float GetFloatData() const { return _wtof(m_data.c_str()); }
+	
 	enum class LiteralType
 	{
 		String,
