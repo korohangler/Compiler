@@ -27,6 +27,9 @@
     <Filter Include="Source Files\Stages\ParserElements\MathOperations">
       <UniqueIdentifier>{2d8b549c-4676-4a62-9374-3deaecec1256}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\CompilerParts\StageOutputStructs">
+      <UniqueIdentifier>{b3a24cb1-d0bd-4234-81d8-d44e90a01d4b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\Compiler\stdafx.cpp">
@@ -139,9 +142,6 @@
     <ClInclude Include="..\src\Compiler\Stages\StageOutputSerializers\ParserStageOutputSerializer.h">
       <Filter>Source Files\Stages\StageOutputSerializers</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\Compiler\CompilerParts\StageOutputStructs.h">
-      <Filter>Source Files\CompilerParts</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\Compiler\Stages\ParserElements\Scope.h">
       <Filter>Source Files\Stages\ParserElements</Filter>
     </ClInclude>
@@ -216,6 +216,12 @@
     </ClInclude>
     <ClInclude Include="..\src\Compiler\Stages\ASMCompilerStage.h">
       <Filter>Source Files\Stages</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Compiler\StageOutputStructs\AbstractTreeNode.h">
+      <Filter>Source Files\CompilerParts\StageOutputStructs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Compiler\StageOutputStructs\Token.h">
+      <Filter>Source Files\CompilerParts\StageOutputStructs</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

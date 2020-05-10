@@ -54,7 +54,8 @@
     <ClInclude Include="..\src\Compiler\CompilerParts\Observers\Observable.h" />
     <ClInclude Include="..\src\Compiler\CompilerParts\Observers\IObserver.h" />
     <ClInclude Include="..\src\Compiler\CompilerParts\ParserHelper.h" />
-    <ClInclude Include="..\src\Compiler\CompilerParts\StageOutputStructs.h" />
+    <ClInclude Include="..\src\Compiler\StageOutputStructs\AbstractTreeNode.h" />
+    <ClInclude Include="..\src\Compiler\StageOutputStructs\Token.h" />
     <ClInclude Include="..\src\Compiler\Stages\ASMCompilerStage.h" />
     <ClInclude Include="..\src\Compiler\Stages\CodeGeneratorStage.h" />
     <ClInclude Include="..\src\Compiler\Stages\IStage.h" />

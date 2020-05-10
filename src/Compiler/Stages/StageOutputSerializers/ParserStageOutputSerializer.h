@@ -1,7 +1,7 @@
 #pragma once
 #include "CompilerParts/Observers/IObserver.h"
 #include "IStageOutputSerializer.h"
-#include "CompilerParts/StageOutputStructs.h"
+#include "StageOutputStructs/AbstractTreeNode.h"
 
 class __declspec(dllexport) ParserStageOutputSerializer : public IStageOutputSerializer, public IObserver<std::shared_ptr<AbstractTreeNode>>
 {

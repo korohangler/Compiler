@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "ParserStageOutputSerializer.h"
-#include "CompilerParts/StageOutputStructs.h"
+#include "StageOutputStructs/AbstractTreeNode.h"
 
 ParserStageOutputSerializer::ParserStageOutputSerializer()
 {

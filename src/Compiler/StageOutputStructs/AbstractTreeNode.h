@@ -1,19 +1,5 @@
 #pragma once
-
-class ParserStage;
-class IStageOutputSerializer;
-
-struct __declspec(dllexport) Token
-{
-	Token() : Line(0) {};
-	Token(std::wstring val, std::wstring type, size_t line) : Value(std::move(val)), Type(std::move(type)), Line(line) {};
-
-	std::wstring Value;
-	std::wstring Type;
-	size_t Line;
-
-	bool operator==(const Token& tok) const { return tok.Line == Line && tok.Type == Type && tok.Value == Value; }
-};
+#include "Token.h"
 
 class __declspec(dllexport) AbstractTreeNode
 {
@@ -21,7 +7,7 @@ public:
 	virtual ~AbstractTreeNode() = default;
 	AbstractTreeNode() = default;
 	AbstractTreeNode(size_t childsCount) { m_childs = std::vector<std::shared_ptr<AbstractTreeNode>>(childsCount); }
-	
+
 	AbstractTreeNode* parent = nullptr;
 	std::vector<std::shared_ptr<AbstractTreeNode>> m_childs;
 
