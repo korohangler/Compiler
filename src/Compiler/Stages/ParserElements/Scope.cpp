@@ -29,25 +29,25 @@ void Scope::HandleOpenBracket(const Token& token)
 
 void Scope::HandleComputation(const Token& token)
 {
-	if (token.Type == L"Bracket" && token.Value == L"}" && (m_childs.empty() || m_childs.back()->IsComplete()))
+	if (token.Type == L"Bracket" && token.Value == L"}" && (Childs.empty() || Childs.back()->IsComplete()))
 	{
 		m_needRecompute = false;
 		m_isComplete = true;
 	}
 	else
 	{
-		if (token.Type != L"CommonSeparator" && (m_childs.empty() || m_childs.back()->IsComplete()))
+		if (token.Type != L"CommonSeparator" && (Childs.empty() || Childs.back()->IsComplete()))
 		{
-			m_childs.emplace_back(ParserHelper::CreateNewNodeFromToken(token));
-			m_childs.back()->parent = this;
+			Childs.emplace_back(ParserHelper::CreateNewNodeFromToken(token));
+			Childs.back()->Parent = this;
 		}
 
-		if (!m_childs.empty())
+		if (!Childs.empty())
 		{
-			if (!m_childs.back()->IsComplete())
-				m_childs.back()->Compute(token);
+			if (!Childs.back()->IsComplete())
+				Childs.back()->Compute(token);
 
-			m_needRecompute = m_childs.back()->NeedRecompute();
+			m_needRecompute = Childs.back()->NeedRecompute();
 		}
 	}
 }

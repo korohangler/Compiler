@@ -40,7 +40,7 @@ void CodeGeneratorStage::TranslateNode(std::shared_ptr<AbstractTreeNode> node)
 	else if (whileElem != nullptr)
 		TranslateWhileElement(whileElem);
 	else if (scope != nullptr)
-		for (auto child : scope->m_childs) TranslateNode(child);
+		for (auto child : scope->Childs) TranslateNode(child);
 	else if (function != nullptr)
 		TranslateFunction(function);
 }

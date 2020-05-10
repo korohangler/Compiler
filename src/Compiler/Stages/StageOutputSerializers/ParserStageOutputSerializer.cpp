@@ -46,10 +46,10 @@ WValue ParserStageOutputSerializer::SerializeNode(std::shared_ptr<AbstractTreeNo
 		res.AddMember(L"Value", val, *m_allocator);
 	}
 
-	if (!node->m_childs.empty())
+	if (!node->Childs.empty())
 	{
 		WValue arr(rapidjson::kArrayType);
-		for (const auto& child : node->m_childs)
+		for (const auto& child : node->Childs)
 			arr.PushBack(SerializeNode(child), *m_allocator);
 
 		res.AddMember(L"Nodes", arr, *m_allocator);

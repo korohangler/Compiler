@@ -78,7 +78,7 @@ void Function::HandleArgumentOrBracket(const Token& token)
 	Utils::ASSERT2(token.Type == L"Identificator",
 		std::wstring(L"Token type mismatch! Expected: Identificator. Got: ") + token.Type + std::wstring(L". At line: ") + std::to_wstring(token.Line));
 
-	m_childs.push_back(std::make_shared<Identificator>(token.Value));
+	Childs.push_back(std::make_shared<Identificator>(token.Value));
 
 	m_state = States::CommaOrBracket;
 }
@@ -103,7 +103,7 @@ void Function::HandleCommaOrBracket(const Token& token)
 
 void Function::HandleScopeCreation(const Token& token)
 {
-	m_childs.emplace_back(std::make_shared<Scope>());
+	Childs.emplace_back(std::make_shared<Scope>());
 
 	m_state = States::ScopeComputation;
 
@@ -112,9 +112,9 @@ void Function::HandleScopeCreation(const Token& token)
 
 void Function::HandleScopeComputation(const Token& token)
 {
-	m_childs.back()->Compute(token);
+	Childs.back()->Compute(token);
 
-	m_needRecompute = m_childs.back()->NeedRecompute();
+	m_needRecompute = Childs.back()->NeedRecompute();
 
-	m_isComplete = m_childs.back()->IsComplete();
+	m_isComplete = Childs.back()->IsComplete();
 }

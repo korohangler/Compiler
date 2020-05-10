@@ -1,5 +1,5 @@
 #pragma once
-#include "CompilerParts/StageOutputStructs.h"
+#include "StageOutputStructs/AbstractTreeNode.h"
 #include "Stages/ParserElements/BaseNode.h"
 #include "Stages/ParserElements/Expression.h"
 
@@ -20,7 +20,7 @@ public:
 
 	[[nodiscard]] const std::wstring& GetIdentificatorName() const { return m_identificator; }
 
-	[[nodiscard]] std::shared_ptr<Expression> GetExpression() { return std::dynamic_pointer_cast<Expression>(m_childs.back()); }
+	[[nodiscard]] std::shared_ptr<Expression> GetExpression() { return std::dynamic_pointer_cast<Expression>(Childs.back()); }
 	
 private:
 

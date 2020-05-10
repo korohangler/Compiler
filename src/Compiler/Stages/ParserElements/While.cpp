@@ -39,8 +39,8 @@ void While::HandleKeywordWhile(const Token& token)
 
 void While::HandleExpressionCreation(const Token& token)
 {
-	m_childs.emplace_back(std::make_shared<Expression>());
-	m_childs.back()->parent = this;
+	Childs.emplace_back(std::make_shared<Expression>());
+	Childs.back()->Parent = this;
 
 	m_needRecompute = true;
 
@@ -49,16 +49,16 @@ void While::HandleExpressionCreation(const Token& token)
 
 void While::HandleExpressionComputation(const Token& token)
 {
-	m_childs.back()->Compute(token);
+	Childs.back()->Compute(token);
 
-	m_needRecompute = m_childs.back()->NeedRecompute();
+	m_needRecompute = Childs.back()->NeedRecompute();
 
-	if (m_childs.back()->IsComplete()) m_state = States::ScopeCreation;
+	if (Childs.back()->IsComplete()) m_state = States::ScopeCreation;
 }
 
 void While::HandleScopeCreation(const Token& token)
 {
-	m_childs.emplace_back(std::make_shared<Scope>());
+	Childs.emplace_back(std::make_shared<Scope>());
 
 	m_needRecompute = true;
 
@@ -67,9 +67,9 @@ void While::HandleScopeCreation(const Token& token)
 
 void While::HandleScopeComputation(const Token& token)
 {
-	m_childs.back()->Compute(token);
+	Childs.back()->Compute(token);
 
-	m_needRecompute = m_childs.back()->NeedRecompute();
+	m_needRecompute = Childs.back()->NeedRecompute();
 
-	m_isComplete = m_childs.back()->IsComplete();
+	m_isComplete = Childs.back()->IsComplete();
 }

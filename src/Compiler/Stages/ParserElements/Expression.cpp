@@ -24,7 +24,7 @@ void Expression::Compute(const Token& token)
 	{
 		Utils::ASSERT2(!m_tokens.empty(), std::wstring(L"Expected expression at line: ") + std::to_wstring(token.Line));
 		
-		m_childs.emplace_back(ParseExpression(m_tokens.begin(), m_tokens.end()));
+		Childs.emplace_back(ParseExpression(m_tokens.begin(), m_tokens.end()));
 		m_needRecompute = true;
 		m_isComplete = true;
 	}

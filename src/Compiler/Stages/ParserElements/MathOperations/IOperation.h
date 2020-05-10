@@ -1,5 +1,5 @@
 #pragma once
-#include "CompilerParts/StageOutputStructs.h"
+#include "StageOutputStructs/AbstractTreeNode.h"
 
 class __declspec(dllexport) IOperation
 {

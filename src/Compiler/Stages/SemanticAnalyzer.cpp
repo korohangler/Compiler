@@ -30,43 +30,43 @@ void SemanticAnalyzer::ProcessNode(std::shared_ptr<AbstractTreeNode> node, const
 		
 		m_identificatorTable->AddScope(currScopeData.ToString(), newScopeData.ToString());
 
-		for (size_t i = 0; i < node->m_childs.size(); i++) 
-			ProcessNode(node->m_childs[i], newScopeData, i);
+		for (size_t i = 0; i < node->Childs.size(); i++) 
+			ProcessNode(node->Childs[i], newScopeData, i);
 	}
 	else if(identificator != nullptr)
 	{
 		Utils::ASSERT2(m_identificatorTable->IsIdentificatorExist(currScopeData.ToString(), identificator->GetVariableName()),
 		               std::wstring(L"Variable: ") + identificator->GetVariableName() + std::wstring(L". Does not exist"));
 
-		for (size_t i = 0; i < node->m_childs.size(); i++)
-			ProcessNode(node->m_childs[i], currScopeData, i);
+		for (size_t i = 0; i < node->Childs.size(); i++)
+			ProcessNode(node->Childs[i], currScopeData, i);
 	}
 	else if(let != nullptr)
 	{
 		m_identificatorTable->AddIdentificator(currScopeData.ToString(), let->GetVariableName());
 		
-		for (size_t i = 0; i < node->m_childs.size(); i++)
-			ProcessNode(node->m_childs[i], currScopeData, i);
+		for (size_t i = 0; i < node->Childs.size(); i++)
+			ProcessNode(node->Childs[i], currScopeData, i);
 	}
 	else if(function != nullptr)
 	{
 		m_identificatorTable->AddIdentificator(currScopeData.ToString(), function->GetFunctionName());
 
-		for (size_t i = 0; i < node->m_childs.size(); i++)
-			ProcessNode(node->m_childs[i], currScopeData, i);
+		for (size_t i = 0; i < node->Childs.size(); i++)
+			ProcessNode(node->Childs[i], currScopeData, i);
 	}
 	else if(expressionStatement != nullptr)
 	{
 		Utils::ASSERT2(m_identificatorTable->IsIdentificatorExist(currScopeData.ToString(), expressionStatement->GetIdentificatorName()),
 		               std::wstring(L"Use of undefined variable: ") + expressionStatement->GetIdentificatorName());
 
-		for (size_t i = 0; i < node->m_childs.size(); i++)
-			ProcessNode(node->m_childs[i], currScopeData, i);
+		for (size_t i = 0; i < node->Childs.size(); i++)
+			ProcessNode(node->Childs[i], currScopeData, i);
 	}
 	else
 	{
-		for (size_t i = 0; i < node->m_childs.size(); i++)
-			ProcessNode(node->m_childs[i], currScopeData, i);
+		for (size_t i = 0; i < node->Childs.size(); i++)
+			ProcessNode(node->Childs[i], currScopeData, i);
 	}
 }
 

@@ -9,7 +9,7 @@ void ParserStage::Notify(const Token& token)
 	{
 		if (!m_currNode->IsComplete()) m_currNode->Compute(token);
 
-		Utils::ASSERT2(m_root->m_childs.back()->IsComplete(), L"Unexpected end of tokens!");
+		Utils::ASSERT2(m_root->Childs.back()->IsComplete(), L"Unexpected end of tokens!");
 		
 		NotifyListeners(m_root);
 
@@ -20,9 +20,9 @@ void ParserStage::Notify(const Token& token)
 	{
 		if (token.Type == L"CommonSeparator") return;
 		
-		m_root->m_childs.emplace_back(ParserHelper::CreateNewNodeFromToken(token));
-		m_currNode = m_root->m_childs.back();
-		m_currNode->parent = m_root.get();
+		m_root->Childs.emplace_back(ParserHelper::CreateNewNodeFromToken(token));
+		m_currNode = m_root->Childs.back();
+		m_currNode->Parent = m_root.get();
 	}
 	
 	m_currNode->Compute(token);

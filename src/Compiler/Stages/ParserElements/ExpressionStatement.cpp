@@ -55,7 +55,7 @@ void ExpressionStatement::HandleTypeChoiseState(const Token& token)
 		m_type = StatementType::AssignmentExpression;
 
 		// Simple expression
-		m_childs.push_back(std::make_shared<Expression>());
+		Childs.push_back(std::make_shared<Expression>());
 
 		m_state = States::ExpressionComputation;
 	}
@@ -70,11 +70,11 @@ void ExpressionStatement::HandleTypeChoiseState(const Token& token)
 
 void ExpressionStatement::HandleExpressionComputingState(const Token& token)
 {
-	m_childs.back()->Compute(token);
+	Childs.back()->Compute(token);
 
-	if (m_childs.back()->IsComplete()) m_state = States::SemicolonAwait;
+	if (Childs.back()->IsComplete()) m_state = States::SemicolonAwait;
 
-	m_needRecompute = m_childs.back()->NeedRecompute();
+	m_needRecompute = Childs.back()->NeedRecompute();
 }
 
 void ExpressionStatement::HandleSemicolonAwaitState(const Token& token)

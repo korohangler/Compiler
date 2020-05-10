@@ -1,6 +1,6 @@
 #pragma once
 #include "IOperation.h"
-#include "CompilerParts/StageOutputStructs.h"
+#include "StageOutputStructs/AbstractTreeNode.h"
 
 class __declspec(dllexport) BasicOperation : public IOperation, public AbstractTreeNode
 {
@@ -9,11 +9,11 @@ public:
 	BasicOperation() : AbstractTreeNode(2) { }
 
 	/// IOperation override
-	[[nodiscard]] std::shared_ptr<AbstractTreeNode> GetRight() const override { return m_childs[1]; }
-	[[nodiscard]] std::shared_ptr<AbstractTreeNode> GetLeft() const override { return m_childs[0]; }
+	[[nodiscard]] std::shared_ptr<AbstractTreeNode> GetRight() const override { return Childs[1]; }
+	[[nodiscard]] std::shared_ptr<AbstractTreeNode> GetLeft() const override { return Childs[0]; }
 
-	void SetRight(std::shared_ptr<AbstractTreeNode> right) override { m_childs[1] = right; }
-	void SetLeft(std::shared_ptr<AbstractTreeNode> left) override { m_childs[0] = left; }
+	void SetRight(std::shared_ptr<AbstractTreeNode> right) override { Childs[1] = right; }
+	void SetLeft(std::shared_ptr<AbstractTreeNode> left) override { Childs[0] = left; }
 	///
 
 	/// AbstractTreeNode override

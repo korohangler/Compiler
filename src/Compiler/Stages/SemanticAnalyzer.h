@@ -1,7 +1,7 @@
 #pragma once
 #include "CompilerParts/IdentificatorTable.h"
 #include "IStage.h"
-#include "CompilerParts/StageOutputStructs.h"
+#include "StageOutputStructs/AbstractTreeNode.h"
 #include "CompilerParts/Observers/Observable.h"
 
 class __declspec(dllexport) SemanticAnalyzer : public IStage,

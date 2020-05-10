@@ -8,7 +8,7 @@ public:
 	void Compute(const Token& token) override;
 	///
 
-	[[nodiscard]] std::shared_ptr<AbstractTreeNode> GetRoot() { return m_childs[0]; }
+	[[nodiscard]] std::shared_ptr<AbstractTreeNode> GetRoot() { return Childs[0]; }
 	
 private:
 

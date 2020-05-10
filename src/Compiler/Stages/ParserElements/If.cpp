@@ -48,7 +48,7 @@ void If::HandleOpeningBracket(const Token& token)
 	Utils::ASSERT2(token.Type == L"Bracket" && token.Value == L"(",
 		std::wstring(L"token type mismatch! Expected RoundOpeningBracket, got ") + token.Type + std::wstring(L". At line: ") + std::to_wstring(token.Line));
 
-	m_childs.emplace_back(std::make_shared<Expression>());
+	Childs.emplace_back(std::make_shared<Expression>());
 	
 	m_needRecompute = true;
 
@@ -57,16 +57,16 @@ void If::HandleOpeningBracket(const Token& token)
 
 void If::HandleExpressionComputation(const Token& token)
 {
-	m_childs.back()->Compute(token);
+	Childs.back()->Compute(token);
 
-	if (m_childs.back()->IsComplete()) m_state = States::ScopeCreation;
+	if (Childs.back()->IsComplete()) m_state = States::ScopeCreation;
 
-	m_needRecompute = m_childs.back()->NeedRecompute();
+	m_needRecompute = Childs.back()->NeedRecompute();
 }
 
 void If::HandleScopeCreation(const Token& token)
 {
-	m_childs.emplace_back(std::make_shared<Scope>());
+	Childs.emplace_back(std::make_shared<Scope>());
 
 	m_needRecompute = true;
 
@@ -75,11 +75,11 @@ void If::HandleScopeCreation(const Token& token)
 
 void If::HandleScopeComputation(const Token& token)
 {
-	m_childs.back()->Compute(token);
+	Childs.back()->Compute(token);
 
-	if (m_childs.back()->IsComplete()) m_state = States::ElseKeyword;
+	if (Childs.back()->IsComplete()) m_state = States::ElseKeyword;
 
-	m_needRecompute = m_childs.back()->NeedRecompute();
+	m_needRecompute = Childs.back()->NeedRecompute();
 }
 
 void If::HandleElseKeyword(const Token& token)

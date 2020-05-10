@@ -1,7 +1,7 @@
 #pragma once
 #include "CompilerParts/Observers/Observable.h"
 #include "IStage.h"
-#include "CompilerParts/StageOutputStructs.h"
+#include "StageOutputStructs/AbstractTreeNode.h"
 #include "ParserElements/Scope.h"
 
 class __declspec(dllexport) ParserStage final : public IStage, public IObserver<const Token&>, public Observable<std::shared_ptr<AbstractTreeNode>>

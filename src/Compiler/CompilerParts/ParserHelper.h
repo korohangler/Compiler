@@ -1,6 +1,6 @@
 #pragma once
 
-#include "StageOutputStructs.h"
+#include "StageOutputStructs/AbstractTreeNode.h"
 
 class __declspec(dllexport) ParserHelper
 {

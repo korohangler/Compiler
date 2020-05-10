@@ -2,7 +2,7 @@
 #include "CompilerParts/IdentificatorTable.h"
 #include "CompilerParts/Observers/IObserver.h"
 #include "IStageOutputSerializer.h"
-#include "CompilerParts/StageOutputStructs.h"
+#include "StageOutputStructs/AbstractTreeNode.h"
 
 class IdentificatorTableSerializer : public IStageOutputSerializer, public IObserver<std::pair<std::shared_ptr<AbstractTreeNode>, std::shared_ptr<IdentificatorTable>>>
 {

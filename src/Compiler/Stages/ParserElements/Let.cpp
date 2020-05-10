@@ -65,8 +65,8 @@ void Let::HandleSemicolonOrAssign(const Token& token)
 	}
 	else if (token.Type == L"Assignment")
 	{
-		m_childs.emplace_back(std::make_shared<Expression>());
-		m_childs.back()->parent = this;
+		Childs.emplace_back(std::make_shared<Expression>());
+		Childs.back()->Parent = this;
 
 		m_state = States::ExpressionComputation;
 	}
@@ -74,15 +74,15 @@ void Let::HandleSemicolonOrAssign(const Token& token)
 
 void Let::HandleExpressionComputation(const Token& token)
 {
-	if (m_childs.back()->IsComplete())
+	if (Childs.back()->IsComplete())
 	{
 		m_isComplete = true;
 	}
 	else
 	{
-		m_childs.back()->Compute(token);
+		Childs.back()->Compute(token);
 
-		if (m_childs.back()->IsComplete())
+		if (Childs.back()->IsComplete())
 		{
 			m_state = States::Semicolon;
 			m_needRecompute = true;

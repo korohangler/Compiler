@@ -1,5 +1,5 @@
 #pragma once
-#include "CompilerParts/StageOutputStructs.h"
+#include "StageOutputStructs/Token.h"
 #include "IStage.h"
 #include "CompilerParts/Observers/Observable.h"
 

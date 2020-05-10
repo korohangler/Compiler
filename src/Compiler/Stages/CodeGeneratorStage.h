@@ -2,7 +2,7 @@
 #include "CompilerParts/IdentificatorTable.h"
 #include "IStage.h"
 #include "CompilerParts/Observers/Observable.h"
-#include "CompilerParts/StageOutputStructs.h"
+#include "StageOutputStructs/AbstractTreeNode.h"
 #include "CompilerParts/ASMConstructor.h"
 
 class Let;
