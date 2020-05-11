@@ -12,6 +12,7 @@
 #include "ParserElements/Scope.h"
 #include "ParserElements/While.h"
 #include "ParserElements/Expression.h"
+#include "ParserElements/Identificator.h"
 
 void CodeGeneratorStage::Notify(std::pair<std::shared_ptr<AbstractTreeNode>, std::shared_ptr<IdentificatorTable>> data)
 {
@@ -48,14 +49,14 @@ void CodeGeneratorStage::TranslateNode(std::shared_ptr<AbstractTreeNode> node)
 void CodeGeneratorStage::TranslateLet(std::shared_ptr<Let> node)
 {
 	// TODO For now no initialization at all
-	m_constructor->AddVariable(node->GetVariableName());
+	m_constructor->AddVariable(node->GetVariable()->GetVariableName());
 }
 
 void CodeGeneratorStage::TranslateExpressionStatement(std::shared_ptr<ExpressionStatement> node)
 {
 	// TODO functions
 
-	TranslateExpression(node->GetExpression(), node->GetIdentificatorName());
+	TranslateExpression(node->GetExpression(), node->GetIdentificator());
 }
 
 void CodeGeneratorStage::TranslateIfElement(std::shared_ptr<If> node)
@@ -70,10 +71,10 @@ void CodeGeneratorStage::TranslateFunction(std::shared_ptr<Function> node)
 {
 }
 
-void CodeGeneratorStage::TranslateExpression(std::shared_ptr<Expression> node, std::wstring whereToStore)
+void CodeGeneratorStage::TranslateExpression(std::shared_ptr<Expression> node, std::shared_ptr<Identificator> whereToStore)
 {
 	TranslateExpressionNode(node->GetRoot());
-	m_constructor->fstp(whereToStore);
+	m_constructor->popFromStack(std::stol(whereToStore->GetAttribute(L"PositionOnStack")));
 }
 
 void CodeGeneratorStage::TranslateExpressionNode(std::shared_ptr<AbstractTreeNode> node)
@@ -90,18 +91,18 @@ void CodeGeneratorStage::TranslateExpressionNode(std::shared_ptr<AbstractTreeNod
 	auto rightOperation = std::dynamic_pointer_cast<IOperation>(operation->GetRight());
 
 	if (leftLiteral != nullptr)
-		m_constructor->fld(m_constructor->GetConstant(leftLiteral->GetFloatData()));
+		m_constructor->pushToStack(m_constructor->GetLiteralPos(leftLiteral->GetData()));
 	else if (leftIdentificator != nullptr)
-		m_constructor->fld(leftIdentificator->GetVariableName());
+		m_constructor->pushToStack(std::stol(leftIdentificator->GetAttribute(L"PositionOnStack")));
 	else if(leftOperation != nullptr)
 		TranslateExpressionNode(operation->GetLeft());
 
 	if (rightLiteral != nullptr)
-		m_constructor->fld(m_constructor->GetConstant(rightLiteral->GetFloatData()));
+		m_constructor->pushToStack(m_constructor->GetLiteralPos(rightLiteral->GetData()));
 	else if (rightIdentificator != nullptr)
-		m_constructor->fld(rightIdentificator->GetVariableName());
+		m_constructor->pushToStack(std::stol(rightIdentificator->GetAttribute(L"PositionOnStack")));
 	else if (rightOperation != nullptr)
 		TranslateExpressionNode(operation->GetRight());
 
-	m_constructor->faddp();
+	m_constructor->addPush(m_constructor->GetCurrentStackOffset() - 1, m_constructor->GetCurrentStackOffset(), true);
 }

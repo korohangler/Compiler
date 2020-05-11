@@ -1,5 +1,6 @@
 #pragma once
 #include "Stages/ParserElements/BaseNode.h"
+#include "Stages\ParserElements\Identificator.h"
 
 class __declspec(dllexport) Let : public BaseNode
 {
@@ -7,10 +8,10 @@ public:
 	/// AbstractTreeNode override
 	void Compute(const Token& token) override;
 
-	[[nodiscard]] const std::wstring& GetSerializeData() const override { return m_variableName; }
+	[[nodiscard]] const std::wstring& GetSerializeData() const override { return std::static_pointer_cast<Identificator>(Childs[0])->GetVariableName(); }
 	///
 
-	[[nodiscard]] const std::wstring& GetVariableName() const { return m_variableName; }
+	[[nodiscard]] std::shared_ptr<Identificator> GetVariable() const { return std::static_pointer_cast<Identificator>(Childs[0]); }
 	
 private:
 
@@ -30,8 +31,6 @@ private:
 	void HandleSemicolonOrAssign(const Token& token);
 	void HandleExpressionComputation(const Token& token);
 	void HandleSemicolon(const Token& token);
-	
-	std::wstring m_variableName;
 
 	States m_state = States::LetKeyword;
 };

@@ -35,7 +35,7 @@ void ExpressionStatement::HandleAwaitIdentificatorState(const Token& token)
 	Utils::ASSERT2(token.Type == L"Identificator",
 		std::wstring(L"Token type mismatch! Expected: Identificator. Got: ") + token.Type + std::wstring(L". At line: ") + std::to_wstring(token.Line));
 
-	m_identificator = token.Value;
+	Childs.emplace_back(std::make_shared<Identificator>(token.Value));
 
 	m_state = States::TypeChoise;
 }
@@ -65,7 +65,7 @@ void ExpressionStatement::HandleTypeChoiseState(const Token& token)
 	else if (m_type == StatementType::CallExpression)
 		m_serializeData = L"CallExpression: ";
 
-	m_serializeData += m_identificator;
+	m_serializeData += GetIdentificator()->GetVariableName();
 }
 
 void ExpressionStatement::HandleExpressionComputingState(const Token& token)

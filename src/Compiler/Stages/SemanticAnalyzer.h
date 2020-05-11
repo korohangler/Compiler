@@ -32,5 +32,10 @@ private:
 		[[nodiscard]] std::wstring ToString() const;
 	};
 
+	size_t m_positionOnStack = 0;
+	size_t m_counterForVariableName = 0;
+	size_t m_counterForFunctionName = 0;
+	size_t m_counterForLiterals = 0;
+
 	void ProcessNode(std::shared_ptr<AbstractTreeNode> node, const ScopeData& currScopeData, size_t childIdx);
 };

@@ -1,0 +1,69 @@
+_res$1 = -80                                            ; size = 4
+_aPtr$2 = -76                                     ; size = 4
+_result$ = -72                                      ; size = 8
+_bPtr$3 = -64                                     ; size = 4
+_arg$4 = -60                                            ; size = 4
+_buff$5 = -56                                     ; size = 50
+__$ArrayPad$ = -4                                 ; size = 4
+_a$ = 8                                       ; size = 8
+_b$ = 16                                                ; size = 8
+summAtoms PROC C
+	push    ebp
+        mov     ebp, esp
+        sub     esp, 80                             ; 00000050H
+        xor     eax, ebp
+        mov     DWORD PTR __$ArrayPad$[ebp], eax
+        mov     eax, DWORD PTR _a$[ebp]
+        mov     DWORD PTR _result$[ebp], eax
+        cmp     DWORD PTR _a$[ebp], 0
+        jne     SHORT $LN2@summAtoms
+        movss   xmm0, DWORD PTR _b$[ebp+4]
+        movss   DWORD PTR _arg$4[ebp], xmm0
+        cmp     DWORD PTR _b$[ebp], 0
+        je      SHORT $LN4@summAtoms
+        mov     ecx, DWORD PTR _b$[ebp+4]
+        push    ecx
+        call    atof
+        add     esp, 4
+        fstp    DWORD PTR _arg$4[ebp]
+$LN4@summAtoms:
+        movss   xmm0, DWORD PTR _a$[ebp+4]
+        addss   xmm0, DWORD PTR _arg$4[ebp]
+        movss   DWORD PTR _result$[ebp+4], xmm0
+        jmp     SHORT $LN3@summAtoms
+$LN2@summAtoms:
+        mov     edx, DWORD PTR _a$[ebp+4]
+        mov     DWORD PTR _aPtr$2[ebp], edx
+        mov     eax, DWORD PTR _b$[ebp+4]
+        mov     DWORD PTR _bPtr$3[ebp], eax
+        cmp     DWORD PTR _b$[ebp], 1
+        jne     SHORT $LN5@summAtoms
+        lea     ecx, DWORD PTR _buff$5[ebp]
+        push    ecx
+        push    50                                  ; 00000032H
+        cvtss2sd xmm0, DWORD PTR _b$[ebp+4]
+        sub     esp, 8
+        movsd   QWORD PTR [esp], xmm0
+        call    gcvt
+        add     esp, 16                             ; 00000010H
+        lea     edx, DWORD PTR _buff$5[ebp]
+        mov     DWORD PTR _bPtr$3[ebp], edx
+$LN5@summAtoms:
+        mov     eax, DWORD PTR _bPtr$3[ebp]
+        push    eax
+        mov     ecx, DWORD PTR _aPtr$2[ebp]
+        push    ecx
+        call    strcat
+        add     esp, 8
+        mov     DWORD PTR _res$1[ebp], eax
+        cvtsi2ss xmm0, DWORD PTR _res$1[ebp]
+        movss   DWORD PTR _result$[ebp+4], xmm0
+$LN3@summAtoms:
+        mov     eax, DWORD PTR _result$[ebp]
+        mov     edx, DWORD PTR _result$[ebp+4]
+        mov     ecx, DWORD PTR __$ArrayPad$[ebp]
+        xor     ecx, ebp
+        mov     esp, ebp
+        pop     ebp
+        ret     0
+summAtoms ENDP

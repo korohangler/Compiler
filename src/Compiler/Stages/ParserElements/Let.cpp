@@ -50,7 +50,7 @@ void Let::HandleIdentificator(const Token& token)
 
 	Utils::ASSERT2(token.Type == L"Identificator", std::wstring(L"token type mismatch! Expected CommonSeparator, got ") + token.Type + std::wstring(L". At line: ") + std::to_wstring(token.Line));
 
-	m_variableName = token.Value;
+	Childs.emplace_back(std::make_shared<Identificator>(token.Value));
 
 	m_state = States::SemicolonOrAssign;
 }

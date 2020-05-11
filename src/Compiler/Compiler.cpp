@@ -19,7 +19,7 @@ Compiler::Compiler(Config config) : m_config(std::move(config))
 	auto lexer            = std::make_shared<LexerStage>(m_config.ExecutionFolder, m_config.InputFileName, m_config.NeedLog);
 	auto parser           = std::make_shared<ParserStage>();
 	auto semanticAnalyzer = std::make_shared<SemanticAnalyzer>();
-	auto codeGenerator    = std::make_shared<CodeGeneratorStage>();
+	auto codeGenerator    = std::make_shared<CodeGeneratorStage>(m_config.ExecutionFolder);
 	auto asmCompiler	  = std::make_shared<ASMCompilerStage>(m_config.ExecutionFolder, m_config.OutputFileName);
 
 	// Serializers

@@ -1,0 +1,17 @@
+.686P
+.XMM
+.model flat, stdcall
+.stack 4096
+option casemap:none
+
+includelib libcmt.lib
+includelib libvcruntime.lib
+includelib libucrt.lib
+includelib legacy_stdio_definitions.lib
+includelib oldnames.lib
+
+ExitProcess PROTO, dwExitCode:DWORD
+
+EXTRN   atof:PROC
+EXTRN   gcvt:PROC
+EXTRN   strcat:PROC

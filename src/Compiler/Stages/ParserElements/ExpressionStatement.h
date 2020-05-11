@@ -2,6 +2,7 @@
 #include "StageOutputStructs/AbstractTreeNode.h"
 #include "Stages/ParserElements/BaseNode.h"
 #include "Stages/ParserElements/Expression.h"
+#include "Stages/ParserElements/Identificator.h"
 
 class __declspec(dllexport) ExpressionStatement : public BaseNode
 {
@@ -18,9 +19,9 @@ public:
 		, AssignmentExpression
 	};
 
-	[[nodiscard]] const std::wstring& GetIdentificatorName() const { return m_identificator; }
+	[[nodiscard]] std::shared_ptr<Identificator> GetIdentificator() { return std::static_pointer_cast<Identificator>(Childs[0]); }
 
-	[[nodiscard]] std::shared_ptr<Expression> GetExpression() { return std::dynamic_pointer_cast<Expression>(Childs.back()); }
+	[[nodiscard]] std::shared_ptr<Expression> GetExpression() { return std::static_pointer_cast<Expression>(Childs.back()); }
 	
 private:
 
@@ -42,6 +43,4 @@ private:
 	States m_state = States::AwaitIdentificator;
 
 	StatementType m_type = StatementType::AssignmentExpression;
-
-	std::wstring m_identificator; // function name or variable name
 };

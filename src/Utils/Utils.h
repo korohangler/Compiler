@@ -35,6 +35,15 @@ namespace Utils
 		return std::vector<wchar_t>(std::istreambuf_iterator<wchar_t>(file), std::istreambuf_iterator<wchar_t>());
 	}
 
+	inline std::wstring ReadFileAsString(std::wstring_view pathToFile)
+	{
+		std::wifstream file(pathToFile.data());
+
+		ASSERT2(file.is_open(), std::wstring(L"Can't open file: ") + pathToFile.data());
+
+		return std::wstring(std::istreambuf_iterator<wchar_t>(file), std::istreambuf_iterator<wchar_t>());
+	}
+
 	class Logger
 	{
 	public:

@@ -30,9 +30,20 @@ void IdentificatorTableSerializer::Notify(std::pair<std::shared_ptr<AbstractTree
 			tmp.SetArray();
 			for (auto& id : scope.second.Identificators)
 			{
-				WValue idName;
-				idName.SetString(WValue::StringRefType(id.c_str()), *m_allocator);
-				tmp.PushBack(idName, *m_allocator);
+				WValue idInfo;
+				idInfo.SetObject();
+
+				WValue val;
+				val.SetString(WValue::StringRefType(id.first.c_str()), *m_allocator);
+				idInfo.AddMember(L"Name", val, *m_allocator);
+
+				val.SetString(WValue::StringRefType(id.second.AsmName.c_str()), *m_allocator);
+				idInfo.AddMember(L"AsmName", val, *m_allocator);
+
+				val.SetString(WValue::StringRefType(std::to_wstring(id.second.VariableLocationOnStack).c_str()), *m_allocator);
+				idInfo.AddMember(L"LocationOnStack", val, *m_allocator);
+
+				tmp.PushBack(idInfo, *m_allocator);
 			}
 			objValue.AddMember(L"Identificators", tmp, *m_allocator);
 		}

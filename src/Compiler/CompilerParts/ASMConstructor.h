@@ -3,30 +3,43 @@
 class ASMConstructor
 {
 public:
-	void mov(const std::wstring& to, const std::wstring& what);
-	void add(const std::wstring& to, const std::wstring& what);
+	ASMConstructor(const std::wstring& runningDirectory);
 
-	void fld(const std::wstring& what);
-	void faddp();
-	void fst(const std::wstring& to);
-	void fstp(const std::wstring& to);
+	void addPush(int to, int what, bool useESP = false);			   // summ 2 atoms and push result to stack
+	void add(int to, int what, int whereToStore, bool useESP = false); // summ 2 atoms and store it
 
-	void jmp(const std::wstring& to);
+	void subPush(int to, int what, bool useESP = false);			   // sub 2 atoms and push result to stack
+	void sub(int to, int what, int whereToStore, bool useESP = false); // sub 2 atoms and store it
 
-	void push(const std::wstring& what);
-	void pop(const std::wstring& to);
+	void divPush(int to, int what, bool useESP = false);			   // div 2 atoms and push result to stack
+	void div(int to, int what, int whereToStore, bool useESP = false); // div 2 atoms and store it
 
-	void AddVariable(std::wstring var, float defaultVal = 0.0);
+	void mulPush(int to, int what, bool useESP = false);			   // mul 2 atoms and push result to stack
+	void mul(int to, int what, int whereToStore, bool useESP = false); // mul 2 atoms and store it
 
-	const std::wstring& GetConstant(float val);
+	void pushToStack(int what, bool useESP = false);
+	void popFromStack(int to, bool useESP = false);
+
+	void AddVariable(std::wstring var);
+	
+	size_t GetLiteralPos(const std::wstring& val);
+
+	int GetCurrentStackOffset() { return m_stackOffset; };
 
 	std::wstring GenerateASM();
 private:
-	std::unordered_map<float, std::wstring> m_constants;
-	
+	void PushArgsToStack(int a, int b, bool useESP);
+	void PopArgsFromStack();
+
 	std::vector<std::pair<std::wstring, float>> m_variables;
-	
+	std::map<std::wstring, size_t> m_literals;
 	std::vector<std::wstring> m_commands;
 
-	size_t m_counter = 0;
+	size_t m_literalsCounter = 0;
+
+	std::vector<std::wstring> m_builtInFunctions;
+
+	std::wstring m_configDirectory;
+
+	int m_stackOffset = 0;
 };

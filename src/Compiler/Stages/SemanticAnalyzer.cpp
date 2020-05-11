@@ -6,6 +6,7 @@
 #include "ParserElements/Function.h"
 #include "ParserElements/Identificator.h"
 #include "ParserElements/Let.h"
+#include "Stages\ParserElements\Literal.h"
 
 void SemanticAnalyzer::Notify(std::shared_ptr<AbstractTreeNode> root)
 {
@@ -23,6 +24,7 @@ void SemanticAnalyzer::ProcessNode(std::shared_ptr<AbstractTreeNode> node, const
 	const auto let = std::dynamic_pointer_cast<Let>(node);
 	const auto function = std::dynamic_pointer_cast<Function>(node);
 	const auto expressionStatement = std::dynamic_pointer_cast<ExpressionStatement>(node);
+	const auto liter = std::dynamic_pointer_cast<Literal>(node);
 
 	if (scope != nullptr)
 	{
@@ -38,27 +40,51 @@ void SemanticAnalyzer::ProcessNode(std::shared_ptr<AbstractTreeNode> node, const
 		Utils::ASSERT2(m_identificatorTable->IsIdentificatorExist(currScopeData.ToString(), identificator->GetVariableName()),
 		               std::wstring(L"Variable: ") + identificator->GetVariableName() + std::wstring(L". Does not exist"));
 
+		identificator->SetAttribute(L"PositionOnStack", 
+			std::to_wstring(m_identificatorTable->GetIdentificatorInfo(currScopeData.ToString(), identificator->GetVariableName()).VariableLocationOnStack));
+
 		for (size_t i = 0; i < node->Childs.size(); i++)
 			ProcessNode(node->Childs[i], currScopeData, i);
 	}
 	else if(let != nullptr)
 	{
-		m_identificatorTable->AddIdentificator(currScopeData.ToString(), let->GetVariableName());
+		IdentificatorInfo info;
+		info.AsmName = std::wstring(L"Var") + std::to_wstring(m_counterForVariableName);
+		m_counterForVariableName++;
+
+		info.VariableLocationOnStack = m_positionOnStack;
+		m_positionOnStack++;
+
+		m_identificatorTable->AddIdentificator(currScopeData.ToString(), let->GetVariable()->GetVariableName(), info);
 		
 		for (size_t i = 0; i < node->Childs.size(); i++)
 			ProcessNode(node->Childs[i], currScopeData, i);
 	}
 	else if(function != nullptr)
 	{
-		m_identificatorTable->AddIdentificator(currScopeData.ToString(), function->GetFunctionName());
+		IdentificatorInfo info;
+		info.AsmName = std::wstring(L"Function") + std::to_wstring(m_counterForFunctionName);
+		m_counterForFunctionName++;
+
+		info.VariableLocationOnStack = -1;
+
+		m_identificatorTable->AddIdentificator(currScopeData.ToString(), function->GetFunctionName(), info);
 
 		for (size_t i = 0; i < node->Childs.size(); i++)
 			ProcessNode(node->Childs[i], currScopeData, i);
 	}
 	else if(expressionStatement != nullptr)
 	{
-		Utils::ASSERT2(m_identificatorTable->IsIdentificatorExist(currScopeData.ToString(), expressionStatement->GetIdentificatorName()),
-		               std::wstring(L"Use of undefined variable: ") + expressionStatement->GetIdentificatorName());
+		Utils::ASSERT2(m_identificatorTable->IsIdentificatorExist(currScopeData.ToString(), expressionStatement->GetIdentificator()->GetVariableName()),
+		               std::wstring(L"Use of undefined variable: ") + expressionStatement->GetIdentificator()->GetVariableName());
+
+		for (size_t i = 0; i < node->Childs.size(); i++)
+			ProcessNode(node->Childs[i], currScopeData, i);
+	}
+	else if (liter != nullptr)
+	{
+		liter->SetAttribute(L"PositionOnStack", std::to_wstring(m_positionOnStack));
+		m_positionOnStack++;
 
 		for (size_t i = 0; i < node->Childs.size(); i++)
 			ProcessNode(node->Childs[i], currScopeData, i);

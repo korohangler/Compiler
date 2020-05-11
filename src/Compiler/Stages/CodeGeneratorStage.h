@@ -11,13 +11,14 @@ class If;
 class While;
 class Function;
 class Expression;
+class Identificator;
 
 class __declspec(dllexport) CodeGeneratorStage : public IStage,
 public IObserver<std::pair<std::shared_ptr<AbstractTreeNode>, std::shared_ptr<IdentificatorTable>>>,
 public Observable<std::shared_ptr<ASMConstructor>>
 {
 public:
-	CodeGeneratorStage() : m_constructor(std::make_shared<ASMConstructor>()) {}
+	CodeGeneratorStage(std::wstring directory) : m_constructor(std::make_shared<ASMConstructor>(std::move(directory))) {}
 	
 	/// IStage override
 	void DoStage() override {}
@@ -42,7 +43,7 @@ private:
 	void TranslateFunction(std::shared_ptr<Function> node);
 
 	// result of this will be saved in eax register
-	void TranslateExpression(std::shared_ptr<Expression> node, std::wstring whereToStore);
+	void TranslateExpression(std::shared_ptr<Expression> node, std::shared_ptr<Identificator> whereToStore);
 	void TranslateExpressionNode(std::shared_ptr<AbstractTreeNode> node);
 	
 	std::shared_ptr<IdentificatorTable> m_table;
