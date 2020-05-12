@@ -3,11 +3,7 @@
 #include "CompilerParts/IdentificatorTable.h"
 #include "Identificator.h"
 #include "Literal.h"
-#include "MathOperations/LogicOperation.h"
-#include "Stages/ParserElements/MathOperations/DivideOperation.h"
-#include "Stages/ParserElements/MathOperations/MinusOperation.h"
-#include "Stages/ParserElements/MathOperations/MultiplyOperation.h"
-#include "Stages/ParserElements/MathOperations/SummOperation.h"
+#include "MathOperations/Operation.h"
 
 void Expression::Compute(const Token& token)
 {
@@ -47,11 +43,11 @@ std::shared_ptr<AbstractTreeNode> Expression::ParseExpression(std::vector<Token>
 	
 	if (distance > 2)
 	{
-		const std::shared_ptr<IOperation> operation = std::dynamic_pointer_cast<IOperation>(expressionTreeRoot);
+		const std::shared_ptr<Operation> operation = std::dynamic_pointer_cast<Operation>(expressionTreeRoot);
 
 		operation->SetLeft(ParseExpression(begin, rootToken));
 
-		if (operation->GetOperationType() == IOperation::OperationType::Binary)
+		if (operation->GetOperationType() == OperationType::Binary)
 		{
 			operation->SetRight(ParseExpression(rootToken + 1, end));
 		}
@@ -158,14 +154,7 @@ std::shared_ptr<AbstractTreeNode> Expression::CreateNode(const Token& token)
 	}
 	else
 	{
-		if (token.Value == L"-")
-			result = std::make_shared<MinusOperation>();
-		else if (token.Value == L"+")
-			result = std::make_shared<SummOperation>();
-		else if (token.Value == L"*")
-			result = std::make_shared<MultiplyOperation>();
-		else
-			result = std::make_shared<LogicOperation>(token);
+		result = std::make_shared<Operation>(token);
 	}
 	
 	return result;

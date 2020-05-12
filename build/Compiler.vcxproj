@@ -31,7 +31,7 @@
     <ClCompile Include="..\src\Compiler\Stages\ParserElements\If.cpp" />
     <ClCompile Include="..\src\Compiler\Stages\ParserElements\Let.cpp" />
     <ClCompile Include="..\src\Compiler\Stages\ParserElements\Literal.cpp" />
-    <ClCompile Include="..\src\Compiler\Stages\ParserElements\MathOperations\LogicOperation.cpp" />
+    <ClCompile Include="..\src\Compiler\Stages\ParserElements\MathOperations\Operation.cpp" />
     <ClCompile Include="..\src\Compiler\Stages\ParserElements\Scope.cpp" />
     <ClCompile Include="..\src\Compiler\Stages\ParserElements\While.cpp" />
     <ClCompile Include="..\src\Compiler\Stages\ParserStage.cpp" />
@@ -68,13 +68,7 @@
     <ClInclude Include="..\src\Compiler\Stages\ParserElements\If.h" />
     <ClInclude Include="..\src\Compiler\Stages\ParserElements\Let.h" />
     <ClInclude Include="..\src\Compiler\Stages\ParserElements\Literal.h" />
-    <ClInclude Include="..\src\Compiler\Stages\ParserElements\MathOperations\BasicOperation.h" />
-    <ClInclude Include="..\src\Compiler\Stages\ParserElements\MathOperations\DivideOperation.h" />
-    <ClInclude Include="..\src\Compiler\Stages\ParserElements\MathOperations\IOperation.h" />
-    <ClInclude Include="..\src\Compiler\Stages\ParserElements\MathOperations\LogicOperation.h" />
-    <ClInclude Include="..\src\Compiler\Stages\ParserElements\MathOperations\MinusOperation.h" />
-    <ClInclude Include="..\src\Compiler\Stages\ParserElements\MathOperations\MultiplyOperation.h" />
-    <ClInclude Include="..\src\Compiler\Stages\ParserElements\MathOperations\SummOperation.h" />
+    <ClInclude Include="..\src\Compiler\Stages\ParserElements\MathOperations\Operation.h" />
     <ClInclude Include="..\src\Compiler\Stages\ParserElements\Scope.h" />
     <ClInclude Include="..\src\Compiler\Stages\ParserElements\While.h" />
     <ClInclude Include="..\src\Compiler\Stages\ParserStage.h" />

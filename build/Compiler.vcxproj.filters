@@ -80,9 +80,6 @@
     <ClCompile Include="..\src\Compiler\Stages\ParserElements\Literal.cpp">
       <Filter>Source Files\Stages\ParserElements</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\Compiler\Stages\ParserElements\MathOperations\LogicOperation.cpp">
-      <Filter>Source Files\Stages\ParserElements\MathOperations</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\Compiler\Stages\ParserElements\ExpressionStatement.cpp">
       <Filter>Source Files\Stages\ParserElements</Filter>
     </ClCompile>
@@ -106,6 +103,9 @@
     </ClCompile>
     <ClCompile Include="..\src\Compiler\Stages\ASMCompilerStage.cpp">
       <Filter>Source Files\Stages</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Compiler\Stages\ParserElements\MathOperations\Operation.cpp">
+      <Filter>Source Files\Stages\ParserElements\MathOperations</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -163,29 +163,8 @@
     <ClInclude Include="..\src\Compiler\Stages\ParserElements\While.h">
       <Filter>Source Files\Stages\ParserElements</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\Compiler\Stages\ParserElements\MathOperations\IOperation.h">
-      <Filter>Source Files\Stages\ParserElements\MathOperations</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\Compiler\Stages\ParserElements\MathOperations\SummOperation.h">
-      <Filter>Source Files\Stages\ParserElements\MathOperations</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\Compiler\Stages\ParserElements\MathOperations\MinusOperation.h">
-      <Filter>Source Files\Stages\ParserElements\MathOperations</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\Compiler\Stages\ParserElements\MathOperations\MultiplyOperation.h">
-      <Filter>Source Files\Stages\ParserElements\MathOperations</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\Compiler\Stages\ParserElements\MathOperations\DivideOperation.h">
-      <Filter>Source Files\Stages\ParserElements\MathOperations</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\Compiler\Stages\ParserElements\MathOperations\BasicOperation.h">
-      <Filter>Source Files\Stages\ParserElements\MathOperations</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\Compiler\Stages\ParserElements\Literal.h">
       <Filter>Source Files\Stages\ParserElements</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\Compiler\Stages\ParserElements\MathOperations\LogicOperation.h">
-      <Filter>Source Files\Stages\ParserElements\MathOperations</Filter>
     </ClInclude>
     <ClInclude Include="..\src\Compiler\Stages\ParserElements\ExpressionStatement.h">
       <Filter>Source Files\Stages\ParserElements</Filter>
@@ -222,6 +201,9 @@
     </ClInclude>
     <ClInclude Include="..\src\Compiler\StageOutputStructs\Token.h">
       <Filter>Source Files\CompilerParts\StageOutputStructs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Compiler\Stages\ParserElements\MathOperations\Operation.h">
+      <Filter>Source Files\Stages\ParserElements\MathOperations</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

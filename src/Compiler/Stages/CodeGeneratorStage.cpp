@@ -8,11 +8,11 @@
 #include "ParserElements/If.h"
 #include "ParserElements/Let.h"
 #include "ParserElements/Literal.h"
-#include "ParserElements/MathOperations/IOperation.h"
 #include "ParserElements/Scope.h"
 #include "ParserElements/While.h"
 #include "ParserElements/Expression.h"
 #include "ParserElements/Identificator.h"
+#include "Stages\ParserElements\MathOperations\Operation.h"
 
 void CodeGeneratorStage::Notify(std::pair<std::shared_ptr<AbstractTreeNode>, std::shared_ptr<IdentificatorTable>> data)
 {
@@ -73,13 +73,20 @@ void CodeGeneratorStage::TranslateFunction(std::shared_ptr<Function> node)
 
 void CodeGeneratorStage::TranslateExpression(std::shared_ptr<Expression> node, std::shared_ptr<Identificator> whereToStore)
 {
-	TranslateExpressionNode(node->GetRoot());
-	m_constructor->popFromStack(std::stol(whereToStore->GetAttribute(L"PositionOnStack")));
+	if (std::dynamic_pointer_cast<Operation>(node->GetRoot()) != nullptr)
+	{
+		TranslateExpressionNode(node->GetRoot());
+		m_constructor->popFromStack(std::stol(whereToStore->GetAttribute(L"PositionOnStack")));
+	}
+	else
+	{
+		m_constructor->copyAtom(std::stol(node->GetRoot()->GetAttribute(L"PositionOnStack")), std::stol(whereToStore->GetAttribute(L"PositionOnStack")));
+	}
 }
 
 void CodeGeneratorStage::TranslateExpressionNode(std::shared_ptr<AbstractTreeNode> node)
 {
-	auto operation = std::dynamic_pointer_cast<IOperation>(node);
+	auto operation = std::dynamic_pointer_cast<Operation>(node);
 
 	auto leftLiteral = std::dynamic_pointer_cast<Literal>(operation->GetLeft());
 	auto rightLiteral = std::dynamic_pointer_cast<Literal>(operation->GetRight());
@@ -87,8 +94,10 @@ void CodeGeneratorStage::TranslateExpressionNode(std::shared_ptr<AbstractTreeNod
 	auto leftIdentificator = std::dynamic_pointer_cast<Identificator>(operation->GetLeft());
 	auto rightIdentificator = std::dynamic_pointer_cast<Identificator>(operation->GetRight());
 
-	auto leftOperation = std::dynamic_pointer_cast<IOperation>(operation->GetLeft());
-	auto rightOperation = std::dynamic_pointer_cast<IOperation>(operation->GetRight());
+	auto leftOperation = std::dynamic_pointer_cast<Operation>(operation->GetLeft());
+	auto rightOperation = std::dynamic_pointer_cast<Operation>(operation->GetRight());
+
+	m_constructor->pushToStack(static_cast<int>(operation->GetOperationName()));
 
 	if (leftLiteral != nullptr)
 		m_constructor->pushToStack(m_constructor->GetLiteralPos(leftLiteral->GetData()));
@@ -104,5 +113,5 @@ void CodeGeneratorStage::TranslateExpressionNode(std::shared_ptr<AbstractTreeNod
 	else if (rightOperation != nullptr)
 		TranslateExpressionNode(operation->GetRight());
 
-	m_constructor->addPush(m_constructor->GetCurrentStackOffset() - 1, m_constructor->GetCurrentStackOffset(), true);
+	m_constructor->doOperationPush(m_constructor->GetCurrentStackOffset() - 1, m_constructor->GetCurrentStackOffset(), true);
 }

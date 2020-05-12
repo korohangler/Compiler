@@ -1,0 +1,26 @@
+_result$ = -8
+_a$ = 8
+CopyAtom PROC
+push    ebp
+mov     ebp, esp
+sub     esp, 8
+mov     eax, DWORD PTR _a$[ebp]
+mov     DWORD PTR _result$[ebp], eax
+cmp     DWORD PTR _a$[ebp], 0
+jne     SHORT $LN2@CopyAtom
+mov     ecx, DWORD PTR _a$[ebp+4]
+mov     DWORD PTR _result$[ebp+4], ecx
+jmp     SHORT $LN3@CopyAtom
+$LN2@CopyAtom:
+mov     edx, DWORD PTR _a$[ebp+4]
+push    edx
+call    strcpy
+add     esp, 4
+mov     DWORD PTR _result$[ebp+4], eax
+$LN3@CopyAtom:
+mov     eax, DWORD PTR _result$[ebp]
+mov     edx, DWORD PTR _result$[ebp+4]
+mov     esp, ebp
+pop     ebp
+ret     0
+CopyAtom ENDP

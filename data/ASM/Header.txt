@@ -1,5 +1,6 @@
 .686P
 .XMM
+include listing.inc
 .model flat, stdcall
 .stack 4096
 option casemap:none
@@ -12,6 +13,17 @@ includelib oldnames.lib
 
 ExitProcess PROTO, dwExitCode:DWORD
 
+PUBLIC  DoOperation
+PUBLIC  CopyAtom
+PUBLIC  __real@00000000
 EXTRN   atof:PROC
+EXTRN   malloc:PROC
 EXTRN   gcvt:PROC
 EXTRN   strcat:PROC
+EXTRN   strcmp:PROC
+EXTRN   strcpy:PROC
+EXTRN   _fltused:DWORD
+;       COMDAT __real@00000000
+CONST   SEGMENT
+__real@00000000 DD 000000000r             ; 0
+CONST   ENDS

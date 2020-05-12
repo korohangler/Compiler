@@ -9,6 +9,17 @@ struct Atom
 
 const size_t atomSize = sizeof(Atom);
 
+ASMConstructor::ASMConstructor(const std::wstring& runningDirectory)
+{
+	m_configDirectory = runningDirectory + L"../../../data/ASM/";
+
+	for (std::filesystem::directory_iterator iter(m_configDirectory + L"Functions/"); !iter._At_end(); ++iter)
+	{
+		std::filesystem::path path = *iter;
+		m_builtInFunctions.emplace_back(Utils::ReadFileAsString(path.wstring()));
+	}
+}
+
 void ASMConstructor::AddVariable(std::wstring var)
 {
 	m_variables.emplace_back(var, 0.0);
@@ -76,107 +87,7 @@ void ASMConstructor::PopArgsFromStack()
 	m_commands.push_back(L"pop ecx");
 	m_commands.push_back(L"pop ecx");
 	m_commands.push_back(L"pop ecx");
-}
-
-ASMConstructor::ASMConstructor(const std::wstring& runningDirectory)
-{
-	m_configDirectory = runningDirectory + L"../../../data/ASM/";
-
-	for (std::filesystem::directory_iterator iter(m_configDirectory + L"Functions/"); !iter._At_end(); ++iter)
-	{
-		std::filesystem::path path = *iter;
-		m_builtInFunctions.emplace_back(Utils::ReadFileAsString(path.wstring()));
-	}
-}
-
-void ASMConstructor::addPush(int to, int what, bool useESP)
-{
-	// call summ function
-	m_commands.push_back(L"call summAtoms");
-	PopArgsFromStack();
-
-	// push result on stack
-	m_commands.push_back(L"push eax");
-	m_commands.push_back(L"push ebx");
-}
-
-void ASMConstructor::add(int to, int what, int whereToStore, bool useESP)
-{
-	std::wstring reg = useESP ? L"esp" : L"ebp";
-
-	// call summ function
-	m_commands.push_back(L"call summAtoms");
-	PopArgsFromStack();
-
-	// mov result to store location
-	m_commands.push_back(std::wstring(L"mov eax, DWORD PTR[") + reg + L" - " + std::to_wstring(whereToStore * atomSize) + L"]");
-	m_commands.push_back(std::wstring(L"mov ebx, DWORD PTR[") + reg + L" - " + std::to_wstring(whereToStore * atomSize + 4) + L"]");
-}
-
-void ASMConstructor::subPush(int to, int what, bool useESP)
-{
-	// call summ function
-	m_commands.push_back(L"call subAtoms");
-	PopArgsFromStack();
-
-	// push result on stack
-	m_commands.push_back(L"push eax");
-	m_commands.push_back(L"push ebx");
-}
-
-void ASMConstructor::sub(int to, int what, int whereToStore, bool useESP)
-{
-	// call summ function
-	m_commands.push_back(L"call subAtoms");
-	PopArgsFromStack();
-
-	// mov result to store location
-	m_commands.push_back(std::wstring(L"mov eax, DWORD PTR[ebp - ") + std::to_wstring(whereToStore * atomSize) + L"]");
-	m_commands.push_back(std::wstring(L"mov ebx, DWORD PTR[ebp - ") + std::to_wstring(whereToStore * atomSize + 4) + L"]");
-}
-
-void ASMConstructor::divPush(int to, int what, bool useESP)
-{
-	// call summ function
-	m_commands.push_back(L"call divAtoms");
-	PopArgsFromStack();
-
-	// push result on stack
-	m_commands.push_back(L"push eax");
-	m_commands.push_back(L"push ebx");
-}
-
-void ASMConstructor::div(int to, int what, int whereToStore, bool useESP)
-{
-	// call summ function
-	m_commands.push_back(L"call divAtoms");
-	PopArgsFromStack();
-
-	// mov result to store location
-	m_commands.push_back(std::wstring(L"mov eax, DWORD PTR[ebp - ") + std::to_wstring(whereToStore * atomSize) + L"]");
-	m_commands.push_back(std::wstring(L"mov ebx, DWORD PTR[ebp - ") + std::to_wstring(whereToStore * atomSize + 4) + L"]");
-}
-
-void ASMConstructor::mulPush(int to, int what, bool useESP)
-{
-	// call summ function
-	m_commands.push_back(L"call mulAtoms");
-	PopArgsFromStack();
-
-	// push result on stack
-	m_commands.push_back(L"push eax");
-	m_commands.push_back(L"push ebx");
-}
-
-void ASMConstructor::mul(int to, int what, int whereToStore, bool useESP)
-{
-	// call summ function
-	m_commands.push_back(L"call mulAtoms");
-	PopArgsFromStack();
-
-	// mov result to store location
-	m_commands.push_back(std::wstring(L"mov eax, DWORD PTR[ebp - ") + std::to_wstring(whereToStore * atomSize) + L"]");
-	m_commands.push_back(std::wstring(L"mov ebx, DWORD PTR[ebp - ") + std::to_wstring(whereToStore * atomSize + 4) + L"]");
+	m_commands.push_back(L"pop ecx");
 }
 
 void ASMConstructor::pushToStack(int what, bool useESP)
@@ -193,4 +104,52 @@ void ASMConstructor::popFromStack(int to, bool useESP)
 	m_commands.push_back(std::wstring(L"pop [ebp - ") + std::to_wstring(to * atomSize + 4) + L"]");
 
 	m_stackOffset--;
+}
+
+void ASMConstructor::doOperation(int to, int what, int whereToStore, bool useESP)
+{
+	// function
+	m_commands.push_back(L"call DoOperation");
+	PopArgsFromStack();
+
+	// mov result to store location
+	m_commands.push_back(std::wstring(L"mov eax, DWORD PTR[ebp - ") + std::to_wstring(whereToStore * atomSize) + L"]");
+	m_commands.push_back(std::wstring(L"mov ebx, DWORD PTR[ebp - ") + std::to_wstring(whereToStore * atomSize + 4) + L"]");
+}
+
+void ASMConstructor::doOperationPush(int to, int what, bool useESP)
+{
+	// call summ function
+	m_commands.push_back(L"call DoOperation");
+	PopArgsFromStack();
+
+	// push result on stack
+	m_commands.push_back(L"push eax");
+	m_commands.push_back(L"push ebx");
+}
+
+void ASMConstructor::moveAtom(int what, int to, bool leftUseESP, bool rightUseESP)
+{
+	std::wstring leftReg  = leftUseESP ? L"esp" : L"ebp";
+	std::wstring rightReg = rightUseESP ? L"esp" : L"ebp";
+
+	m_commands.push_back(std::wstring(L"mov [") + leftReg + L" - " + std::to_wstring(to * atomSize) + L"], "	 + L"[" + rightReg + L" - " + std::to_wstring(to * atomSize) + L"]");
+	m_commands.push_back(std::wstring(L"mov [") + leftReg + L" - " + std::to_wstring(to * atomSize + 4) + L"], " + L"[" + rightReg + L" - " + std::to_wstring(to * atomSize) + L"]");
+}
+
+void ASMConstructor::copyAtom(int what, int to, bool leftUseESP, bool rightUseESP)
+{
+	std::wstring leftReg = leftUseESP ? L"esp" : L"ebp";
+	std::wstring rightReg = rightUseESP ? L"esp" : L"ebp";
+
+	pushToStack(what, leftUseESP);
+	m_commands.push_back(L"call CopyAtom");
+
+	// move result to asked location
+	m_commands.push_back(std::wstring(L"mov [") + rightReg + L" - " + std::to_wstring(to * atomSize)     + L"], eax");
+	m_commands.push_back(std::wstring(L"mov [") + rightReg + L" - " + std::to_wstring(to * atomSize + 4) + L"], ebx");
+
+	// pop args
+	m_commands.push_back(L"pop ecx");
+	m_commands.push_back(L"pop ecx");
 }

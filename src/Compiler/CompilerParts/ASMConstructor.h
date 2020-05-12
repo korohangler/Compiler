@@ -5,20 +5,15 @@ class ASMConstructor
 public:
 	ASMConstructor(const std::wstring& runningDirectory);
 
-	void addPush(int to, int what, bool useESP = false);			   // summ 2 atoms and push result to stack
-	void add(int to, int what, int whereToStore, bool useESP = false); // summ 2 atoms and store it
-
-	void subPush(int to, int what, bool useESP = false);			   // sub 2 atoms and push result to stack
-	void sub(int to, int what, int whereToStore, bool useESP = false); // sub 2 atoms and store it
-
-	void divPush(int to, int what, bool useESP = false);			   // div 2 atoms and push result to stack
-	void div(int to, int what, int whereToStore, bool useESP = false); // div 2 atoms and store it
-
-	void mulPush(int to, int what, bool useESP = false);			   // mul 2 atoms and push result to stack
-	void mul(int to, int what, int whereToStore, bool useESP = false); // mul 2 atoms and store it
-
 	void pushToStack(int what, bool useESP = false);
 	void popFromStack(int to, bool useESP = false);
+
+	void doOperation(int to, int what, int whereToStore, bool useESP = false);
+	void doOperationPush(int to, int what, bool useESP = false);
+
+	void moveAtom(int what, int to, bool leftUseESP = false, bool rightUseESP = false);
+
+	void copyAtom(int what, int to, bool leftUseESP = false, bool rightUseESP = false);
 
 	void AddVariable(std::wstring var);
 	
