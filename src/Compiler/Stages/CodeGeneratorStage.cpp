@@ -76,11 +76,11 @@ void CodeGeneratorStage::TranslateExpression(std::shared_ptr<Expression> node, s
 	if (std::dynamic_pointer_cast<Operation>(node->GetRoot()) != nullptr)
 	{
 		TranslateExpressionNode(node->GetRoot());
-		m_constructor->popFromStack(std::stol(whereToStore->GetAttribute(L"PositionOnStack")));
+		m_constructor->popFromStack(std::stol(whereToStore->GetAttribute(L"PositionOnStack").data()));
 	}
 	else
 	{
-		m_constructor->copyAtom(std::stol(node->GetRoot()->GetAttribute(L"PositionOnStack")), std::stol(whereToStore->GetAttribute(L"PositionOnStack")));
+		m_constructor->copyAtom(std::stol(node->GetRoot()->GetAttribute(L"PositionOnStack").data()), std::stol(whereToStore->GetAttribute(L"PositionOnStack").data()));
 	}
 }
 
@@ -102,14 +102,14 @@ void CodeGeneratorStage::TranslateExpressionNode(std::shared_ptr<AbstractTreeNod
 	if (leftLiteral != nullptr)
 		m_constructor->pushToStack(m_constructor->GetLiteralPos(leftLiteral->GetData()));
 	else if (leftIdentificator != nullptr)
-		m_constructor->pushToStack(std::stol(leftIdentificator->GetAttribute(L"PositionOnStack")));
+		m_constructor->pushToStack(std::stol(leftIdentificator->GetAttribute(L"PositionOnStack").data()));
 	else if(leftOperation != nullptr)
 		TranslateExpressionNode(operation->GetLeft());
 
 	if (rightLiteral != nullptr)
 		m_constructor->pushToStack(m_constructor->GetLiteralPos(rightLiteral->GetData()));
 	else if (rightIdentificator != nullptr)
-		m_constructor->pushToStack(std::stol(rightIdentificator->GetAttribute(L"PositionOnStack")));
+		m_constructor->pushToStack(std::stol(rightIdentificator->GetAttribute(L"PositionOnStack").data()));
 	else if (rightOperation != nullptr)
 		TranslateExpressionNode(operation->GetRight());
 

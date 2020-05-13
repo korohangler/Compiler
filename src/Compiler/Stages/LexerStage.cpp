@@ -1,9 +1,9 @@
 #include "stdafx.h"
 #include "LexerStage.h"
 
-LexerStage::LexerStage(const std::wstring& runningDirectory, std::wstring file, bool needLog) : m_needLog(needLog), m_inputFileName(std::move(file))
+LexerStage::LexerStage(const std::wstring_view runningDirectory, std::wstring file, bool needLog) : m_needLog(needLog), m_inputFileName(std::move(file))
 {
-	std::wstring pathToConfig = runningDirectory + L"../../../data/Lexer/regexps.json";
+	std::wstring pathToConfig = std::wstring(runningDirectory) + L"../../../data/Lexer/regexps.json";
 
 	std::wifstream rulesFile(pathToConfig);
 

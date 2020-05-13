@@ -7,13 +7,13 @@ class __declspec(dllexport) LexerStage : public IStage, public Observable<const 
 {
 public:
 	LexerStage() = delete;
-	LexerStage(const std::wstring& runningDirectory, std::wstring file, bool needLog);
+	LexerStage(const std::wstring_view runningDirectory, std::wstring file, bool needLog);
 	~LexerStage() override = default;
 
 	/// IStage override
 	void DoStage() override;
 
-	[[nodiscard]] std::wstring GetStageName() override { return L"Lexer"; }
+	[[nodiscard]] std::wstring_view GetStageName() override { return L"Lexer"; }
 	///
 
 	struct TokenRule

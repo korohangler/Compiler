@@ -1,7 +1,7 @@
 #pragma once
 #include <vector>
 #include "CompilerParts/Observers/IObserver.h"
-#include "CompilerParts/StageOutputStructs.h"
+#include "StageOutputStructs/Token.h"
 
 class LexerTester : public IObserver<const Token&>
 {

@@ -11,7 +11,7 @@ public:
 
 	[[nodiscard]] bool NeedRecompute() const override { return m_needRecompute; }
 
-	[[nodiscard]] const std::wstring& GetSerializeData() const override { return m_serializeData; }
+	[[nodiscard]] const std::wstring_view GetSerializeData() const override { return m_serializeData; }
 	///
 
 protected:

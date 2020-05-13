@@ -8,7 +8,7 @@ public:
 	/// AbstractTreeNode override
 	void Compute(const Token& token) override;
 
-	[[nodiscard]] const std::wstring& GetSerializeData() const override { return std::static_pointer_cast<Identificator>(Childs[0])->GetVariableName(); }
+	[[nodiscard]] const std::wstring_view GetSerializeData() const override { return std::static_pointer_cast<Identificator>(Childs[0])->GetVariableName(); }
 	///
 
 	[[nodiscard]] std::shared_ptr<Identificator> GetVariable() const { return std::static_pointer_cast<Identificator>(Childs[0]); }

@@ -13,7 +13,7 @@ public:
 	///
 
 	/// IStageOutputSerializer override
-	void OpenDocToSave(const std::wstring& path) override;
+	void OpenDocToSave(const std::wstring_view path) override;
 
 	void Finalize() override {};
 	///

@@ -38,7 +38,7 @@ void SemanticAnalyzer::ProcessNode(std::shared_ptr<AbstractTreeNode> node, const
 	else if(identificator != nullptr)
 	{
 		Utils::ASSERT2(m_identificatorTable->IsIdentificatorExist(currScopeData.ToString(), identificator->GetVariableName()),
-		               std::wstring(L"Variable: ") + identificator->GetVariableName() + std::wstring(L". Does not exist"));
+		               std::wstring(L"Variable: ") + std::wstring(identificator->GetVariableName()) + std::wstring(L". Does not exist"));
 
 		identificator->SetAttribute(L"PositionOnStack", 
 			std::to_wstring(m_identificatorTable->GetIdentificatorInfo(currScopeData.ToString(), identificator->GetVariableName()).VariableLocationOnStack));
@@ -76,7 +76,7 @@ void SemanticAnalyzer::ProcessNode(std::shared_ptr<AbstractTreeNode> node, const
 	else if(expressionStatement != nullptr)
 	{
 		Utils::ASSERT2(m_identificatorTable->IsIdentificatorExist(currScopeData.ToString(), expressionStatement->GetIdentificator()->GetVariableName()),
-		               std::wstring(L"Use of undefined variable: ") + expressionStatement->GetIdentificator()->GetVariableName());
+		               std::wstring(L"Use of undefined variable: ") + std::wstring(expressionStatement->GetIdentificator()->GetVariableName()));
 
 		for (size_t i = 0; i < node->Childs.size(); i++)
 			ProcessNode(node->Childs[i], currScopeData, i);

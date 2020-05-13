@@ -12,7 +12,7 @@ void While::Compute(const Token& token)
 		HandleKeywordWhile(token);
 		break;
 	case States::ExpressionCreation:
-		HandleExpressionCreation(token);
+		HandleExpressionCreation();
 		break;
 	case States::ExpressionComputation:
 		HandleExpressionComputation(token);
@@ -37,7 +37,7 @@ void While::HandleKeywordWhile(const Token& token)
 	m_state = States::ExpressionCreation;
 }
 
-void While::HandleExpressionCreation(const Token& token)
+void While::HandleExpressionCreation()
 {
 	Childs.emplace_back(std::make_shared<Expression>());
 	Childs.back()->Parent = this;

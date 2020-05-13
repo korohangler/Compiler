@@ -7,11 +7,11 @@ struct Atom
 	int type;
 };
 
-const size_t atomSize = sizeof(Atom);
+const auto atomSize = sizeof(Atom);
 
-ASMConstructor::ASMConstructor(const std::wstring& runningDirectory)
+ASMConstructor::ASMConstructor(const std::wstring_view runningDirectory)
 {
-	m_configDirectory = runningDirectory + L"../../../data/ASM/";
+	m_configDirectory = std::wstring(runningDirectory) + L"../../../data/ASM/";
 
 	for (std::filesystem::directory_iterator iter(m_configDirectory + L"Functions/"); !iter._At_end(); ++iter)
 	{
@@ -20,22 +20,22 @@ ASMConstructor::ASMConstructor(const std::wstring& runningDirectory)
 	}
 }
 
-void ASMConstructor::AddVariable(std::wstring var)
+void ASMConstructor::AddVariable(const std::wstring_view var)
 {
-	m_variables.emplace_back(var, 0.0);
+	m_variables.emplace_back(var, 0.0f);
 }
 
-size_t ASMConstructor::GetLiteralPos(const std::wstring& val)
+int ASMConstructor::GetLiteralPos(const std::wstring_view val)
 {
-	auto it = m_literals.find(val);
+	auto it = m_literals.find(val.data());
 
 	if (it == m_literals.end())
 	{
-		m_literals[val] = m_literalsCounter;
+		m_literals[val.data()] = m_literalsCounter;
 		m_literalsCounter++;
 	}
 
-	return m_literals[val];
+	return m_literals[val.data()];
 }
 
 std::wstring ASMConstructor::GenerateASM()
@@ -55,9 +55,9 @@ std::wstring ASMConstructor::GenerateASM()
 	result += L"mov ebp, esp\n";
 	result += std::wstring(L"sub esp, ") + std::to_wstring((m_variables.size() + m_literals.size()) * atomSize) + L"\n";
 
-	int stackSize = (m_variables.size() + m_literals.size()) * atomSize;
+	size_t stackSize = (m_variables.size() + m_literals.size()) * atomSize;
 
-	for (int i = 0; i < stackSize / 4; i++)
+	for (size_t i = 0; i < stackSize / 4; i++)
 		result += std::wstring(L"mov DWORD PTR[ebp - ") + std::to_wstring(i * 4) + L"], 0\n";
 
 	for (auto it : m_commands)

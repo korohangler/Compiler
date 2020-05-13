@@ -59,7 +59,7 @@ void IdentificatorTableSerializer::Notify(std::pair<std::shared_ptr<AbstractTree
 	m_resFile.write(strbuf.GetString(), strbuf.GetLength());
 }
 
-void IdentificatorTableSerializer::OpenDocToSave(const std::wstring& path)
+void IdentificatorTableSerializer::OpenDocToSave(const std::wstring_view path)
 {
-	m_resFile.open(path + L".IDTable.json");
+	m_resFile.open(std::wstring(path) + L".IDTable.json");
 }

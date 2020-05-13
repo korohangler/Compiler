@@ -15,12 +15,12 @@ public:
 
 	[[nodiscard]] bool NeedRecompute() const override { return false; }
 
-	[[nodiscard]] const std::wstring& GetSerializeData() const override { return m_serializeData; }
+	[[nodiscard]] const std::wstring_view GetSerializeData() const override { return m_serializeData; }
 	///
 
-	[[nodiscard]] const std::wstring& GetData() const { return m_data; }
+	[[nodiscard]] const std::wstring_view GetData() const { return m_data; }
 
-	[[nodiscard]] float GetFloatData() const { return _wtof(m_data.c_str()); }
+	[[nodiscard]] float GetFloatData() const { return std::stof(m_data.c_str(), nullptr); }
 	
 	enum class LiteralType
 	{

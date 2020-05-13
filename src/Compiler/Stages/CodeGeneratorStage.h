@@ -23,7 +23,7 @@ public:
 	/// IStage override
 	void DoStage() override {}
 
-	[[nodiscard]] std::wstring GetStageName() override { return L"CodeGenerator"; }
+	[[nodiscard]] std::wstring_view GetStageName() override { return L"CodeGenerator"; }
 	///
 
 	/// INewParserTreeObserver override

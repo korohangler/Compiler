@@ -41,7 +41,7 @@ void LexerStageOutputSerializer::Notify(const Token& token)
 	}
 }
 
-void LexerStageOutputSerializer::OpenDocToSave(const std::wstring& path)
+void LexerStageOutputSerializer::OpenDocToSave(const std::wstring_view path)
 {
-	m_resFile.open(path + L".lexer.json");
+	m_resFile.open(std::wstring(path) + L".lexer.json");
 }

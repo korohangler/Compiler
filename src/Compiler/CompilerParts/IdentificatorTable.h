@@ -18,13 +18,13 @@ class __declspec(dllexport) IdentificatorTable
 public:
 	IdentificatorTable() = default;
 
-	void AddScope(const std::wstring& parentScope, const std::wstring& scope);
+	void AddScope(const std::wstring_view parentScope, const std::wstring_view scope);
 
-	void AddIdentificator(const std::wstring& scope, const std::wstring& name, IdentificatorInfo identificator);
+	void AddIdentificator(const std::wstring_view scope, const std::wstring_view name, IdentificatorInfo identificator);
 
-	[[nodiscard]] bool IsIdentificatorExist(const std::wstring& scope, const std::wstring& name);
+	[[nodiscard]] bool IsIdentificatorExist(const std::wstring_view scope, const std::wstring_view name);
 
-	IdentificatorInfo& GetIdentificatorInfo(const std::wstring& scope, const std::wstring& name);
+	IdentificatorInfo& GetIdentificatorInfo(const std::wstring_view scope, const std::wstring_view name);
 	
 	const std::unordered_map<std::wstring, ScopeInfo>& GetScopesMap() const { return m_scopes; }
 

@@ -16,9 +16,9 @@ void ParserStageOutputSerializer::Notify(std::shared_ptr<AbstractTreeNode> root)
 	m_docToSave.AddMember(L"Tree", tree, *m_allocator);
 }
 
-void ParserStageOutputSerializer::OpenDocToSave(const std::wstring& path)
+void ParserStageOutputSerializer::OpenDocToSave(const std::wstring_view path)
 {
-	m_resFile.open(path + L".parser.json");
+	m_resFile.open(std::wstring(path) + L".parser.json");
 }
 
 void ParserStageOutputSerializer::Finalize()
@@ -42,7 +42,7 @@ WValue ParserStageOutputSerializer::SerializeNode(std::shared_ptr<AbstractTreeNo
 
 	if (!serializationData.empty())
 	{
-		val.SetString(rapidjson::StringRef(node->GetSerializeData().c_str()), *m_allocator);
+		val.SetString(rapidjson::StringRef(node->GetSerializeData().data()), *m_allocator);
 		res.AddMember(L"Value", val, *m_allocator);
 	}
 

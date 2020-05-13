@@ -4,29 +4,27 @@ namespace Utils
 {
 #include "StringConverter.h"
 
-#define WIN32_LEAN_AND_MEAN             // Exclude rarely-used stuff from Windows headers
-
-	inline void ASSERT(const std::wstring& msg)
+	inline void ASSERT(const std::wstring_view msg)
 	{
 		throw std::runtime_error(Utils::StringConverter::WstrToStr(msg));
 	}
 
-	inline void ASSERT(const std::string& msg)
+	inline void ASSERT(const std::string_view msg)
 	{
-		throw std::runtime_error(Utils::StringConverter::WstrToStr(msg));
+		throw std::runtime_error(Utils::StringConverter::WstrToStr(msg).data());
 	}
 
-	constexpr void ASSERT2(bool expression, const std::wstring& msg)
-	{
-		if (!expression) throw std::runtime_error(Utils::StringConverter::WstrToStr(msg));
-	}
-
-	constexpr void ASSERT2(bool expression, const std::string& msg)
+	constexpr void ASSERT2(bool expression, const std::wstring_view msg)
 	{
 		if (!expression) throw std::runtime_error(Utils::StringConverter::WstrToStr(msg));
 	}
 
-	inline std::vector<wchar_t> ReadFile(std::wstring_view pathToFile)
+	constexpr void ASSERT2(bool expression, const std::string_view msg)
+	{
+		if (!expression) throw std::runtime_error(Utils::StringConverter::WstrToStr(msg).data());
+	}
+
+	inline std::vector<wchar_t> ReadFile(const std::wstring_view pathToFile)
 	{
 		std::wifstream file(pathToFile.data());
 

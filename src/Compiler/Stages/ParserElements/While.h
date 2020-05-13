@@ -22,7 +22,7 @@ private:
 	};
 
 	void HandleKeywordWhile(const Token& token);
-	void HandleExpressionCreation(const Token& token);
+	void HandleExpressionCreation();
 	void HandleExpressionComputation(const Token& token);
 	void HandleScopeCreation(const Token& token);
 	void HandleScopeComputation(const Token& token);

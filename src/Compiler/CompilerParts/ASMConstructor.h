@@ -3,7 +3,7 @@
 class ASMConstructor
 {
 public:
-	ASMConstructor(const std::wstring& runningDirectory);
+	ASMConstructor(const std::wstring_view runningDirectory);
 
 	void pushToStack(int what, bool useESP = false);
 	void popFromStack(int to, bool useESP = false);
@@ -15,9 +15,9 @@ public:
 
 	void copyAtom(int what, int to, bool leftUseESP = false, bool rightUseESP = false);
 
-	void AddVariable(std::wstring var);
+	void AddVariable(const std::wstring_view var);
 	
-	size_t GetLiteralPos(const std::wstring& val);
+	int GetLiteralPos(const std::wstring_view val);
 
 	int GetCurrentStackOffset() { return m_stackOffset; };
 
@@ -27,10 +27,10 @@ private:
 	void PopArgsFromStack();
 
 	std::vector<std::pair<std::wstring, float>> m_variables;
-	std::map<std::wstring, size_t> m_literals;
+	std::map<std::wstring, int> m_literals;
 	std::vector<std::wstring> m_commands;
 
-	size_t m_literalsCounter = 0;
+	int m_literalsCounter = 0;
 
 	std::vector<std::wstring> m_builtInFunctions;
 

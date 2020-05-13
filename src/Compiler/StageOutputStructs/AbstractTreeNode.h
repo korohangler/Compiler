@@ -19,11 +19,11 @@ public:
 
 	[[nodiscard]] std::wstring GetTypeName() const { return Utils::StringConverter::StrToWstr(typeid(*this).name()); }
 
-	[[nodiscard]] virtual const std::wstring& GetSerializeData() const = 0;
+	[[nodiscard]] virtual const std::wstring_view GetSerializeData() const = 0;
 
-	void SetAttribute(const std::wstring& attrName, const std::wstring& attr) { m_attributes[attrName] = attr; }
+	void SetAttribute(const std::wstring_view attrName, const std::wstring_view attr) { m_attributes[attrName.data()] = attr; }
 
-	[[nodiscard]] const std::wstring& GetAttribute(const std::wstring& attrName) { return m_attributes[attrName]; }
+	[[nodiscard]] const std::wstring_view GetAttribute(const std::wstring_view attrName) { return m_attributes[attrName.data()]; }
 
 private:
 	std::unordered_map<std::wstring, std::wstring> m_attributes;

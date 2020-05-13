@@ -10,7 +10,7 @@ public:
 	void Compute(const Token& token) override;
 	///
 
-	[[nodiscard]] const std::wstring& GetFunctionName() const { return m_functionName; }
+	[[nodiscard]] const std::wstring_view GetFunctionName() const { return m_functionName; }
 	
 private:
 	enum class States

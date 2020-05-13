@@ -43,9 +43,9 @@ public:
 
 	/// AbstractTreeNode override
 	[[nodiscard]] bool IsComplete() const { return true; }
-	void Compute(const Token& token) {}
+	void Compute(const Token&) {}
 	[[nodiscard]] bool NeedRecompute() const { return false; }
-	[[nodiscard]] const std::wstring& GetSerializeData() const { return m_serializationData; }
+	[[nodiscard]] const std::wstring_view GetSerializeData() const { return m_serializationData; }
 	///
 	
 	OperationName GetOperationName() { return m_name; }
