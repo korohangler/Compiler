@@ -1,15 +1,17 @@
+#include <string.h>
+#include <stdlib.h>
 
 struct Atom
 {
-    int type;
     int data;
+    int type;
 };
 
 enum operationTypes
 {
     summ = 0,
     sub,
-    div,
+    divide,
     mul,
     less,
     more,
@@ -24,7 +26,7 @@ struct Atom DoOperation(struct Atom a, struct Atom b, int operationType)
 
     if(a.type == 0)
     {
-        float right = *((float*)b.data);
+        float right = *((float*)(&b.data));
 
         if(b.type != 0)
             right = atof((char*)b.data);
@@ -32,25 +34,25 @@ struct Atom DoOperation(struct Atom a, struct Atom b, int operationType)
         switch(operationType)
         {
         case 0:
-            *((float*)result.data) = *((float*)a.data) + right;
+            *((float*)&result.data) = *((float*)&a.data) + right;
             break;
         case 1:
-            *((float*)result.data) = *((float*)a.data) - right;
+            *((float*)&result.data) = *((float*)&a.data) - right;
             break;
         case 2:
-            *((float*)result.data) = *((float*)a.data) / right;
+            *((float*)&result.data) = *((float*)&a.data) / right;
             break;
         case 3:
-            *((float*)result.data) = *((float*)a.data) * right;
+            *((float*)&result.data) = *((float*)&a.data) * right;
             break;
         case 4:
-            *((float*)result.data) = *((float*)a.data) < right;
+            *((float*)&result.data) = *((float*)&a.data) < right;
             break;
         case 5:
-            *((float*)result.data) = *((float*)a.data) > right;
+            *((float*)&result.data) = *((float*)&a.data) > right;
             break;
         case 6:
-            *((float*)result.data) = *((float*)a.data) == right;
+            *((float*)&result.data) = *((float*)&a.data) == right;
             break;
         }
     }
@@ -68,7 +70,7 @@ struct Atom DoOperation(struct Atom a, struct Atom b, int operationType)
         switch(operationType)
         {
         case 0:
-            result.data = strcat((char*)a.data, right);
+            result.data = (int)strcat((char*)a.data, right);
             break;
         case 1:
             result.data = 0;

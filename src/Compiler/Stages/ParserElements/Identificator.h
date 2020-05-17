@@ -17,7 +17,7 @@ public:
 	[[nodiscard]] const std::wstring_view GetSerializeData() const override { return m_variableName; }
 	///
 
-	[[nodiscard]] const std::wstring_view GetVariableName() const { return m_variableName; }
+	[[nodiscard]] const std::wstring_view GetName() const { return m_variableName; }
 	
 private:
 

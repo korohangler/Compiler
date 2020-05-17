@@ -23,6 +23,10 @@ EXTRN   strcat:PROC
 EXTRN   strcmp:PROC
 EXTRN   strcpy:PROC
 EXTRN   _fltused:DWORD
+EXTRN   scanf:PROC
+EXTRN   puts:PROC
+EXTRN   gets:PROC
+EXTRN   printf:PROC
 ;       COMDAT __real@00000000
 CONST   SEGMENT
 __real@00000000 DD 000000000r             ; 0

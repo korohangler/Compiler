@@ -25,6 +25,9 @@ bool IdentificatorTable::IsIdentificatorExist(const std::wstring_view scope, con
 	auto treeScope = m_scopes.find(scope.data());
 	if (treeScope == m_scopes.end()) return false;
 
+	if (std::find(begin(UserAvailableFunctions), end(UserAvailableFunctions), variable) != UserAvailableFunctions.cend())
+		return true;
+
 	if (treeScope->second.Identificators.find(variable.data()) != treeScope->second.Identificators.end())
 		return true;
 

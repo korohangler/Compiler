@@ -6,7 +6,7 @@ Literal::Literal(const Token& token)
 	if (token.Type == L"StringLiteral")
 	{
 		m_literalType = LiteralType::String;
-		m_data = token.Value;
+		m_data = token.Value.substr(1, token.Value.length() - 2);
 	}
 	else if(token.Type == L"HexLiteral"
 		|| token.Type == L"OctLiteral")

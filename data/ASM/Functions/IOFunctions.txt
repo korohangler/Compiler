@@ -1,0 +1,65 @@
+_DATA   SEGMENT
+$SG6716 DB        '%f', 00H
+        ORG $+1
+$SG6733 DB        '%f', 0aH, 00H
+_DATA   ENDS
+
+_result$ = -8                                     ; size = 8
+ScanFloat PROC
+        push    ebp
+        mov     ebp, esp
+        sub     esp, 8
+        lea     eax, DWORD PTR _result$[ebp]
+        push    eax
+        push    OFFSET $SG6716
+        call    scanf
+        add     esp, 8
+        mov     eax, DWORD PTR _result$[ebp]
+        mov     edx, DWORD PTR _result$[ebp+4]
+        mov     esp, ebp
+        pop     ebp
+        ret     0
+ScanFloat ENDP
+
+_result$ = -8                                     ; size = 8
+ScanString PROC
+        push    ebp
+        mov     ebp, esp
+        sub     esp, 8
+        push    50                                  ; 00000032H
+        call    malloc
+        add     esp, 4
+        mov     DWORD PTR _result$[ebp], eax
+        lea     eax, DWORD PTR _result$[ebp]
+        push    eax
+        call    gets
+        add     esp, 4
+        mov     eax, DWORD PTR _result$[ebp]
+        mov     edx, DWORD PTR _result$[ebp+4]
+        mov     esp, ebp
+        pop     ebp
+        ret     0
+ScanString ENDP
+
+_el$ = 8                                                ; size = 8
+print  PROC
+        push    ebp
+        mov     ebp, esp
+        cmp     DWORD PTR _el$[ebp+4], 0
+        jne     SHORT $LN2@print
+        cvtss2sd xmm0, DWORD PTR _el$[ebp]
+        sub     esp, 8
+        movsd   QWORD PTR [esp], xmm0
+        push    OFFSET $SG6733
+        call    printf
+        add     esp, 12                             ; 0000000cH
+        jmp     SHORT $LN3@print
+$LN2@print:
+        mov     eax, DWORD PTR _el$[ebp]
+        push    eax
+        call    puts
+        add     esp, 4
+$LN3@print:
+        pop     ebp
+        ret     0
+print  ENDP

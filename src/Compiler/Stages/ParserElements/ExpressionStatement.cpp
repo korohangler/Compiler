@@ -20,8 +20,11 @@ void ExpressionStatement::Compute(const Token& token)
 	case States::SemicolonAwait:
 		HandleSemicolonAwaitState(token);
 		break;
-	case States::AwaitCloseBracket:
-		HandleClosingBracketAwaitState(token);
+	case States::Argument:
+		HandleArgument(token);
+		break;
+	case States::Comma:
+		HandleComma(token);
 		break;
 	default:
 		Utils::ASSERT(std::string("Unknown state! At: ") + __FILE__);
@@ -48,7 +51,7 @@ void ExpressionStatement::HandleTypeChoiseState(const Token& token)
 	{
 		m_type = StatementType::CallExpression;
 
-		m_state = States::AwaitCloseBracket;
+		m_state = States::Argument;
 	}
 	else if (token.Type == L"Assignment")
 	{
@@ -59,13 +62,18 @@ void ExpressionStatement::HandleTypeChoiseState(const Token& token)
 
 		m_state = States::ExpressionComputation;
 	}
+	else
+	{
+		Utils::ASSERT(
+			std::wstring(L"Token type mismatch! Expected Identificator or Bracket. But got: ") + token.Type + std::wstring(L". At line: ") + std::to_wstring(token.Line));
+	}
 
 	if (m_type == StatementType::AssignmentExpression)
 		m_serializeData = L"AssignmentExpression: ";
 	else if (m_type == StatementType::CallExpression)
 		m_serializeData = L"CallExpression: ";
 
-	m_serializeData += GetIdentificator()->GetVariableName();
+	m_serializeData += GetIdentificator()->GetName();
 }
 
 void ExpressionStatement::HandleExpressionComputingState(const Token& token)
@@ -86,10 +94,36 @@ void ExpressionStatement::HandleSemicolonAwaitState(const Token& token)
 	m_needRecompute = false;
 }
 
-void ExpressionStatement::HandleClosingBracketAwaitState(const Token& token)
+void ExpressionStatement::HandleArgument(const Token& token)
 {
-	Utils::ASSERT2(token.Type == L"Bracket" && token.Value == L")",
-		std::wstring(L"Token type mismatch! Expected Bracket. But got: ") + token.Type + std::wstring(L". At line: ") + std::to_wstring(token.Line));
+	if (token.Type == L"Bracket" && token.Value == L")")
+	{
+		m_state = States::SemicolonAwait;
+	}
+	else
+	{
+		Utils::ASSERT2(token.Type == L"Identificator",
+			std::wstring(L"Token type mismatch! Expected Identificator. But got: ") + token.Type + std::wstring(L". At line: ") + std::to_wstring(token.Line));
 
-	m_state = States::SemicolonAwait;
+		m_arguments.emplace_back(std::make_shared<Identificator>(token.Value));
+
+		m_state = States::Comma;
+	}
+}
+
+void ExpressionStatement::HandleComma(const Token& token)
+{
+	if (token.Type == L"Comma")
+	{
+		m_state = States::Argument;
+	}
+	else if (token.Type == L"Bracket" && token.Value == L")")
+	{
+		m_state = States::SemicolonAwait;
+	}
+	else
+	{
+		Utils::ASSERT(
+			std::wstring(L"Token type mismatch! Expected Comma or Bracket. But got: ") + token.Type + std::wstring(L". At line: ") + std::to_wstring(token.Line));
+	}
 }

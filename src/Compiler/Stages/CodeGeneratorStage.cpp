@@ -1,7 +1,6 @@
 #include "stdafx.h"
 #include "CodeGeneratorStage.h"
 
-
 #include "ParserElements/ExpressionStatement.h"
 #include "ParserElements/Function.h"
 #include "ParserElements/Identificator.h"
@@ -12,7 +11,7 @@
 #include "ParserElements/While.h"
 #include "ParserElements/Expression.h"
 #include "ParserElements/Identificator.h"
-#include "Stages\ParserElements\MathOperations\Operation.h"
+#include "ParserElements/MathOperations/Operation.h"
 
 void CodeGeneratorStage::Notify(std::pair<std::shared_ptr<AbstractTreeNode>, std::shared_ptr<IdentificatorTable>> data)
 {
@@ -23,14 +22,14 @@ void CodeGeneratorStage::Notify(std::pair<std::shared_ptr<AbstractTreeNode>, std
 	NotifyListeners(m_constructor);
 }
 
-void CodeGeneratorStage::TranslateNode(std::shared_ptr<AbstractTreeNode> node)
+void CodeGeneratorStage::TranslateNode(const std::shared_ptr<AbstractTreeNode> node)
 {
-	auto let = std::dynamic_pointer_cast<Let>(node);
-	auto expressionStatement = std::dynamic_pointer_cast<ExpressionStatement>(node);
-	auto ifElem = std::dynamic_pointer_cast<If>(node);
-	auto whileElem = std::dynamic_pointer_cast<While>(node);
-	auto scope = std::dynamic_pointer_cast<Scope>(node);
-	auto function = std::dynamic_pointer_cast<Function>(node);
+	const auto let = std::dynamic_pointer_cast<Let>(node);
+	const auto expressionStatement = std::dynamic_pointer_cast<ExpressionStatement>(node);
+	const auto ifElem = std::dynamic_pointer_cast<If>(node);
+	const auto whileElem = std::dynamic_pointer_cast<While>(node);
+	const auto scope = std::dynamic_pointer_cast<Scope>(node);
+	const auto function = std::dynamic_pointer_cast<Function>(node);
 
 	if (let != nullptr)
 		TranslateLet(let);
@@ -41,37 +40,47 @@ void CodeGeneratorStage::TranslateNode(std::shared_ptr<AbstractTreeNode> node)
 	else if (whileElem != nullptr)
 		TranslateWhileElement(whileElem);
 	else if (scope != nullptr)
-		for (auto child : scope->Childs) TranslateNode(child);
+		for (const auto child : scope->Childs) TranslateNode(child);
 	else if (function != nullptr)
 		TranslateFunction(function);
 }
 
-void CodeGeneratorStage::TranslateLet(std::shared_ptr<Let> node)
+void CodeGeneratorStage::TranslateLet(const std::shared_ptr<Let> node)
 {
 	// TODO For now no initialization at all
-	m_constructor->AddVariable(node->GetVariable()->GetVariableName());
+	m_constructor->AddVariable(node->GetVariable());
 }
 
-void CodeGeneratorStage::TranslateExpressionStatement(std::shared_ptr<ExpressionStatement> node)
+void CodeGeneratorStage::TranslateExpressionStatement(const std::shared_ptr<ExpressionStatement> node)
 {
-	// TODO functions
-
-	TranslateExpression(node->GetExpression(), node->GetIdentificator());
+	if (node->GetType() == ExpressionStatement::StatementType::CallExpression)
+	{
+		TranslateFunctionCall(node);
+	}
+	else
+	{
+		TranslateExpression(node->GetExpression(), node->GetIdentificator());
+	}
 }
 
-void CodeGeneratorStage::TranslateIfElement(std::shared_ptr<If> node)
-{
-}
-
-void CodeGeneratorStage::TranslateWhileElement(std::shared_ptr<While> node)
-{
-}
-
-void CodeGeneratorStage::TranslateFunction(std::shared_ptr<Function> node)
+void CodeGeneratorStage::TranslateIfElement(const std::shared_ptr<If> node)
 {
 }
 
-void CodeGeneratorStage::TranslateExpression(std::shared_ptr<Expression> node, std::shared_ptr<Identificator> whereToStore)
+void CodeGeneratorStage::TranslateWhileElement(const std::shared_ptr<While> node)
+{
+}
+
+void CodeGeneratorStage::TranslateFunction(const std::shared_ptr<Function> node)
+{
+	m_constructor->BeginFuction(node->GetAttribute(L"ASMName"));
+
+	std::for_each(begin(node->Childs), end(node->Childs), [&](const auto& child) { TranslateNode(child); });
+
+	m_constructor->EndFuction();
+}
+
+void CodeGeneratorStage::TranslateExpression(const std::shared_ptr<Expression> node, const std::shared_ptr<Identificator> whereToStore)
 {
 	if (std::dynamic_pointer_cast<Operation>(node->GetRoot()) != nullptr)
 	{
@@ -84,34 +93,51 @@ void CodeGeneratorStage::TranslateExpression(std::shared_ptr<Expression> node, s
 	}
 }
 
-void CodeGeneratorStage::TranslateExpressionNode(std::shared_ptr<AbstractTreeNode> node)
+void CodeGeneratorStage::TranslateExpressionNode(const std::shared_ptr<AbstractTreeNode> node)
 {
-	auto operation = std::dynamic_pointer_cast<Operation>(node);
+	const auto operation = std::dynamic_pointer_cast<Operation>(node);
 
-	auto leftLiteral = std::dynamic_pointer_cast<Literal>(operation->GetLeft());
-	auto rightLiteral = std::dynamic_pointer_cast<Literal>(operation->GetRight());
+	const auto leftLiteral = std::dynamic_pointer_cast<Literal>(operation->GetLeft());
+	const auto rightLiteral = std::dynamic_pointer_cast<Literal>(operation->GetRight());
 	
-	auto leftIdentificator = std::dynamic_pointer_cast<Identificator>(operation->GetLeft());
-	auto rightIdentificator = std::dynamic_pointer_cast<Identificator>(operation->GetRight());
+	const auto leftIdentificator = std::dynamic_pointer_cast<Identificator>(operation->GetLeft());
+	const auto rightIdentificator = std::dynamic_pointer_cast<Identificator>(operation->GetRight());
 
-	auto leftOperation = std::dynamic_pointer_cast<Operation>(operation->GetLeft());
-	auto rightOperation = std::dynamic_pointer_cast<Operation>(operation->GetRight());
+	const auto leftOperation = std::dynamic_pointer_cast<Operation>(operation->GetLeft());
+	const auto rightOperation = std::dynamic_pointer_cast<Operation>(operation->GetRight());
 
 	m_constructor->pushToStack(static_cast<int>(operation->GetOperationName()));
 
-	if (leftLiteral != nullptr)
-		m_constructor->pushToStack(m_constructor->GetLiteralPos(leftLiteral->GetData()));
-	else if (leftIdentificator != nullptr)
-		m_constructor->pushToStack(std::stol(leftIdentificator->GetAttribute(L"PositionOnStack").data()));
-	else if(leftOperation != nullptr)
-		TranslateExpressionNode(operation->GetLeft());
-
 	if (rightLiteral != nullptr)
-		m_constructor->pushToStack(m_constructor->GetLiteralPos(rightLiteral->GetData()));
+	{
+		m_constructor->pushToStack(std::stol(rightLiteral->GetAttribute(L"PositionOnStack").data()));
+		m_constructor->AddLiteral(rightLiteral);
+	}
 	else if (rightIdentificator != nullptr)
 		m_constructor->pushToStack(std::stol(rightIdentificator->GetAttribute(L"PositionOnStack").data()));
 	else if (rightOperation != nullptr)
 		TranslateExpressionNode(operation->GetRight());
 
+	if (leftLiteral != nullptr)
+	{
+		m_constructor->pushToStack(std::stol(leftLiteral->GetAttribute(L"PositionOnStack").data()));
+		m_constructor->AddLiteral(leftLiteral);
+	}
+	else if (leftIdentificator != nullptr)
+		m_constructor->pushToStack(std::stol(leftIdentificator->GetAttribute(L"PositionOnStack").data()));
+	else if(leftOperation != nullptr)
+		TranslateExpressionNode(operation->GetLeft());
+
 	m_constructor->doOperationPush(m_constructor->GetCurrentStackOffset() - 1, m_constructor->GetCurrentStackOffset(), true);
+}
+
+void CodeGeneratorStage::TranslateFunctionCall(const std::shared_ptr<ExpressionStatement> node)
+{
+	const auto& args = node->GetArguments();
+
+	std::for_each(args.rbegin(), args.rend(), [&](const auto& elem) { m_constructor->pushToStack(std::stol(elem->GetAttribute(L"PositionOnStack").data())); });
+
+	m_constructor->call(node->GetAttribute(L"ASMName"), -1, false, true);
+
+	for (size_t i = 0; i < args.size(); i++) m_constructor->popFromStack();
 }

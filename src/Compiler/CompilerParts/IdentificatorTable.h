@@ -28,6 +28,13 @@ public:
 	
 	const std::unordered_map<std::wstring, ScopeInfo>& GetScopesMap() const { return m_scopes; }
 
+	static const inline std::vector<std::wstring> UserAvailableFunctions
+	{
+		L"print",
+		L"ScanFloat",
+		L"ScanString"
+	};
+
 private:
 
 	std::unordered_map<std::wstring, ScopeInfo> m_scopes;

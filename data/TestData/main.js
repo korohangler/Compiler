@@ -1,3 +1,12 @@
 var a;
 
-a = 5 + 9;
+a = "hello" + 9;
+
+function test(a)
+{
+
+}
+
+test(a);
+
+print(a);

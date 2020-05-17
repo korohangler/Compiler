@@ -28,6 +28,8 @@ public:
 		Number
 	};
 
+	[[nodiscard]] LiteralType GetLiteralType() { return m_literalType; }
+
 private:
 
 	LiteralType m_literalType = LiteralType::String;

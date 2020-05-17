@@ -26,7 +26,7 @@ public:
 	[[nodiscard]] std::wstring_view GetStageName() override { return L"CodeGenerator"; }
 	///
 
-	/// INewParserTreeObserver override
+	/// IObserver override
 	void Notify(std::pair<std::shared_ptr<AbstractTreeNode>, std::shared_ptr<IdentificatorTable>> data) override;
 	///
 
@@ -34,17 +34,18 @@ private:
 
 	std::shared_ptr<ASMConstructor> m_constructor;
 
-	void TranslateNode(std::shared_ptr<AbstractTreeNode> node);
+	void TranslateNode(const std::shared_ptr<AbstractTreeNode> node);
 
-	void TranslateLet(std::shared_ptr<Let> node);
-	void TranslateExpressionStatement(std::shared_ptr<ExpressionStatement> node);
-	void TranslateIfElement(std::shared_ptr<If> node);
-	void TranslateWhileElement(std::shared_ptr<While> node);
-	void TranslateFunction(std::shared_ptr<Function> node);
+	void TranslateLet(const std::shared_ptr<Let> node);
+	void TranslateExpressionStatement(const std::shared_ptr<ExpressionStatement> node);
+	void TranslateIfElement(const std::shared_ptr<If> node);
+	void TranslateWhileElement(const std::shared_ptr<While> node);
+	void TranslateFunction(const std::shared_ptr<Function> node);
 
-	// result of this will be saved in eax register
-	void TranslateExpression(std::shared_ptr<Expression> node, std::shared_ptr<Identificator> whereToStore);
-	void TranslateExpressionNode(std::shared_ptr<AbstractTreeNode> node);
+	void TranslateExpression(const std::shared_ptr<Expression> node, const std::shared_ptr<Identificator> whereToStore);
+	void TranslateExpressionNode(const std::shared_ptr<AbstractTreeNode> node);
+
+	void TranslateFunctionCall(const std::shared_ptr<ExpressionStatement> node);
 	
 	std::shared_ptr<IdentificatorTable> m_table;
 };
