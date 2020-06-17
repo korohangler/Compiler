@@ -106,7 +106,7 @@ void CodeGeneratorStage::TranslateExpressionNode(const std::shared_ptr<AbstractT
 	const auto leftOperation = std::dynamic_pointer_cast<Operation>(operation->GetLeft());
 	const auto rightOperation = std::dynamic_pointer_cast<Operation>(operation->GetRight());
 
-	m_constructor->pushToStack(static_cast<int>(operation->GetOperationName()));
+	m_constructor->pushValueToStack(static_cast<int>(operation->GetOperationName()));
 
 	if (rightLiteral != nullptr)
 	{
