@@ -1,8 +1,8 @@
 
 struct Atom
 {
-    int type;
     int data;
+    int type;
 };
 
 struct Atom CopyAtom(struct Atom a)
@@ -17,7 +17,8 @@ struct Atom CopyAtom(struct Atom a)
     }
     else
     {
-        result.data = strcpy((char*)a.data);
+        result.data = malloc(50);
+        strcpy((char*)result.data, (char*)a.data);
     }
 
     return result;

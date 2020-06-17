@@ -106,14 +106,21 @@ void SemanticAnalyzer::ProcessNode(std::shared_ptr<AbstractTreeNode> node, const
 	}
 	else if (liter != nullptr)
 	{
-		liter->SetAttribute(L"PositionOnStack", std::to_wstring(m_positionOnStack));
-		m_positionOnStack++;
+		if (m_literalsMap.find(liter->GetData().data()) == m_literalsMap.end())
+		{
+			auto& lit = m_literalsMap[liter->GetData().data()];
 
-		liter->SetAttribute(L"ASMName", std::wstring(L"literal") + std::to_wstring(m_counterForLiteralName));
-		m_counterForLiteralName++;
+			lit = std::pair<std::wstring, std::wstring>(std::to_wstring(m_positionOnStack), std::wstring(L"literal") + std::to_wstring(m_counterForLiteralName));
 
-		for (size_t i = 0; i < node->Childs.size(); i++)
-			ProcessNode(node->Childs[i], currScopeData, i);
+			m_positionOnStack++;
+			m_counterForLiteralName++;
+		}
+
+		auto& lit = m_literalsMap[liter->GetData().data()];
+
+		liter->SetAttribute(L"PositionOnStack", lit.first);
+
+		liter->SetAttribute(L"ASMName", lit.second);
 	}
 	else
 	{

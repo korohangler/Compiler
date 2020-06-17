@@ -18,7 +18,7 @@ public IObserver<std::pair<std::shared_ptr<AbstractTreeNode>, std::shared_ptr<Id
 public Observable<std::shared_ptr<ASMConstructor>>
 {
 public:
-	CodeGeneratorStage(std::wstring directory) : m_constructor(std::make_shared<ASMConstructor>(std::move(directory))) {}
+	CodeGeneratorStage(std::wstring directory) : m_constructor(std::make_shared<ASMConstructor>(std::move(directory))), m_jumpNameMarks(0){}
 	
 	/// IStage override
 	void DoStage() override {}
@@ -31,6 +31,8 @@ public:
 	///
 
 private:
+
+	size_t m_jumpNameMarks;
 
 	std::shared_ptr<ASMConstructor> m_constructor;
 

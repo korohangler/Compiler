@@ -18,6 +18,13 @@ public:
 	void BeginFuction(const std::wstring_view name);
 	void EndFuction();
 
+	void jumpIf(std::wstring_view mark);
+	void jump(std::wstring_view mark);
+
+	void addJumpMark(std::wstring_view mark);
+
+	std::wstring_view GetLiterPosition(std::wstring_view liter);
+
 	void moveAtom(int what, int to, bool leftUseESP = false, bool rightUseESP = false);
 
 	void copyAtom(int what, int to, bool leftUseESP = false, bool rightUseESP = false);

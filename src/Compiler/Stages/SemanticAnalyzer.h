@@ -24,6 +24,8 @@ public:
 private:
 	std::shared_ptr<IdentificatorTable> m_identificatorTable;
 
+	std::map<std::wstring, std::pair<std::wstring, std::wstring>> m_literalsMap;
+
 	struct ScopeData
 	{
 		size_t level = 0;

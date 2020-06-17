@@ -65,10 +65,45 @@ void CodeGeneratorStage::TranslateExpressionStatement(const std::shared_ptr<Expr
 
 void CodeGeneratorStage::TranslateIfElement(const std::shared_ptr<If> node)
 {
+	std::wstring newJumpMark = std::wstring(L"JumpMark") + std::to_wstring(m_jumpNameMarks);
+	m_jumpNameMarks++;
+
+	std::shared_ptr<Expression> expr = std::static_pointer_cast<Expression>(node->Childs[0]);
+
+	// translate expression. Result on stack
+	TranslateExpressionNode(expr->GetRoot());
+
+	// add jump instruction if res == 1;
+	m_constructor->jumpIf(newJumpMark);
+	TranslateNode(node->Childs[1]);
+
+	// add where to jump
+	m_constructor->addJumpMark(newJumpMark);
 }
 
 void CodeGeneratorStage::TranslateWhileElement(const std::shared_ptr<While> node)
 {
+	std::wstring cycleBeginMark = std::wstring(L"JumpMark") + std::to_wstring(m_jumpNameMarks);
+	m_jumpNameMarks++;
+
+	m_constructor->addJumpMark(cycleBeginMark);
+
+	std::wstring exprJumpMark = std::wstring(L"JumpMark") + std::to_wstring(m_jumpNameMarks);
+	m_jumpNameMarks++;
+
+	std::shared_ptr<Expression> expr = std::static_pointer_cast<Expression>(node->Childs[0]);
+
+	// translate expression. Result on stack
+	TranslateExpressionNode(expr->GetRoot());
+
+	// add jump instruction if res == 1;
+	m_constructor->jumpIf(exprJumpMark);
+	TranslateNode(node->Childs[1]);
+
+	m_constructor->jump(cycleBeginMark);
+
+	// add where to jump
+	m_constructor->addJumpMark(exprJumpMark);
 }
 
 void CodeGeneratorStage::TranslateFunction(const std::shared_ptr<Function> node)
@@ -89,6 +124,8 @@ void CodeGeneratorStage::TranslateExpression(const std::shared_ptr<Expression> n
 	}
 	else
 	{
+		if(std::dynamic_pointer_cast<Literal>(node->GetRoot()) != nullptr)
+			m_constructor->AddLiteral(std::static_pointer_cast<Literal>(node->GetRoot()));
 		m_constructor->copyAtom(std::stol(node->GetRoot()->GetAttribute(L"PositionOnStack").data()), std::stol(whereToStore->GetAttribute(L"PositionOnStack").data()));
 	}
 }
@@ -110,8 +147,8 @@ void CodeGeneratorStage::TranslateExpressionNode(const std::shared_ptr<AbstractT
 
 	if (rightLiteral != nullptr)
 	{
-		m_constructor->pushToStack(std::stol(rightLiteral->GetAttribute(L"PositionOnStack").data()));
 		m_constructor->AddLiteral(rightLiteral);
+		m_constructor->pushToStack(std::stol(m_constructor->GetLiterPosition(rightLiteral->GetData()).data()));
 	}
 	else if (rightIdentificator != nullptr)
 		m_constructor->pushToStack(std::stol(rightIdentificator->GetAttribute(L"PositionOnStack").data()));
@@ -120,8 +157,8 @@ void CodeGeneratorStage::TranslateExpressionNode(const std::shared_ptr<AbstractT
 
 	if (leftLiteral != nullptr)
 	{
-		m_constructor->pushToStack(std::stol(leftLiteral->GetAttribute(L"PositionOnStack").data()));
 		m_constructor->AddLiteral(leftLiteral);
+		m_constructor->pushToStack(std::stol(m_constructor->GetLiterPosition(leftLiteral->GetData()).data()));
 	}
 	else if (leftIdentificator != nullptr)
 		m_constructor->pushToStack(std::stol(leftIdentificator->GetAttribute(L"PositionOnStack").data()));

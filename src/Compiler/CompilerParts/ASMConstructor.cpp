@@ -224,6 +224,35 @@ void ASMConstructor::EndFuction()
 	m_pendingFunctions.pop();
 }
 
+void ASMConstructor::jumpIf(std::wstring_view mark)
+{
+	std::vector<std::wstring>& commands = m_pendingFunctions.empty() ? m_commands : m_pendingFunctions.top().Commands;
+
+	commands.emplace_back(L"pop ecx");
+	commands.emplace_back(L"add esp, 4");
+	commands.emplace_back(L"cmp ecx, 0");
+	commands.emplace_back(std::wstring(L"je ") + mark.data());
+}
+
+void ASMConstructor::jump(std::wstring_view mark)
+{
+	std::vector<std::wstring>& commands = m_pendingFunctions.empty() ? m_commands : m_pendingFunctions.top().Commands;
+
+	commands.emplace_back(std::wstring(L"jmp ") + mark.data());
+}
+
+void ASMConstructor::addJumpMark(std::wstring_view mark)
+{
+	std::vector<std::wstring>& commands = m_pendingFunctions.empty() ? m_commands : m_pendingFunctions.top().Commands;
+
+	commands.emplace_back(std::wstring(mark.data()) + L":");
+}
+
+std::wstring_view ASMConstructor::GetLiterPosition(std::wstring_view liter)
+{
+	return m_literals[liter.data()]->GetAttribute(L"PositionOnStack");
+}
+
 void ASMConstructor::moveAtom(int what, int to, bool leftUseESP, bool rightUseESP)
 {
 	std::wstring leftReg  = leftUseESP ? L"esp" : L"ebp";
@@ -250,8 +279,7 @@ void ASMConstructor::copyAtom(int what, int to, bool leftUseESP, bool rightUseES
 	commands.push_back(std::wstring(L"mov [") + rightReg + L" - " + std::to_wstring(to * atomSize + 4) + L"], edx");
 
 	// pop args
-	commands.push_back(L"pop ecx");
-	commands.push_back(L"pop ecx");
+	commands.push_back(L"add esp, 8");
 }
 
 void ASMConstructor::call(const std::wstring_view name, int whereToStore, bool useESP, bool isVoid)

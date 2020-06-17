@@ -27,7 +27,18 @@ void ParserStage::Notify(const Token& token)
 	
 	m_currNode->Compute(token);
 
-	while (m_currNode->NeedRecompute()) m_currNode->Compute(token);
+	while (m_currNode->NeedRecompute() && !m_currNode->IsComplete()) m_currNode->Compute(token);
 	
 	m_needCreateNewNode = m_currNode->IsComplete();
+
+	if (m_needCreateNewNode && m_currNode->NeedRecompute())
+	{
+		m_root->Childs.emplace_back(ParserHelper::CreateNewNodeFromToken(token));
+		m_currNode = m_root->Childs.back();
+		m_currNode->Parent = m_root.get();
+
+		m_currNode->Compute(token);
+
+		m_needCreateNewNode = false;
+	}
 }
