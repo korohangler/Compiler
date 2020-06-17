@@ -63,7 +63,7 @@ void Let::HandleSemicolonOrAssign(const Token& token)
 	{
 		m_isComplete = true;
 	}
-	else if (token.Type == L"Assignment")
+	else if (token.Type == L"BinaryOperation" && token.Value == L"=")
 	{
 		Childs.emplace_back(std::make_shared<Expression>());
 		Childs.back()->Parent = this;

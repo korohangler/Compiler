@@ -22,6 +22,7 @@ EXTRN   gcvt:PROC
 EXTRN   strcat:PROC
 EXTRN   strcmp:PROC
 EXTRN   strcpy:PROC
+EXTRN   strlen:PROC
 EXTRN   _fltused:DWORD
 EXTRN   scanf:PROC
 EXTRN   puts:PROC

@@ -9,16 +9,27 @@ public:
 	///
 
 	[[nodiscard]] std::shared_ptr<AbstractTreeNode> GetRoot() { return Childs[0]; }
+
 	
 private:
 
-	[[nodiscard]] static std::shared_ptr<AbstractTreeNode> ParseExpression(std::vector<Token>::const_iterator begin, std::vector<Token>::const_iterator end);
+	struct ExpressionNode
+	{
+		std::shared_ptr<AbstractTreeNode> node;
+		std::wstring Value;
+		std::wstring Type;
+	};
 
-	[[nodiscard]] static std::vector<Token>::const_iterator GetMinPriorityToken(std::vector<Token>::const_iterator begin, std::vector<Token>::const_iterator end);
+	void ConvertTokensToExpressionNodes();
 
-	[[nodiscard]] static size_t GetOperationPriority(const Token& token);
+	[[nodiscard]] static std::shared_ptr<AbstractTreeNode> ParseExpression(std::vector<ExpressionNode>::const_iterator begin, std::vector<ExpressionNode>::const_iterator end);
 
-	[[nodiscard]] static std::shared_ptr<AbstractTreeNode> CreateNode(const Token& token);
+	[[nodiscard]] static std::vector<ExpressionNode>::const_iterator GetMinPriorityToken(std::vector<ExpressionNode>::const_iterator begin, std::vector<ExpressionNode>::const_iterator end);
+
+	[[nodiscard]] static size_t GetOperationPriority(const ExpressionNode& token);
+
+	[[nodiscard]] static ExpressionNode CreateNode(const Token& token);
 
 	std::vector<Token> m_tokens;
+	std::vector<ExpressionNode> m_convertedTokens;
 };

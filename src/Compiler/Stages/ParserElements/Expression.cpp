@@ -4,6 +4,7 @@
 #include "Identificator.h"
 #include "Literal.h"
 #include "MathOperations/Operation.h"
+#include "ExpressionStatement.h"
 
 void Expression::Compute(const Token& token)
 {
@@ -20,13 +21,52 @@ void Expression::Compute(const Token& token)
 	{
 		Utils::ASSERT2(!m_tokens.empty(), std::wstring(L"Expected expression at line: ") + std::to_wstring(token.Line));
 		
-		Childs.emplace_back(ParseExpression(m_tokens.begin(), m_tokens.end()));
+		ConvertTokensToExpressionNodes();
+
+		Childs.emplace_back(ParseExpression(m_convertedTokens.begin(), m_convertedTokens.end()));
 		m_needRecompute = true;
 		m_isComplete = true;
 	}
 }
 
-std::shared_ptr<AbstractTreeNode> Expression::ParseExpression(std::vector<Token>::const_iterator begin, std::vector<Token>::const_iterator end)
+void Expression::ConvertTokensToExpressionNodes()
+{
+	bool functionCallCreation = false;
+	for (size_t i = 0; i < m_tokens.size(); i++)
+	{
+		if (functionCallCreation)
+		{
+			m_convertedTokens.back().node->Compute(m_tokens[i]);
+			functionCallCreation = m_convertedTokens.back().node->IsComplete();
+		} 
+		else if (m_tokens[i].Type == L"BinaryOperator"
+			|| m_tokens[i].Type == L"UnaryOperator"
+			|| m_tokens[i].Type == L"DoubleLiteral"
+			|| m_tokens[i].Type == L"OctLiteral"
+			|| m_tokens[i].Type == L"HexLiteral"
+			|| m_tokens[i].Type == L"StringLiteral")
+		{
+			m_convertedTokens.emplace_back(CreateNode(m_tokens[i]));
+		}
+		else if(m_tokens[i].Type == L"Identificator")
+		{
+			if (i >= m_tokens.size() - 2 || m_tokens[i + 1].Type != L"Bracket")
+			{
+				m_convertedTokens.emplace_back(CreateNode(m_tokens[i]));
+			}
+			else
+			{
+				ExpressionNode expressionStatement;
+				expressionStatement.node = std::make_shared<ExpressionStatement>();
+				expressionStatement.Type = L"ExpressionStatement";
+				m_convertedTokens.emplace_back(expressionStatement);
+				functionCallCreation = true;
+			}
+		}
+	}
+}
+
+std::shared_ptr<AbstractTreeNode> Expression::ParseExpression(std::vector<ExpressionNode>::const_iterator begin, std::vector<ExpressionNode>::const_iterator end)
 {
 	auto last = end - 1;
 	while(begin->Value == L"(" && last->Value == L")" && begin != last)
@@ -35,28 +75,31 @@ std::shared_ptr<AbstractTreeNode> Expression::ParseExpression(std::vector<Token>
 		--end;
 	}
 	
-	const auto rootToken = GetMinPriorityToken(begin, end);
-
-	std::shared_ptr<AbstractTreeNode> expressionTreeRoot = CreateNode(rootToken == end ? *begin : *rootToken);
+	const auto root = GetMinPriorityToken(begin, end);
 
 	const size_t distance = std::distance(begin, end);
 	
 	if (distance > 2)
 	{
-		const std::shared_ptr<Operation> operation = std::dynamic_pointer_cast<Operation>(expressionTreeRoot);
+		const std::shared_ptr<Operation> operation = std::dynamic_pointer_cast<Operation>(root->node);
 
-		operation->SetLeft(ParseExpression(begin, rootToken));
+		operation->SetLeft(ParseExpression(begin, root));
 
 		if (operation->GetOperationType() == OperationType::Binary)
 		{
-			operation->SetRight(ParseExpression(rootToken + 1, end));
+			operation->SetRight(ParseExpression(root + 1, end));
 		}
 	}
+	else if (distance == 1)
+	{
+		return begin->node;
+	}
 	
-	return expressionTreeRoot;
+	return root->node;
 }
 
-std::vector<Token>::const_iterator Expression::GetMinPriorityToken(std::vector<Token>::const_iterator begin, std::vector<Token>::const_iterator end)
+std::vector<Expression::ExpressionNode>::const_iterator
+Expression::GetMinPriorityToken(std::vector<ExpressionNode>::const_iterator begin, std::vector<ExpressionNode>::const_iterator end)
 {
 	size_t openedBrackets = 0;
 	size_t closedBrackets = 0;
@@ -93,7 +136,7 @@ std::vector<Token>::const_iterator Expression::GetMinPriorityToken(std::vector<T
 	return result;
 }
 
-size_t Expression::GetOperationPriority(const Token& token)
+size_t Expression::GetOperationPriority(const ExpressionNode& token)
 {
 	size_t result = -1;
 
@@ -130,31 +173,30 @@ size_t Expression::GetOperationPriority(const Token& token)
 	{
 		result = 11;
 	}
-
-	Utils::ASSERT2(result != -1,
-	               std::wstring(L"Cannot compute operator priority for token: ") + token.Value + std::wstring(L" at line: ") + std::to_wstring(token.Line));
 	
 	return result;
 }
 
-std::shared_ptr<AbstractTreeNode> Expression::CreateNode(const Token& token)
+Expression::ExpressionNode Expression::CreateNode(const Token& token)
 {
-	std::shared_ptr<AbstractTreeNode> result;
+	ExpressionNode result;
+	result.Type = token.Type;
+	result.Value = token.Value;
 
 	if (token.Type == L"Identificator")
 	{
-		result = std::make_shared<Identificator>(token.Value);
+		result.node = std::make_shared<Identificator>(token.Value);
 	}
 	else if(token.Type == L"HexLiteral"
 		|| token.Type == L"OctLiteral"
 		|| token.Type == L"StringLiteral"
 		|| token.Type == L"DoubleLiteral")
 	{
-		result = std::make_shared<Literal>(token);
+		result.node = std::make_shared<Literal>(token);
 	}
 	else
 	{
-		result = std::make_shared<Operation>(token);
+		result.node = std::make_shared<Operation>(token);
 	}
 	
 	return result;

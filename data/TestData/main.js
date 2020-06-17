@@ -1,12 +1,5 @@
 var a;
 
-a = "hello" + 9;
-
-function test(a)
-{
-
-}
-
-test(a);
+a = 9 - 3;
 
 print(a);

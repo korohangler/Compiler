@@ -93,6 +93,12 @@ Operation::Operation(const Token& token) : AbstractTreeNode(2)
 		m_serializationData = L"Not";
 		m_operationType = OperationType::Unary;
 	}
+	else if (token.Value == L"=")
+	{
+		m_name = OperationName::Assignment;
+		m_serializationData = L"Assign";
+		m_operationType = OperationType::Binary;
+	}
 	else
 	{
 		Utils::ASSERT(L"Expected logic operator! How do you even end up here?");

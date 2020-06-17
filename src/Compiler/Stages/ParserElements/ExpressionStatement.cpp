@@ -53,7 +53,7 @@ void ExpressionStatement::HandleTypeChoiseState(const Token& token)
 
 		m_state = States::Argument;
 	}
-	else if (token.Type == L"Assignment")
+	else if (token.Type == L"BinaryOperator" && token.Value == L"=")
 	{
 		m_type = StatementType::AssignmentExpression;
 

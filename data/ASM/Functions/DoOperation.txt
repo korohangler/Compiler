@@ -13,6 +13,7 @@ DoOperation PROC
         push    ebp
         mov     ebp, esp
         sub     esp, 36                             ; 00000024H
+        push    esi
         mov     eax, DWORD PTR _a$[ebp+4]
         mov     DWORD PTR _result$[ebp+4], eax
         cmp     DWORD PTR _a$[ebp+4], 0
@@ -113,17 +114,36 @@ $LN16@DoOperatio:
         mov     eax, DWORD PTR _operationType$[ebp]
         mov     DWORD PTR tv90[ebp], eax
         cmp     DWORD PTR tv90[ebp], 6
-        ja      SHORT $LN4@DoOperatio
+        ja      $LN4@DoOperatio
         mov     ecx, DWORD PTR tv90[ebp]
         jmp     DWORD PTR $LN32@DoOperatio[ecx*4]
 $LN17@DoOperatio:
-        mov     edx, DWORD PTR _right$1[ebp]
+        mov     edx, DWORD PTR _a$[ebp]
         push    edx
-        mov     eax, DWORD PTR _a$[ebp]
+        call    strlen
+        add     esp, 4
+        mov     esi, eax
+        mov     eax, DWORD PTR _right$1[ebp]
         push    eax
+        call    strlen
+        add     esp, 4
+        lea     ecx, DWORD PTR [esi+eax+1]
+        push    ecx
+        call    malloc
+        add     esp, 4
+        mov     DWORD PTR _result$[ebp], eax
+        mov     edx, DWORD PTR _a$[ebp]
+        push    edx
+        mov     eax, DWORD PTR _result$[ebp]
+        push    eax
+        call    strcpy
+        add     esp, 8
+        mov     ecx, DWORD PTR _right$1[ebp]
+        push    ecx
+        mov     edx, DWORD PTR _result$[ebp]
+        push    edx
         call    strcat
         add     esp, 8
-        mov     DWORD PTR _result$[ebp], eax
         jmp     SHORT $LN4@DoOperatio
 $LN18@DoOperatio:
         mov     DWORD PTR _result$[ebp], 0
@@ -141,10 +161,10 @@ $LN22@DoOperatio:
         mov     DWORD PTR _result$[ebp], 0
         jmp     SHORT $LN4@DoOperatio
 $LN23@DoOperatio:
-        mov     ecx, DWORD PTR _right$1[ebp]
+        mov     eax, DWORD PTR _right$1[ebp]
+        push    eax
+        mov     ecx, DWORD PTR _a$[ebp]
         push    ecx
-        mov     edx, DWORD PTR _a$[ebp]
-        push    edx
         call    strcmp
         add     esp, 8
         mov     DWORD PTR _result$[ebp], eax
@@ -152,9 +172,11 @@ $LN23@DoOperatio:
 $LN4@DoOperatio:
         mov     eax, DWORD PTR _result$[ebp]
         mov     edx, DWORD PTR _result$[ebp+4]
+        pop     esi
         mov     esp, ebp
         pop     ebp
         ret     0
+        npad    3
 $LN31@DoOperatio:
         DD      $LN9@DoOperatio
         DD      $LN10@DoOperatio

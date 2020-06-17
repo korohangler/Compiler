@@ -24,6 +24,7 @@ enum class OperationName
 	, NotEqual
 	, NotEqualTypeCheck
 	, Not
+	, Assignment
 	, Unknown
 };
 

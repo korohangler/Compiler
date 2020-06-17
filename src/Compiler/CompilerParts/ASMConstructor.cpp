@@ -29,7 +29,19 @@ std::wstring ASMConstructor::GenerateASM()
 	{
 		if (elem.second->GetLiteralType() == Literal::LiteralType::String)
 		{
-			result += std::wstring(elem.second->GetAttribute(L"ASMName").data()) + L" DB '" + elem.second->GetData().data() + L"', 00H\n";
+			std::wstring data(elem.second->GetData().data());
+
+			size_t index = 0;
+			while (true) {
+				index = data.find(L"'", index);
+				if (index == std::string::npos) break;
+
+				data.replace(index, 1, L"\'\'");
+
+				index += 2;
+			}
+
+			result += std::wstring(elem.second->GetAttribute(L"ASMName").data()) + L" DB '" + data + L"', 00H\n";
 		}
 		else
 		{
@@ -69,7 +81,15 @@ std::wstring ASMConstructor::GenerateASM()
 	size_t stackSize = (m_variables.size() + m_literals.size()) * atomSize;
 
 	for (size_t i = 0; i < stackSize / 4; i++)
-		result += std::wstring(L"mov DWORD PTR[ebp - ") + std::to_wstring(i * 4) + L"], 0\n";
+	{
+		if (!std::any_of(begin(m_literals), end(m_literals), [i](const auto& el) {
+			const size_t pos = std::stol(el.second->GetAttribute(L"PositionOnStack").data());
+			return pos * atomSize == i * 4 || (pos  * atomSize) + 4 == i * 4;
+			}))
+		{
+			result += std::wstring(L"mov DWORD PTR[ebp - ") + std::to_wstring(i * 4) + L"], 0\n";
+		}
+	}
 
 	std::for_each(begin(m_literals), end(m_literals), [&](const auto& elem)
 	{
@@ -90,6 +110,7 @@ std::wstring ASMConstructor::GenerateASM()
 
 	std::for_each(begin(m_commands), end(m_commands), [&](const auto& elem) { result += elem + L"\n"; });
 
+	result += std::wstring(L"add esp, ") + std::to_wstring(stackSize) + L'\n';
 	result += L"mov eax, 0\n";
 	result += L"pop ebp\n";
 	result += L"ret\n";
@@ -115,11 +136,7 @@ void ASMConstructor::PopArgsFromStack()
 {
 	std::vector<std::wstring>& commands = m_pendingFunctions.empty() ? m_commands : m_pendingFunctions.top().Commands;
 
-	commands.push_back(L"pop ecx");
-	commands.push_back(L"pop ecx");
-	commands.push_back(L"pop ecx");
-	commands.push_back(L"pop ecx");
-	commands.push_back(L"pop ecx");
+	commands.emplace_back(L"add esp, 20");
 }
 
 void ASMConstructor::pushToStack(int what, bool useESP)
@@ -128,6 +145,17 @@ void ASMConstructor::pushToStack(int what, bool useESP)
 
 	commands.push_back(std::wstring(L"push [ebp - ") + std::to_wstring(what * atomSize + 4) + L"]");
 	commands.push_back(std::wstring(L"push [ebp - ") + std::to_wstring(what * atomSize) + L"]");
+
+	int& stackOffset = m_pendingFunctions.empty() ? m_stackOffset : m_pendingFunctions.top().StackOffset;
+
+	stackOffset++;
+}
+
+void ASMConstructor::pushValueToStack(int what)
+{
+	std::vector<std::wstring>& commands = m_pendingFunctions.empty() ? m_commands : m_pendingFunctions.top().Commands;
+
+	commands.push_back(std::wstring(L"push ") + std::to_wstring(what));
 
 	int& stackOffset = m_pendingFunctions.empty() ? m_stackOffset : m_pendingFunctions.top().StackOffset;
 
@@ -150,8 +178,7 @@ void ASMConstructor::popFromStack()
 {
 	std::vector<std::wstring>& commands = m_pendingFunctions.empty() ? m_commands : m_pendingFunctions.top().Commands;
 
-	commands.push_back(L"pop ecx");
-	commands.push_back(L"pop ecx");
+	commands.push_back(L"add esp, 8");
 
 	int& stackOffset = m_pendingFunctions.empty() ? m_stackOffset : m_pendingFunctions.top().StackOffset;
 

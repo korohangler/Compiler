@@ -78,7 +78,7 @@
         },
         {
             "Regexp" : "=",
-            "Type"   : "Assignment"
+            "Type"   : "BinaryOperator"
         },
         {
             "Regexp" : "\\?",

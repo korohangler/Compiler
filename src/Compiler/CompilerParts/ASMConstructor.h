@@ -8,6 +8,7 @@ public:
 	ASMConstructor(const std::wstring_view runningDirectory);
 
 	void pushToStack(int what, bool useESP = false);
+	void pushValueToStack(int what);
 	void popFromStack(int to, bool useESP = false);
 	void popFromStack();
 

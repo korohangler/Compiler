@@ -70,7 +70,9 @@ struct Atom DoOperation(struct Atom a, struct Atom b, int operationType)
         switch(operationType)
         {
         case 0:
-            result.data = (int)strcat((char*)a.data, right);
+            result.data = (char*)malloc(strlen((char*)a.data) + strlen(right) + 1);
+            strcpy((char*)result.data, (char*)a.data);
+            strcat((char*)result.data, right);
             break;
         case 1:
             result.data = 0;
