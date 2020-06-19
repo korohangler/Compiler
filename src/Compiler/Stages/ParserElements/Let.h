@@ -1,10 +1,14 @@
 #pragma once
 #include "Stages/ParserElements/BaseNode.h"
-#include "Stages\ParserElements\Identificator.h"
+#include "Stages/ParserElements/Identificator.h"
+#include "Stages/ParserElements/Expression.h"
 
 class __declspec(dllexport) Let : public BaseNode
 {
 public:
+	Let() : m_hasInitialization(false) {}
+	~Let() override = default;
+
 	/// AbstractTreeNode override
 	void Compute(const Token& token) override;
 
@@ -13,7 +17,13 @@ public:
 
 	[[nodiscard]] std::shared_ptr<Identificator> GetVariable() const { return std::static_pointer_cast<Identificator>(Childs[0]); }
 	
+	[[nodiscard]] bool HasInitializationExpression() const { return m_hasInitialization; }
+
+	[[nodiscard]] std::shared_ptr<Expression> GetExpression() { return std::static_pointer_cast<Expression>(Childs[1]); }
+
 private:
+
+	bool m_hasInitialization;
 
 	enum class States
 	{

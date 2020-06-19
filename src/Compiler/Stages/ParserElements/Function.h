@@ -4,6 +4,8 @@
 class __declspec(dllexport) Function : public BaseNode
 {
 public:
+	Function() : m_argumentsCount(0) {}
+
 	~Function() override = default;
 
 	/// AbstractTreeNode override
@@ -12,6 +14,8 @@ public:
 
 	[[nodiscard]] const std::wstring_view GetFunctionName() const { return m_functionName; }
 	
+	size_t GetArgumentsCount() const { return m_argumentsCount; }
+
 private:
 	enum class States
 	{
@@ -33,6 +37,8 @@ private:
 	void HandleScopeComputation(const Token& token);
 
 	std::wstring m_functionName;
+
+	size_t m_argumentsCount;
 
 	States m_state = States::FunctionKeyword;
 };

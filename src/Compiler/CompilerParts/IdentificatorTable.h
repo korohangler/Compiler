@@ -3,7 +3,7 @@
 struct __declspec(dllexport) IdentificatorInfo
 {
 	std::wstring AsmName;
-	size_t VariableLocationOnStack; // as idx
+	int VariableLocationOnStack; // as idx
 };
 
 struct __declspec(dllexport) ScopeInfo

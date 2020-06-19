@@ -47,8 +47,12 @@ void CodeGeneratorStage::TranslateNode(const std::shared_ptr<AbstractTreeNode> n
 
 void CodeGeneratorStage::TranslateLet(const std::shared_ptr<Let> node)
 {
-	// TODO For now no initialization at all
 	m_constructor->AddVariable(node->GetVariable());
+
+	if (node->HasInitializationExpression())
+	{
+		TranslateExpression(node->GetExpression(), node->GetVariable());
+	}
 }
 
 void CodeGeneratorStage::TranslateExpressionStatement(const std::shared_ptr<ExpressionStatement> node)
@@ -110,7 +114,8 @@ void CodeGeneratorStage::TranslateFunction(const std::shared_ptr<Function> node)
 {
 	m_constructor->BeginFuction(node->GetAttribute(L"ASMName"));
 
-	std::for_each(begin(node->Childs), end(node->Childs), [&](const auto& child) { TranslateNode(child); });
+	for (size_t i = node->GetArgumentsCount(); i < node->Childs.size(); i++)
+		TranslateNode(node->Childs[i]);
 
 	m_constructor->EndFuction();
 }
@@ -120,13 +125,13 @@ void CodeGeneratorStage::TranslateExpression(const std::shared_ptr<Expression> n
 	if (std::dynamic_pointer_cast<Operation>(node->GetRoot()) != nullptr)
 	{
 		TranslateExpressionNode(node->GetRoot());
-		m_constructor->popFromStack(std::stol(whereToStore->GetAttribute(L"PositionOnStack").data()));
+		m_constructor->popFromStack(std::stoi(whereToStore->GetAttribute(L"PositionOnStack").data()));
 	}
 	else
 	{
 		if(std::dynamic_pointer_cast<Literal>(node->GetRoot()) != nullptr)
 			m_constructor->AddLiteral(std::static_pointer_cast<Literal>(node->GetRoot()));
-		m_constructor->copyAtom(std::stol(node->GetRoot()->GetAttribute(L"PositionOnStack").data()), std::stol(whereToStore->GetAttribute(L"PositionOnStack").data()));
+		m_constructor->copyAtom(std::stoi(node->GetRoot()->GetAttribute(L"PositionOnStack").data()), std::stoi(whereToStore->GetAttribute(L"PositionOnStack").data()));
 	}
 }
 
@@ -148,20 +153,20 @@ void CodeGeneratorStage::TranslateExpressionNode(const std::shared_ptr<AbstractT
 	if (rightLiteral != nullptr)
 	{
 		m_constructor->AddLiteral(rightLiteral);
-		m_constructor->pushToStack(std::stol(m_constructor->GetLiterPosition(rightLiteral->GetData()).data()));
+		m_constructor->pushToStack(std::stoi(m_constructor->GetLiterPosition(rightLiteral->GetData()).data()));
 	}
 	else if (rightIdentificator != nullptr)
-		m_constructor->pushToStack(std::stol(rightIdentificator->GetAttribute(L"PositionOnStack").data()));
+		m_constructor->pushToStack(std::stoi(rightIdentificator->GetAttribute(L"PositionOnStack").data()));
 	else if (rightOperation != nullptr)
 		TranslateExpressionNode(operation->GetRight());
 
 	if (leftLiteral != nullptr)
 	{
 		m_constructor->AddLiteral(leftLiteral);
-		m_constructor->pushToStack(std::stol(m_constructor->GetLiterPosition(leftLiteral->GetData()).data()));
+		m_constructor->pushToStack(std::stoi(m_constructor->GetLiterPosition(leftLiteral->GetData()).data()));
 	}
 	else if (leftIdentificator != nullptr)
-		m_constructor->pushToStack(std::stol(leftIdentificator->GetAttribute(L"PositionOnStack").data()));
+		m_constructor->pushToStack(std::stoi(leftIdentificator->GetAttribute(L"PositionOnStack").data()));
 	else if(leftOperation != nullptr)
 		TranslateExpressionNode(operation->GetLeft());
 
@@ -172,7 +177,7 @@ void CodeGeneratorStage::TranslateFunctionCall(const std::shared_ptr<ExpressionS
 {
 	const auto& args = node->GetArguments();
 
-	std::for_each(args.rbegin(), args.rend(), [&](const auto& elem) { m_constructor->pushToStack(std::stol(elem->GetAttribute(L"PositionOnStack").data())); });
+	std::for_each(args.rbegin(), args.rend(), [&](const auto& elem) { m_constructor->pushToStack(std::stoi(elem->GetAttribute(L"PositionOnStack").data())); });
 
 	m_constructor->call(node->GetAttribute(L"ASMName"), -1, false, true);
 

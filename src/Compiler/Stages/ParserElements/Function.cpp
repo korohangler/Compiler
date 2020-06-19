@@ -80,6 +80,8 @@ void Function::HandleArgumentOrBracket(const Token& token)
 
 	Childs.push_back(std::make_shared<Identificator>(token.Value));
 
+	m_argumentsCount++;
+
 	m_state = States::CommaOrBracket;
 }
 

@@ -28,8 +28,11 @@ private:
 
 	struct ScopeData
 	{
+		ScopeData(size_t lvl, size_t cnt, std::wstring name) : level(lvl), counter(cnt), functionName(std::move(name)){}
+
 		size_t level = 0;
 		size_t counter = 0;
+		std::wstring functionName;
 
 		[[nodiscard]] std::wstring ToString() const;
 	};

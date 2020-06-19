@@ -7,7 +7,7 @@ struct Atom
 	int type;
 };
 
-const auto atomSize = sizeof(Atom);
+const int atomSize = sizeof(Atom);
 
 ASMConstructor::ASMConstructor(const std::wstring_view runningDirectory)
 {
@@ -83,7 +83,7 @@ std::wstring ASMConstructor::GenerateASM()
 	for (size_t i = 0; i < stackSize / 4; i++)
 	{
 		if (!std::any_of(begin(m_literals), end(m_literals), [i](const auto& el) {
-			const size_t pos = std::stol(el.second->GetAttribute(L"PositionOnStack").data());
+			const size_t pos = std::stoi(el.second->GetAttribute(L"PositionOnStack").data());
 			return pos * atomSize == i * 4 || (pos  * atomSize) + 4 == i * 4;
 			}))
 		{
@@ -93,7 +93,7 @@ std::wstring ASMConstructor::GenerateASM()
 
 	std::for_each(begin(m_literals), end(m_literals), [&](const auto& elem)
 	{
-		int posOnStack = std::stol(elem.second->GetAttribute(L"PositionOnStack").data()) * atomSize;
+		int posOnStack = std::stoi(elem.second->GetAttribute(L"PositionOnStack").data()) * atomSize;
 		if (elem.second->GetLiteralType() == Literal::LiteralType::String)
 		{
 			result += std::wstring(L"mov DWORD PTR[ebp - ") + std::to_wstring(posOnStack) + L"], OFFSET " + elem.second->GetAttribute(L"ASMName").data() + L"\n";

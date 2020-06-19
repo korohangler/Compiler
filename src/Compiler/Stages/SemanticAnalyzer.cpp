@@ -10,7 +10,7 @@
 
 void SemanticAnalyzer::Notify(std::shared_ptr<AbstractTreeNode> root)
 {
-	const ScopeData rootScopeData = {0, 0};
+	const ScopeData rootScopeData = {0, 0, L""};
 
 	ProcessNode(root, rootScopeData, 0);
 
@@ -28,7 +28,7 @@ void SemanticAnalyzer::ProcessNode(std::shared_ptr<AbstractTreeNode> node, const
 
 	if (scope != nullptr)
 	{
-		const ScopeData newScopeData = { currScopeData.level + 1, childIdx };
+		const ScopeData newScopeData = { currScopeData.level + 1, childIdx, currScopeData.functionName };
 		
 		m_identificatorTable->AddScope(currScopeData.ToString(), newScopeData.ToString());
 
@@ -62,18 +62,7 @@ void SemanticAnalyzer::ProcessNode(std::shared_ptr<AbstractTreeNode> node, const
 	}
 	else if(function != nullptr)
 	{
-		IdentificatorInfo info;
-		info.AsmName = std::wstring(L"Function") + std::to_wstring(m_counterForFunctionName);
-		m_counterForFunctionName++;
-
-		info.VariableLocationOnStack = -1;
-
-		m_identificatorTable->AddIdentificator(currScopeData.ToString(), function->GetFunctionName(), info);
-
-		function->SetAttribute(L"ASMName", info.AsmName);
-
-		for (size_t i = 0; i < node->Childs.size(); i++)
-			ProcessNode(node->Childs[i], currScopeData, i);
+		Utils::ASSERT("User functions are not supported :(");
 	}
 	else if(expressionStatement != nullptr)
 	{
@@ -131,5 +120,5 @@ void SemanticAnalyzer::ProcessNode(std::shared_ptr<AbstractTreeNode> node, const
 
 std::wstring SemanticAnalyzer::ScopeData::ToString() const
 {
-	return std::wstring(L"l") + std::to_wstring(this->level) + std::wstring(L"m") + std::to_wstring(this->counter);
+	return functionName + L"l" + std::to_wstring(this->level) + L"m" + std::to_wstring(this->counter);
 }
