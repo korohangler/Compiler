@@ -24,7 +24,6 @@ int main(int argc, const char* argv[])
 	{
 		std::cout << err.what() << std::endl;
 		std::cout << "Unable to compile file!\n";
-		system("pause");
 		return -1;
 	}
 

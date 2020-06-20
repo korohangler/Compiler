@@ -47,7 +47,7 @@ void Scope::HandleComputation(const Token& token)
 			if (!Childs.back()->IsComplete())
 				Childs.back()->Compute(token);
 
-			m_needRecompute = Childs.back()->NeedRecompute();
+			m_needRecompute = token.Type != L"CommonSeparator" && Childs.back()->NeedRecompute();
 		}
 	}
 }

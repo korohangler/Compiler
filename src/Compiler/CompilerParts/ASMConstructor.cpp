@@ -46,9 +46,15 @@ std::wstring ASMConstructor::GenerateASM()
 		else
 		{
 			float val = elem.second->GetFloatData();
-			std::wstringstream hexRepresentation;
-			hexRepresentation << std::hex << *((unsigned int*)(&val));
-			result += std::wstring(elem.second->GetAttribute(L"ASMName").data()) + L" DD " + hexRepresentation.str() + L"r\n";
+			
+			std::wstringstream str;
+
+			str << elem.second->GetAttribute(L"ASMName").data() << L" REAL4 ";
+			str.precision(17);
+			str << std::fixed << val;
+			str << '\n';
+
+			result += str.str();
 		}
 	});
 

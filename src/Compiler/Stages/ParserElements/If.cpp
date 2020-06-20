@@ -5,8 +5,6 @@
 
 void If::Compute(const Token& token)
 {
-	if (token.Type == L"CommonSeparator") return;
-
 	switch(m_state)
 	{
 	case States::IfKeyword:
@@ -37,6 +35,8 @@ void If::Compute(const Token& token)
 
 void If::HandleIfKeyword(const Token& token)
 {
+	if (token.Type == L"CommonSeparator") return;
+
 	Utils::ASSERT2(token.Type == L"Keyword" && token.Value == L"if",
 		std::wstring(L"token type mismatch! Expected If, got ") + token.Type + std::wstring(L". At line: ") + std::to_wstring(token.Line));
 
@@ -45,6 +45,8 @@ void If::HandleIfKeyword(const Token& token)
 
 void If::HandleOpeningBracket(const Token& token)
 {
+	if (token.Type == L"CommonSeparator") return;
+
 	Utils::ASSERT2(token.Type == L"Bracket" && token.Value == L"(",
 		std::wstring(L"token type mismatch! Expected RoundOpeningBracket, got ") + token.Type + std::wstring(L". At line: ") + std::to_wstring(token.Line));
 
@@ -57,6 +59,8 @@ void If::HandleOpeningBracket(const Token& token)
 
 void If::HandleExpressionComputation(const Token& token)
 {
+	if (token.Type == L"CommonSeparator") return;
+
 	Childs.back()->Compute(token);
 
 	if (Childs.back()->IsComplete()) m_state = States::ScopeCreation;
@@ -66,6 +70,8 @@ void If::HandleExpressionComputation(const Token& token)
 
 void If::HandleScopeCreation(const Token& token)
 {
+	if (token.Type == L"CommonSeparator") return;
+
 	Childs.emplace_back(std::make_shared<Scope>());
 
 	m_needRecompute = true;
@@ -97,6 +103,8 @@ void If::HandleElseKeyword(const Token& token)
 
 void If::HandleElseIfPossibility(const Token& token)
 {
+	if (token.Type == L"CommonSeparator") return;
+
 	m_state = (token.Type == L"Keyword" && token.Value == L"if") ? States::IfKeyword : States::ScopeCreation;
 
 	m_needRecompute = true;

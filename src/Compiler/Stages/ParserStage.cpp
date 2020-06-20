@@ -5,9 +5,15 @@
 
 void ParserStage::Notify(const Token& token)
 {
+	if (token.Type == L"Comment") return;
+
 	if (token == LexerStage::FinalToken)
 	{
-		if (!m_currNode->IsComplete()) m_currNode->Compute(token);
+		Token lastToken;
+		lastToken.Type = L"CommonSeparator";
+		lastToken.Value = L" ";
+
+		if (!m_currNode->IsComplete()) m_currNode->Compute(lastToken);
 
 		Utils::ASSERT2(m_root->Childs.back()->IsComplete(), L"Unexpected end of tokens!");
 		
@@ -31,7 +37,7 @@ void ParserStage::Notify(const Token& token)
 	
 	m_needCreateNewNode = m_currNode->IsComplete();
 
-	if (m_needCreateNewNode && m_currNode->NeedRecompute())
+	if (m_needCreateNewNode && m_currNode->NeedRecompute() && token.Type != L"CommonSeparator")
 	{
 		m_root->Childs.emplace_back(ParserHelper::CreateNewNodeFromToken(token));
 		m_currNode = m_root->Childs.back();
